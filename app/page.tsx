@@ -48,6 +48,23 @@ export default function Home() {
         {/* lamplight — one warm glow on the plaque, nothing else */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_55%_42%_at_50%_42%,rgba(195,143,14,0.11),transparent_70%)]" />
 
+        {/* duotone photo, anchored at the base, slow push-in, fading up into the canvas — kept faint so it reads as an archival trace, not a backdrop */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-[50vh] overflow-hidden"
+          style={{
+            maskImage: "linear-gradient(to top, black 30%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to top, black 30%, transparent 100%)",
+          }}
+        >
+          <Image
+            src="/photos/anniv55-group-gazebo.jpg"
+            alt=""
+            fill
+            priority
+            className="duotone animate-kenburns object-cover opacity-25"
+          />
+        </div>
+
         {/* a single pass of light across the monument after the title settles */}
         <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
           <div className="animate-light-sweep absolute inset-y-0 left-0 w-[38%] bg-gradient-to-r from-transparent via-[var(--frat-cream)]/7 to-transparent" />

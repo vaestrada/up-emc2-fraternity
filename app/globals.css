@@ -103,6 +103,19 @@ body::after {
   background-size: 72px 72px;
 }
 
+/* Cinematic slow push-in for hero photography */
+@keyframes kenburns {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1.18);
+  }
+}
+.animate-kenburns {
+  animation: kenburns 28s ease-in-out infinite alternate;
+}
+
 /* Certificate frame breathing — barely-there life in the gold hairline */
 @keyframes frame-breathe {
   0%,
