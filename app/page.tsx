@@ -5,6 +5,7 @@ import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
 import { Counter } from "@/components/motion/counter";
 import { Marquee } from "@/components/site/marquee";
+import { BrodCard } from "@/components/site/brod-card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FOUNDING_YEAR, site, projects, prominentBrods } from "@/lib/content";
@@ -41,7 +42,8 @@ export default function Home() {
           aria-hidden
           className="pointer-events-none absolute inset-0 hidden h-full w-full object-cover opacity-35 mix-blend-screen md:block"
         >
-          <source src="/videos/hero-ambient.mp4" type="video/mp4" />
+          {/* media query on the source keeps phones from downloading a video that's display:none */}
+          <source src="/videos/hero-ambient.mp4" type="video/mp4" media="(min-width: 768px)" />
         </video>
 
         {/* rotating gear watermark, centered behind the composition */}
@@ -331,24 +333,8 @@ export default function Home() {
 
           <div className="mt-14 grid gap-10 md:grid-cols-2">
             {prominentBrods.map((brod, i) => (
-              <Reveal key={brod.slug} delay={i * 0.12} className="group">
-                <div className="relative aspect-square overflow-hidden border border-[var(--hairline)]">
-                  <Image
-                    src={brod.image}
-                    alt={`${brod.name} — ${brod.honor}`}
-                    fill
-                    className="duotone object-cover object-top"
-                    sizes="(min-width: 768px) 45vw, 100vw"
-                  />
-                </div>
-                <div className="mt-5 flex items-baseline justify-between gap-4">
-                  <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold)]/70 uppercase">
-                    Citation № {String(i + 1).padStart(3, "0")} — Batch {brod.batch}
-                  </p>
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--frat-cream)]/50">
-                  {brod.detail}
-                </p>
+              <Reveal key={brod.slug} delay={i * 0.12}>
+                <BrodCard brod={brod} index={i} />
               </Reveal>
             ))}
           </div>

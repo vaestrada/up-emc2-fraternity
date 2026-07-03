@@ -54,6 +54,8 @@ export function Navbar() {
         <button
           className="text-[var(--frat-cream)] md:hidden"
           aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -61,6 +63,7 @@ export function Navbar() {
       </Container>
 
       <div
+        id="mobile-menu"
         className={cn(
           "grid overflow-hidden border-t border-[var(--hairline)] bg-[var(--canvas)]/95 transition-all duration-300 md:hidden",
           open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 border-t-0"

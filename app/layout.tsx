@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Cinzel, Cormorant } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/site/navbar";
@@ -66,6 +66,26 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#071e0c",
+};
+
+// Organization schema so search engines render a proper knowledge card.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "EMC² Fraternity",
+  alternateName: "UP EMC² Fraternity",
+  url: "https://up-emc2-fraternity.vercel.app",
+  logo: "https://up-emc2-fraternity.vercel.app/logo/emc2-mark.png",
+  foundingDate: "1969",
+  sameAs: ["https://www.facebook.com/EMC2Fraternity"],
+  parentOrganization: {
+    "@type": "CollegeOrUniversity",
+    name: "University of the Philippines",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -76,6 +96,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${cormorant.variable} font-sans antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <Navbar />
           <main>{children}</main>

@@ -29,7 +29,9 @@ export function Marquee({
     >
       <div className="animate-marquee flex shrink-0 items-center gap-10 pr-10 whitespace-nowrap">
         {strip}
-        {strip}
+        <span aria-hidden className="flex shrink-0 items-center gap-10">
+          {strip}
+        </span>
       </div>
     </div>
   );

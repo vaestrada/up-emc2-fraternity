@@ -16,6 +16,8 @@ export function BrodCard({ brod, index }: { brod: Brod; index: number }) {
       <p className="mt-5 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold)]/70 uppercase">
         Citation № {String(index + 1).padStart(3, "0")} — Batch {brod.batch}
       </p>
+      <h3 className="mt-3 font-display text-2xl text-[var(--frat-cream)]">{brod.name}</h3>
+      <p className="mt-1 font-serif text-lg italic text-[var(--frat-gold-light)]">{brod.honor}</p>
       <p className="mt-2 text-sm leading-relaxed text-[var(--frat-cream)]/50">{brod.detail}</p>
     </div>
   );

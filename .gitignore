@@ -44,3 +44,6 @@ next-env.d.ts
 # birthdates, addresses, phone numbers, emergency contacts of ~490 members).
 # NEVER commit or publish. See PRIVACY.md.
 /assets/
+
+# but keep the env template
+!.env.example
