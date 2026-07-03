@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { buttonVariants } from "@/components/ui/button";
@@ -18,16 +18,26 @@ const LINKS = [
 export function Navbar() {
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--hairline)] bg-[var(--canvas)]/75 backdrop-blur-md">
       <Container className="flex h-20 items-center justify-between">
         <Link href="/" onClick={() => setOpen(false)}>
           {/* Official lockup as issued — the mark is never re-typeset. */}
+          {/* declared at ~3x rendered size so the optimizer serves a sane variant, not w=3840 */}
           <Image
             src="/logo/emc2-lockup-white.png"
             alt="EMC² Fraternity — University of the Philippines"
-            width={2560}
-            height={1080}
+            width={400}
+            height={169}
             className="h-12 w-auto md:h-14"
             priority
           />

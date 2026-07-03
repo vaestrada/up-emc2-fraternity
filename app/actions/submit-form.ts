@@ -7,6 +7,8 @@ export type FormState = {
   /** true when the message was actually emailed to the Alumni Association */
   delivered: boolean;
   message?: string;
+  /** submitted values echoed back on error so React's form reset doesn't wipe them */
+  values?: Record<string, string>;
 };
 
 /* ── Rate limiting ─────────────────────────────────────────────
@@ -106,28 +108,38 @@ async function submit(kind: "contact" | "pledge", formData: FormData): Promise<F
     return { status: "success", delivered: false };
   }
 
+  const def = FORMS[kind];
+  const values: Record<string, string> = {};
+  for (const field of def.fields) {
+    values[field.name] = readField(formData, field.name, field.maxLength);
+  }
+
   if (isRateLimited(await clientIp())) {
     return {
       status: "error",
       delivered: false,
       message: "Too many submissions — please wait a few minutes and try again.",
+      values,
     };
   }
 
-  const def = FORMS[kind];
-  const values: Record<string, string> = {};
   for (const field of def.fields) {
-    values[field.name] = readField(formData, field.name, field.maxLength);
     if (field.required && values[field.name] === "") {
       return {
         status: "error",
         delivered: false,
         message: `Please fill in the ${field.label.toLowerCase()} field.`,
+        values,
       };
     }
   }
   if (!EMAIL_RE.test(values.email)) {
-    return { status: "error", delivered: false, message: "Please enter a valid email address." };
+    return {
+      status: "error",
+      delivered: false,
+      message: "Please enter a valid email address.",
+      values,
+    };
   }
 
   const text = def.fields

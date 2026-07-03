@@ -10,7 +10,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FOUNDING_YEAR, site, projects, prominentBrods } from "@/lib/content";
 
-const YEARS = new Date().getFullYear() - FOUNDING_YEAR;
+// regenerate daily so the years-of-brotherhood counter never goes stale on Jan 1
+export const revalidate = 86400;
 
 const CREDO_LINES = [
   "Equality is our way of life.",
@@ -20,6 +21,7 @@ const CREDO_LINES = [
 ];
 
 export default function Home() {
+  const YEARS = new Date().getFullYear() - FOUNDING_YEAR;
   return (
     <>
       {/* ── Hero — the engraved monument ─────────────────────── */}
@@ -35,12 +37,13 @@ export default function Home() {
 
         {/* rotating seal watermark, centered behind the composition */}
         <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.045]">
+          {/* eager but not priority: a 4.5%-opacity decoration must not compete with LCP */}
           <Image
             src="/logo/emc2-mark.png"
             alt=""
             width={1100}
             height={1100}
-            priority
+            loading="eager"
             className="animate-spin-slow h-[110vmin] w-[110vmin]"
           />
         </div>

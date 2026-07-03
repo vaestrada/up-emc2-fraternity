@@ -13,8 +13,8 @@ export function Footer() {
           <Image
             src="/logo/emc2-lockup-white.png"
             alt="EMC² Fraternity — University of the Philippines"
-            width={2560}
-            height={1080}
+            width={400}
+            height={169}
             className="h-14 w-auto"
           />
           <p className="mt-5 max-w-xs font-mono text-[10px] leading-relaxed tracking-[0.2em] text-[var(--frat-cream)]/40 uppercase">

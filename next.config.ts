@@ -28,6 +28,10 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // a stray lockfile in the home directory makes Next mis-infer the workspace root
+  turbopack: {
+    root: __dirname,
+  },
   headers: async () => [
     {
       source: "/(.*)",

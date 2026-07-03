@@ -52,13 +52,13 @@ export function PledgeForm() {
             <label htmlFor="pledge-name" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
               Name
             </label>
-            <input id="pledge-name" name="name" required maxLength={120} placeholder="Juan dela Cruz" className={inputClass} />
+            <input id="pledge-name" name="name" required maxLength={120} placeholder="Juan dela Cruz" defaultValue={state.values?.name} className={inputClass} />
           </div>
           <div>
             <label htmlFor="pledge-batch" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
               Batch <span className="font-normal text-muted-foreground">(e.g. ’84-F)</span>
             </label>
-            <input id="pledge-batch" name="batch" maxLength={40} placeholder="’84-F" className={inputClass} />
+            <input id="pledge-batch" name="batch" maxLength={40} placeholder="’84-F" defaultValue={state.values?.batch} className={inputClass} />
           </div>
         </div>
 
@@ -73,6 +73,7 @@ export function PledgeForm() {
             required
             maxLength={254}
             placeholder="you@example.com"
+            defaultValue={state.values?.email}
             className={inputClass}
           />
         </div>
@@ -81,7 +82,7 @@ export function PledgeForm() {
           <label htmlFor="pledge-cause" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
             I want to support
           </label>
-          <select id="pledge-cause" name="cause" className={inputClass} defaultValue={CAUSES[0]}>
+          <select id="pledge-cause" name="cause" className={inputClass} defaultValue={state.values?.cause ?? CAUSES[0]}>
             {CAUSES.map((cause) => (
               <option key={cause} value={cause}>
                 {cause}
@@ -100,6 +101,7 @@ export function PledgeForm() {
             rows={3}
             maxLength={5000}
             placeholder="Anything you'd like the Alumni Association to know"
+            defaultValue={state.values?.message}
             className={inputClass}
           />
         </div>

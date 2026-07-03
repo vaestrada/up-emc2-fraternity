@@ -53,7 +53,7 @@ export function ContactForm() {
             <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
               Name
             </label>
-            <input id="contact-name" name="name" required maxLength={120} placeholder="Juan dela Cruz" className={inputClass} />
+            <input id="contact-name" name="name" required maxLength={120} placeholder="Juan dela Cruz" defaultValue={state.values?.name} className={inputClass} />
           </div>
           <div>
             <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
@@ -66,6 +66,7 @@ export function ContactForm() {
               required
               maxLength={254}
               placeholder="you@example.com"
+              defaultValue={state.values?.email}
               className={inputClass}
             />
           </div>
@@ -75,7 +76,7 @@ export function ContactForm() {
           <label htmlFor="contact-topic" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
             Topic
           </label>
-          <select id="contact-topic" name="topic" className={inputClass} defaultValue={TOPICS[0]}>
+          <select id="contact-topic" name="topic" className={inputClass} defaultValue={state.values?.topic ?? TOPICS[0]}>
             {TOPICS.map((topic) => (
               <option key={topic} value={topic}>
                 {topic}
@@ -95,6 +96,7 @@ export function ContactForm() {
             required
             maxLength={5000}
             placeholder="How can the brotherhood help?"
+            defaultValue={state.values?.message}
             className={inputClass}
           />
         </div>
