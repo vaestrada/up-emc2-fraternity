@@ -15,6 +15,7 @@ export const site = {
     "Founded in 1969 by ten scholars of the University, the EMC² Fraternity is an exclusive Engineering and Physical Sciences brotherhood dedicated to the pursuit of excellence in education and service to the country. Through its years of existence as a fraternal organization based in the College of Engineering, it has distinguished itself through noteworthy endeavors and activities that aimed to uplift the cause and welfare of the University studentry and the community. It has also established itself as a molding ground of student leaders and young exemplars in the fields of Engineering and the Sciences.",
   base: "3rd Floor Lobby, Melchor Hall, U.P. Diliman",
   facebook: "https://www.facebook.com/EMC2Fraternity",
+  linkedin: "https://www.linkedin.com/company/up-emc2-fraternity",
 };
 
 export type Project = {

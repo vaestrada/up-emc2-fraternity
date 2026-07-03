@@ -5,6 +5,7 @@ import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
 import { ContactForm } from "@/components/site/contact-form";
 import { FacebookIcon } from "@/components/site/facebook-icon";
+import { LinkedInIcon } from "@/components/site/linkedin-icon";
 import { site } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -53,6 +54,26 @@ export default function ContactPage() {
                   className="mt-1 inline-block text-sm font-semibold text-[var(--frat-gold-light)] underline underline-offset-4"
                 >
                   facebook.com/EMC2Fraternity
+                </a>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.15} className="flex gap-5">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[var(--frat-gold)]/40">
+                <LinkedInIcon className="h-5 w-5 text-[var(--frat-gold-light)]" />
+              </div>
+              <div>
+                <h3 className="font-display text-lg text-[var(--frat-cream)]">LinkedIn</h3>
+                <p className="mt-1 text-sm text-[var(--frat-cream)]/50">
+                  For professional and alumni networking:
+                </p>
+                <a
+                  href={site.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-1 inline-block text-sm font-semibold text-[var(--frat-gold-light)] underline underline-offset-4"
+                >
+                  linkedin.com/company/up-emc2-fraternity
                 </a>
               </div>
             </Reveal>

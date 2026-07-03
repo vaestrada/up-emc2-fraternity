@@ -79,7 +79,10 @@ const organizationJsonLd = {
   url: "https://up-emc2-fraternity.vercel.app",
   logo: "https://up-emc2-fraternity.vercel.app/logo/emc2-mark.png",
   foundingDate: "1969",
-  sameAs: ["https://www.facebook.com/EMC2Fraternity"],
+  sameAs: [
+    "https://www.facebook.com/EMC2Fraternity",
+    "https://www.linkedin.com/company/up-emc2-fraternity",
+  ],
   parentOrganization: {
     "@type": "CollegeOrUniversity",
     name: "University of the Philippines",

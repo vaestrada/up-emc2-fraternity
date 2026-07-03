@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/site/container";
 import { FacebookIcon } from "@/components/site/facebook-icon";
+import { LinkedInIcon } from "@/components/site/linkedin-icon";
+import { site } from "@/lib/content";
 
 export function Footer() {
   return (
@@ -46,12 +48,22 @@ export function Footer() {
           <ul className="mt-5 space-y-3 text-sm text-[var(--frat-cream)]/70">
             <li>
               <a
-                href="https://www.facebook.com/EMC2Fraternity"
+                href={site.facebook}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-2 transition-colors hover:text-[var(--frat-gold-light)]"
               >
                 <FacebookIcon className="h-4 w-4" /> Facebook
+              </a>
+            </li>
+            <li>
+              <a
+                href={site.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 transition-colors hover:text-[var(--frat-gold-light)]"
+              >
+                <LinkedInIcon className="h-4 w-4" /> LinkedIn
               </a>
             </li>
             <li>
