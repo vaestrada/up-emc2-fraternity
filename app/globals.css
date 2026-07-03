@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+:root {
+  /* The Archive palette — dark leather-bound green, gold foil, aged paper */
+  --ink: #04150a;
+  --canvas: #071e0c;
+  --surface: #0b2a12;
+  --surface-raised: #10331a;
+
+  --background: var(--canvas);
+  --foreground: #f2ecdc;
+
+  --card: var(--surface);
+  --card-foreground: #f2ecdc;
+
+  --primary: #c38f0e;
+  --primary-foreground: #1a1305;
+
+  --secondary: var(--surface-raised);
+  --secondary-foreground: #f2ecdc;
+
+  --accent: #c38f0e;
+  --accent-foreground: #1a1305;
+
+  --muted: var(--surface);
+  --muted-foreground: #a8b39d;
+
+  --border: rgba(242, 236, 220, 0.12);
+  --ring: #c38f0e;
+
+  --frat-green: #0c3e06;
+  --frat-green-deep: #071e0c;
+  --frat-green-dark: #082b04;
+  --frat-gold: #c38f0e;
+  --frat-gold-light: #e3b94a;
+  --frat-cream: #f2ecdc;
+  --frat-paper: #f5f1e6;
+
+  --hairline: rgba(195, 143, 14, 0.25);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-ink: var(--ink);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-frat-green: var(--frat-green);
+  --color-frat-green-deep: var(--frat-green-deep);
+  --color-frat-green-dark: var(--frat-green-dark);
+  --color-frat-gold: var(--frat-gold);
+  --color-frat-gold-light: var(--frat-gold-light);
+  --color-frat-cream: var(--frat-cream);
+  --color-frat-paper: var(--frat-paper);
+
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--foreground);
+  position: relative;
+}
+
+/* Film grain over everything — the archive texture */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* Blueprint grid — faint schematic lines */
+.blueprint {
+  background-image:
+    linear-gradient(to right, rgba(242, 236, 220, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242, 236, 220, 0.04) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* Gold foil text */
+.gold-foil {
+  background: linear-gradient(
+    160deg,
+    #e3b94a 0%,
+    #c38f0e 34%,
+    #f4d98a 50%,
+    #c38f0e 68%,
+    #9a7009 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Foil that catches the light — slow shimmer sweep */
+@keyframes foil-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.gold-foil-animated {
+  background: linear-gradient(
+    110deg,
+    #9a7009 0%,
+    #c38f0e 25%,
+    #f4d98a 42%,
+    #e3b94a 50%,
+    #f4d98a 58%,
+    #c38f0e 75%,
+    #9a7009 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: foil-shimmer 9s ease-in-out infinite;
+}
+
+/* Cinematic slow push-in for hero photography */
+@keyframes kenburns {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1.18);
+  }
+}
+.animate-kenburns {
+  animation: kenburns 24s ease-in-out infinite alternate;
+}
+
+/* Outlined display type */
+.text-outline {
+  -webkit-text-stroke: 1px rgba(242, 236, 220, 0.65);
+  color: transparent;
+}
+
+/* Duotone archival photo treatment: green shadows, warm highlights.
+   Blooms to full color on hover of a .group parent. */
+.duotone {
+  filter: grayscale(1) sepia(0.32) hue-rotate(52deg) saturate(0.9) brightness(0.82) contrast(1.06);
+  transition: filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group:hover .duotone {
+  filter: none;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 36s linear infinite;
+}
+
+/* Slow-turning gear watermark */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 90s linear infinite;
+}
+
+::selection {
+  background: var(--frat-gold);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
