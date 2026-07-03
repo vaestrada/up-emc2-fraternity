@@ -351,7 +351,7 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.12}>
             <h2 className="gold-foil mt-8 max-w-3xl font-display text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.05] tracking-tight">
-              Take the quantum leap.
+              {site.mottoCall}
             </h2>
           </Reveal>
           <Reveal delay={0.24}>

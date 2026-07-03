@@ -4,7 +4,7 @@ export const site = {
   name: "EMC² Fraternity",
   school: "U.P. College of Engineering",
   university: "University of the Philippines",
-  motto: "Quantum leaps since 1969.",
+  motto: "Engineered for Service.",
   mottoCall: "Take the quantum leap.",
   tagline: "Equality · Service · Brotherhood",
   credo:
