@@ -105,8 +105,8 @@ export default function Home() {
               {site.motto}
             </p>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[var(--frat-cream)]/55 max-md:hidden">
-              An exclusive brotherhood of Engineering and the Physical Sciences —
-              every generation a jump to a higher energy state.
+              An exclusive brotherhood of Engineering and the Physical Sciences.
+              Every generation a quantum leap.
             </p>
           </Reveal>
 
