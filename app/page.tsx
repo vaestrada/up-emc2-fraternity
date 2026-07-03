@@ -107,12 +107,12 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={0.4} className="mt-[clamp(1.25rem,3vh,2rem)] max-w-xl">
-            <p className="font-serif text-xl italic text-[var(--frat-cream)]/90 md:text-2xl">
-              &ldquo;Equality is our way of life.&rdquo;
+            <p className="font-serif text-2xl italic text-[var(--frat-cream)]/90 md:text-3xl">
+              {site.motto}
             </p>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[var(--frat-cream)]/55 max-md:hidden">
               An exclusive brotherhood of Engineering and the Physical Sciences —
-              {" "}{YEARS} years of scholars, builders, and public servants.
+              every generation a jump to a higher energy state.
             </p>
           </Reveal>
 
@@ -139,14 +139,14 @@ export default function Home() {
       <Marquee
         className="bg-[var(--ink)] font-serif text-xl italic text-[var(--frat-cream)]/80"
         items={[
+          "Quantum Leaps Since 1969",
+          "Brotherhood, Squared",
           "Equality",
           "Service",
           "Brotherhood",
-          `Est. ${FOUNDING_YEAR}`,
           "U.P. College of Engineering",
-          "Loyalty and Obedience",
-          "Service and Sacrifice",
-          "Courage and Justice",
+          "To Higher Energy States",
+          "Energy Becomes Legacy",
         ]}
       />
 
@@ -365,13 +365,13 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.12}>
             <h2 className="gold-foil mt-8 max-w-3xl font-display text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.05] tracking-tight">
-              Carry the brotherhood forward.
+              Take the quantum leap.
             </h2>
           </Reveal>
           <Reveal delay={0.24}>
             <p className="mt-6 max-w-lg text-[var(--frat-cream)]/60">
               Scholarships, the Thinking Space, relief operations — every project in the ledger
-              began with a brod who gave back.
+              began with a brod whose energy became legacy.
             </p>
           </Reveal>
           <Reveal delay={0.36}>
