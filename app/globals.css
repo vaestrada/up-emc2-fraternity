@@ -103,66 +103,54 @@ body::after {
   background-size: 72px 72px;
 }
 
-/* Gold foil text */
-.gold-foil {
-  background: linear-gradient(
-    160deg,
-    #e3b94a 0%,
-    #c38f0e 34%,
-    #f4d98a 50%,
-    #c38f0e 68%,
-    #9a7009 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Foil that catches the light — slow shimmer sweep */
-@keyframes foil-shimmer {
+/* Certificate frame breathing — barely-there life in the gold hairline */
+@keyframes frame-breathe {
   0%,
   100% {
-    background-position: 0% 50%;
+    opacity: 0.6;
   }
   50% {
-    background-position: 100% 50%;
+    opacity: 1;
   }
 }
-.gold-foil-animated {
-  background: linear-gradient(
-    110deg,
-    #9a7009 0%,
-    #c38f0e 25%,
-    #f4d98a 42%,
-    #e3b94a 50%,
-    #f4d98a 58%,
-    #c38f0e 75%,
-    #9a7009 100%
-  );
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: foil-shimmer 9s ease-in-out infinite;
+.animate-frame-breathe {
+  animation: frame-breathe 9s ease-in-out infinite;
 }
 
-/* Cinematic slow push-in for hero photography */
-@keyframes kenburns {
+/* A single pass of light across the hero, like light moving over an
+   engraved bronze plaque. Runs once after the title settles. */
+@keyframes light-sweep {
+  0% {
+    transform: translateX(-140%) skewX(-12deg);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(400%) skewX(-12deg);
+    opacity: 0;
+  }
+}
+.animate-light-sweep {
+  animation: light-sweep 3.2s cubic-bezier(0.45, 0, 0.25, 1) 1.7s 1 both;
+}
+
+/* The hero rule draws itself outward from the center */
+@keyframes rule-draw {
   from {
-    transform: scale(1.08);
+    transform: scaleX(0);
   }
   to {
-    transform: scale(1.18);
+    transform: scaleX(1);
   }
 }
-.animate-kenburns {
-  animation: kenburns 24s ease-in-out infinite alternate;
-}
-
-/* Outlined display type */
-.text-outline {
-  -webkit-text-stroke: 1px rgba(242, 236, 220, 0.65);
-  color: transparent;
+.animate-rule-draw {
+  transform-origin: center;
+  animation: rule-draw 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
 }
 
 /* Duotone archival photo treatment: green shadows, warm highlights.

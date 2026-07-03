@@ -69,7 +69,7 @@ export default function DonatePage() {
               <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[var(--frat-gold)]/40">
                 <HandCoins className="h-6 w-6 text-[var(--frat-gold-light)]" strokeWidth={1.25} />
               </div>
-              <h2 className="gold-foil mt-6 font-display text-4xl font-semibold md:text-5xl">
+              <h2 className="mt-6 font-display text-4xl font-semibold text-[var(--frat-gold-light)] md:text-5xl">
                 Make a Pledge
               </h2>
             </Reveal>

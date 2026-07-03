@@ -19,7 +19,7 @@ export function PageHero({
           </p>
         </Reveal>
         <Reveal delay={0.1}>
-          <h1 className="gold-foil mt-6 max-w-3xl font-display text-[clamp(2.8rem,7vw,5.5rem)] font-semibold leading-[1.02] tracking-tight">
+          <h1 className="mt-6 max-w-3xl font-display text-[clamp(2.8rem,7vw,5.5rem)] font-semibold leading-[1.02] tracking-tight text-[var(--frat-cream)]">
             {title}
           </h1>
         </Reveal>

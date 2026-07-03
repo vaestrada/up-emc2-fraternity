@@ -11,7 +11,7 @@ export default function NotFound() {
         <p className="font-mono text-[11px] tracking-[0.45em] text-[var(--frat-gold)] uppercase">
           Entry not found
         </p>
-        <h1 className="gold-foil mt-8 font-display text-[clamp(4rem,16vw,10rem)] font-semibold leading-none">
+        <h1 className="mt-8 font-display text-[clamp(4rem,16vw,10rem)] font-semibold leading-none text-[var(--frat-gold-light)]">
           404
         </h1>
         <p className="mt-6 max-w-md font-serif text-2xl italic text-[var(--frat-cream)]/80">

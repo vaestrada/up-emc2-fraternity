@@ -22,10 +22,10 @@ const CREDO_LINES = [
 export default function Home() {
   return (
     <>
-      {/* ── Hero ─────────────────────────────────────────────── */}
+      {/* ── Hero — the engraved monument ─────────────────────── */}
       <section className="blueprint relative flex min-h-[100svh] flex-col justify-center overflow-hidden">
-        {/* certificate frame */}
-        <div className="pointer-events-none absolute inset-4 z-20 border border-[var(--frat-gold)]/20 md:inset-7">
+        {/* certificate frame, breathing almost imperceptibly */}
+        <div className="animate-frame-breathe pointer-events-none absolute inset-4 z-20 border border-[var(--frat-gold)]/20 md:inset-7">
           {/* engraved corner ticks */}
           <span className="absolute -top-px -left-px h-7 w-7 border-t-2 border-l-2 border-[var(--frat-gold)]/70" />
           <span className="absolute -top-px -right-px h-7 w-7 border-t-2 border-r-2 border-[var(--frat-gold)]/70" />
@@ -33,21 +33,8 @@ export default function Home() {
           <span className="absolute -bottom-px -right-px h-7 w-7 border-b-2 border-r-2 border-[var(--frat-gold)]/70" />
         </div>
 
-        {/* ambient gold-dust loop — screen blend melts its dark base into the canvas */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden
-          className="pointer-events-none absolute inset-0 hidden h-full w-full object-cover opacity-35 mix-blend-screen md:block"
-        >
-          {/* media query on the source keeps phones from downloading a video that's display:none */}
-          <source src="/videos/hero-ambient.mp4" type="video/mp4" media="(min-width: 768px)" />
-        </video>
-
-        {/* rotating gear watermark, centered behind the composition */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.05]">
+        {/* rotating seal watermark, centered behind the composition */}
+        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.045]">
           <Image
             src="/logo/emc2-mark.png"
             alt=""
@@ -58,24 +45,12 @@ export default function Home() {
           />
         </div>
 
-        {/* candlelight — a faint gold glow behind the title */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_50%_38%,rgba(195,143,14,0.13),transparent_70%)]" />
+        {/* lamplight — one warm glow on the plaque, nothing else */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_55%_42%_at_50%_42%,rgba(195,143,14,0.11),transparent_70%)]" />
 
-        {/* duotone photo, anchored at the base, slow push-in, fading up into the canvas */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-[50vh] overflow-hidden"
-          style={{
-            maskImage: "linear-gradient(to top, black 40%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to top, black 40%, transparent 100%)",
-          }}
-        >
-          <Image
-            src="/photos/anniv55-group-gazebo.jpg"
-            alt=""
-            fill
-            priority
-            className="duotone animate-kenburns object-cover opacity-50"
-          />
+        {/* a single pass of light across the monument after the title settles */}
+        <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
+          <div className="animate-light-sweep absolute inset-y-0 left-0 w-[38%] bg-gradient-to-r from-transparent via-[var(--frat-cream)]/7 to-transparent" />
         </div>
 
         <Container className="relative z-10 flex flex-col items-center pt-[clamp(5rem,13vh,8rem)] pb-[clamp(7rem,20vh,12rem)] text-center">
@@ -86,14 +61,14 @@ export default function Home() {
           </Reveal>
 
           {/* The wordmark rendered as live text in the lockup's Trajan-style capitals (Cinzel). */}
-          <Reveal delay={0.2}>
+          <Reveal delay={0.25} effect="engrave">
             <h1 className="mt-[clamp(1.5rem,4vh,3rem)] inline-block font-display leading-none text-[var(--frat-cream)]">
               <span className="block whitespace-nowrap text-[clamp(2.1rem,min(6.6vw,9vh),5.2rem)] font-semibold">
                 EMC&sup2; FRATERNITY
               </span>
               <span
                 aria-hidden
-                className="mt-[clamp(0.5rem,1.4vh,0.9rem)] block h-[3px] w-full bg-[var(--frat-cream)]"
+                className="animate-rule-draw mt-[clamp(0.5rem,1.4vh,0.9rem)] block h-[3px] w-full bg-[var(--frat-cream)]"
               />
               <span className="mt-[clamp(0.5rem,1.4vh,0.9rem)] block whitespace-nowrap text-[clamp(1.05rem,min(3.35vw,4.6vh),2.65rem)] font-medium tracking-[0.05em]">
                 UNIVERSITY OF THE PHILIPPINES
@@ -169,7 +144,7 @@ export default function Home() {
                 i >= 2 && "max-md:border-t"
               )}
             >
-              <div className="gold-foil font-display text-5xl font-semibold md:text-6xl">
+              <div className="font-display text-5xl font-semibold text-[var(--frat-gold-light)] md:text-6xl">
                 {stat.render}
               </div>
               <div className="mt-3 font-mono text-[10px] tracking-[0.3em] text-[var(--frat-cream)]/50 uppercase">
@@ -194,7 +169,7 @@ export default function Home() {
                 <p
                   className={cn(
                     "font-serif text-[clamp(2.2rem,6vw,5rem)] leading-[1.1] tracking-tight italic",
-                    i === 0 ? "gold-foil font-semibold" : "text-[var(--frat-cream)]/85"
+                    i === 0 ? "font-semibold text-[var(--frat-gold-light)]" : "text-[var(--frat-cream)]/85"
                   )}
                 >
                   {line}
@@ -350,7 +325,7 @@ export default function Home() {
             </p>
           </Reveal>
           <Reveal delay={0.12}>
-            <h2 className="gold-foil mt-8 max-w-3xl font-display text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.05] tracking-tight">
+            <h2 className="mt-8 max-w-3xl font-display text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.05] tracking-tight text-[var(--frat-gold-light)]">
               {site.mottoCall}
             </h2>
           </Reveal>

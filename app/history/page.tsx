@@ -73,7 +73,7 @@ export default function HistoryPage() {
             {milestones.map((m, i) => (
               <Reveal key={m.year} delay={i * 0.08} className="relative">
                 <div className="absolute top-3 -left-[45px] h-2.5 w-2.5 rotate-45 bg-[var(--frat-gold)]" />
-                <p className="gold-foil font-display text-4xl font-semibold md:text-5xl">{m.year}</p>
+                <p className="font-display text-4xl font-semibold text-[var(--frat-gold-light)] md:text-5xl">{m.year}</p>
                 <p className="mt-2 font-display text-lg text-[var(--frat-cream)]">{m.title}</p>
                 <p className="mt-1 text-sm leading-relaxed text-[var(--frat-cream)]/50">{m.detail}</p>
               </Reveal>
