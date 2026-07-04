@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Landmark, Smartphone, Globe, HandCoins } from "lucide-react";
+import Image from "next/image";
+import { HandCoins } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
@@ -11,24 +12,30 @@ export const metadata: Metadata = {
     "Support the scholarships, campus projects, and outreach programs of the EMC² Fraternity.",
 };
 
-const CHANNELS = [
+const QR_CHANNELS = [
   {
-    icon: Smartphone,
-    title: "GCash / Maya",
-    body: "Scan the official QR code to give instantly from your phone.",
-    note: "QR codes to be posted — awaiting the Alumni Association's official account details.",
+    src: "/donate/gcash-qr.jpg",
+    name: "GCash",
+    detail: "Buloy · InstaPay QR",
+    alt: "GCash InstaPay QR code — account name Buloy",
   },
   {
-    icon: Landmark,
-    title: "Bank Transfer",
-    body: "Direct deposit to the UP EMC² Fraternity Alumni Association, Inc. account.",
-    note: "Bank name and account number to be posted after BOT confirmation.",
+    src: "/donate/maya-qr.jpg",
+    name: "Maya",
+    detail: "@vironestrada · InstaPay QR",
+    alt: "Maya InstaPay QR code — Viron Gil Estrada, @vironestrada",
   },
   {
-    icon: Globe,
-    title: "From Abroad",
-    body: "Overseas brods can give via PayPal or international wire transfer.",
-    note: "PayPal link to be set up — coming soon.",
+    src: "/donate/bdo-qr.jpg",
+    name: "BDO",
+    detail: "Savings ···· 0928 · InstaPay QR",
+    alt: "BDO InstaPay QR code — savings account ending in 0928",
+  },
+  {
+    src: "/donate/paypal-qr.png",
+    name: "PayPal",
+    detail: "Viron Estrada · scan in the PayPal app",
+    alt: "PayPal QR code — Viron Estrada, for overseas contributions",
   },
 ];
 
@@ -43,22 +50,42 @@ export default function DonatePage() {
 
       <section className="py-24">
         <Container>
-          <div className="grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] md:grid-cols-3">
-            {CHANNELS.map((ch, i) => (
-              <Reveal key={ch.title} delay={i * 0.08} className="h-full">
-                <div className="flex h-full flex-col bg-[var(--canvas)] p-8 text-center transition-colors hover:bg-[var(--surface)]">
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[var(--frat-gold)]/40">
-                    <ch.icon className="h-6 w-6 text-[var(--frat-gold-light)]" strokeWidth={1.25} />
+          <Reveal>
+            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+              Scan to Give
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 max-w-2xl leading-relaxed text-[var(--frat-cream)]/60">
+              GCash, Maya, and BDO codes work with any InstaPay-enabled bank or e-wallet app —
+              scan whichever is convenient. Overseas brods can scan the PayPal code from inside
+              the PayPal app.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] sm:grid-cols-2 lg:grid-cols-4">
+            {QR_CHANNELS.map((ch, i) => (
+              <Reveal key={ch.name} delay={(i % 4) * 0.08} className="h-full">
+                <div className="flex h-full flex-col bg-[var(--canvas)] p-6">
+                  <div className="relative aspect-[4/5] w-full bg-white p-2">
+                    <Image src={ch.src} alt={ch.alt} fill className="object-contain p-2" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" />
                   </div>
-                  <h3 className="mt-6 font-display text-xl text-[var(--frat-cream)]">{ch.title}</h3>
-                  <p className="mt-2 text-sm text-[var(--frat-cream)]/50">{ch.body}</p>
-                  <p className="mt-auto pt-5 font-mono text-[10px] leading-relaxed tracking-[0.15em] text-[var(--frat-gold-light)]/60 uppercase">
-                    {ch.note}
+                  <h3 className="mt-5 font-display text-xl text-[var(--frat-cream)]">{ch.name}</h3>
+                  <p className="mt-1 font-mono text-[10px] leading-relaxed tracking-[0.15em] text-[var(--frat-cream)]/45 uppercase">
+                    {ch.detail}
                   </p>
                 </div>
               </Reveal>
             ))}
           </div>
+
+          <Reveal className="mt-10">
+            <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm leading-relaxed text-[var(--frat-cream)]/50">
+              After sending, include your transfer reference number in the pledge form below (or
+              message the fraternity on Facebook) so the Alumni Association can record and
+              formally acknowledge your contribution.
+            </div>
+          </Reveal>
         </Container>
       </section>
 
@@ -75,10 +102,10 @@ export default function DonatePage() {
             </Reveal>
             <Reveal delay={0.12}>
               <p className="mt-6 leading-relaxed text-[var(--frat-cream)]/60">
-                While official payment channels are being finalized, you can already signal your
-                support. Tell us what you&rsquo;d like to back — a scholarship, a campus project, an
-                outreach campaign — and the Alumni Association will follow up with you directly once
-                the channels are live.
+                Sent something, or planning to? Tell the Alumni Association what you&rsquo;d like
+                your gift to support — a scholarship, a campus project, an outreach campaign —
+                and include your transfer reference so it can be properly recorded and
+                acknowledged.
               </p>
               <p className="mt-5 font-serif text-xl italic text-[var(--frat-gold-light)]">
                 Every pledge, whatever the size, is an act of Service and Sacrifice for the next
