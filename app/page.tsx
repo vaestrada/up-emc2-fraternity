@@ -117,7 +117,7 @@ export default function Home() {
             <p className="font-serif text-2xl italic text-[var(--frat-cream)]/90 md:text-3xl">
               {site.motto}
             </p>
-            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[var(--frat-cream)]/55 max-md:hidden">
+            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[var(--frat-cream)]/70 max-md:hidden">
               An exclusive brotherhood of Engineering and the Physical Sciences.
               Every generation a quantum leap.
             </p>
@@ -134,10 +134,10 @@ export default function Home() {
         </Container>
 
         {/* schematic corner annotations */}
-        <div className="pointer-events-none absolute bottom-10 left-10 z-20 hidden font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/35 md:block">
+        <div className="pointer-events-none absolute bottom-10 left-10 z-20 hidden font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/55 md:block">
           14.6553° N / 121.0685° E — MELCHOR HALL, 3F LOBBY
         </div>
-        <div className="pointer-events-none absolute bottom-10 right-10 z-20 hidden items-center gap-3 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/35 md:flex">
+        <div className="pointer-events-none absolute bottom-10 right-10 z-20 hidden items-center gap-3 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/55 md:flex">
           EST. MCMLXIX <ArrowDown className="h-3 w-3 animate-bounce" />
         </div>
       </section>
@@ -177,7 +177,7 @@ export default function Home() {
               <div className="font-display text-5xl font-semibold text-[var(--frat-gold-light)] md:text-6xl">
                 {stat.render}
               </div>
-              <div className="mt-3 font-mono text-[10px] tracking-[0.3em] text-[var(--frat-cream)]/50 uppercase">
+              <div className="mt-3 font-mono text-[10px] tracking-[0.3em] text-[var(--frat-cream)]/60 uppercase">
                 {stat.label}
               </div>
             </div>
@@ -249,7 +249,7 @@ export default function Home() {
                 sizes="(min-width: 768px) 45vw, 100vw"
               />
             </div>
-            <p className="mt-4 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/40 uppercase">
+            <p className="mt-4 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
               Fig. 01 — 55th Anniversary · Bahay ng Alumni · MMXXIV
             </p>
           </Reveal>
@@ -290,18 +290,18 @@ export default function Home() {
                   href="/projects"
                   className="group grid grid-cols-[auto_1fr] items-baseline gap-6 border-b border-[var(--hairline)] py-7 transition-colors hover:bg-[var(--frat-gold)]/5 md:grid-cols-[80px_1fr_auto] md:gap-10"
                 >
-                  <span className="font-mono text-sm text-[var(--frat-gold)]/70">
+                  <span className="font-mono text-sm text-[var(--frat-gold)]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span>
                     <span className="font-display text-xl text-[var(--frat-cream)] transition-colors group-hover:text-[var(--frat-gold-light)] md:text-2xl">
                       {project.title}
                     </span>
-                    <span className="mt-1 hidden max-w-xl text-sm text-[var(--frat-cream)]/45 md:block">
+                    <span className="mt-1 hidden max-w-xl text-sm text-[var(--frat-cream)]/70 md:block">
                       {project.description}
                     </span>
                   </span>
-                  <span className="hidden font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/40 uppercase md:block">
+                  <span className="hidden font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase md:block">
                     {project.category}
                   </span>
                 </Link>

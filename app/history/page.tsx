@@ -30,7 +30,7 @@ export default function HistoryPage() {
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mt-10 border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm text-[var(--frat-cream)]/50">
+              <div className="mt-10 border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm text-[var(--frat-cream)]/70">
                 <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase">
                   Entry pending — full founding story
                 </p>
@@ -75,7 +75,7 @@ export default function HistoryPage() {
                 <div className="absolute top-3 -left-[45px] h-2.5 w-2.5 rotate-45 bg-[var(--frat-gold)]" />
                 <p className="font-display text-4xl font-semibold text-[var(--frat-gold-light)] md:text-5xl">{m.year}</p>
                 <p className="mt-2 font-display text-lg text-[var(--frat-cream)]">{m.title}</p>
-                <p className="mt-1 text-sm leading-relaxed text-[var(--frat-cream)]/50">{m.detail}</p>
+                <p className="mt-1 text-sm leading-relaxed text-[var(--frat-cream)]/70">{m.detail}</p>
               </Reveal>
             ))}
           </div>
@@ -95,7 +95,7 @@ export default function HistoryPage() {
                 sizes="(min-width: 1024px) 800px, 100vw"
               />
             </div>
-            <p className="mt-5 text-center font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/40 uppercase">
+            <p className="mt-5 text-center font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
               Fig. 02 — 55th Anniversary Celebration · Bahay ng Alumni · Feb 24 MMXXIV
             </p>
           </Reveal>

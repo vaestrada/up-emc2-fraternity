@@ -30,7 +30,7 @@ export default function BrodsPage() {
           </div>
 
           <Reveal className="mt-16">
-            <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-center text-sm text-[var(--frat-cream)]/50">
+            <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-center text-sm text-[var(--frat-cream)]/70">
               This record is just beginning. If your batch has a brod who deserves a citation here —
               in engineering, public service, business, or the arts —{" "}
               <a href="/contact" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">

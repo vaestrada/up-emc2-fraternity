@@ -31,8 +31,8 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-display text-lg text-[var(--frat-cream)]">The Tambayan</h3>
-                <p className="mt-1 text-sm text-[var(--frat-cream)]/50">{site.base}</p>
-                <p className="mt-2 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/35 uppercase">
+                <p className="mt-1 text-sm text-[var(--frat-cream)]/70">{site.base}</p>
+                <p className="mt-2 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
                   14.6553° N / 121.0685° E
                 </p>
               </div>
@@ -44,7 +44,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-display text-lg text-[var(--frat-cream)]">Facebook</h3>
-                <p className="mt-1 text-sm text-[var(--frat-cream)]/50">
+                <p className="mt-1 text-sm text-[var(--frat-cream)]/70">
                   The fastest way to reach us today is the official page:
                 </p>
                 <a
@@ -64,7 +64,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-display text-lg text-[var(--frat-cream)]">LinkedIn</h3>
-                <p className="mt-1 text-sm text-[var(--frat-cream)]/50">
+                <p className="mt-1 text-sm text-[var(--frat-cream)]/70">
                   For professional and alumni networking:
                 </p>
                 <a
@@ -79,7 +79,7 @@ export default function ContactPage() {
             </Reveal>
 
             <Reveal delay={0.2}>
-              <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm text-[var(--frat-cream)]/50">
+              <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm text-[var(--frat-cream)]/70">
                 An official e-mail address for the Alumni Association will be published here soon.
               </div>
             </Reveal>

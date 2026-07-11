@@ -32,17 +32,17 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
           className="h-8 w-8 text-[var(--frat-gold)] transition-transform duration-500 group-hover:scale-110"
           strokeWidth={1.25}
         />
-        <span className="font-mono text-xs text-[var(--frat-gold)]/50">
+        <span className="font-mono text-xs text-[var(--frat-gold)]">
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
-      <p className="mt-8 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/40 uppercase">
+      <p className="mt-8 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
         {project.category}
       </p>
       <h3 className="mt-2 font-display text-xl leading-snug text-[var(--frat-cream)] transition-colors group-hover:text-[var(--frat-gold-light)]">
         {project.title}
       </h3>
-      <p className="mt-3 text-sm leading-relaxed text-[var(--frat-cream)]/50">
+      <p className="mt-3 text-sm leading-relaxed text-[var(--frat-cream)]/70">
         {project.description}
       </p>
     </div>

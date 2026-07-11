@@ -71,7 +71,7 @@ export default function DonatePage() {
                     <Image src={ch.src} alt={ch.alt} fill className="object-contain p-2" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" />
                   </div>
                   <h3 className="mt-5 font-display text-xl text-[var(--frat-cream)]">{ch.name}</h3>
-                  <p className="mt-1 font-mono text-[10px] leading-relaxed tracking-[0.15em] text-[var(--frat-cream)]/45 uppercase">
+                  <p className="mt-1 font-mono text-[10px] leading-relaxed tracking-[0.15em] text-[var(--frat-cream)]/60 uppercase">
                     {ch.detail}
                   </p>
                 </div>
@@ -80,7 +80,7 @@ export default function DonatePage() {
           </div>
 
           <Reveal className="mt-10">
-            <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm leading-relaxed text-[var(--frat-cream)]/50">
+            <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm leading-relaxed text-[var(--frat-cream)]/70">
               After sending, include your transfer reference number in the pledge form below (or
               message the fraternity on Facebook) so the Alumni Association can record and
               formally acknowledge your contribution.

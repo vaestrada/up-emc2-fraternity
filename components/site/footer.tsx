@@ -17,7 +17,7 @@ export function Footer() {
             height={169}
             className="h-14 w-auto"
           />
-          <p className="mt-5 max-w-xs font-mono text-[10px] leading-relaxed tracking-[0.2em] text-[var(--frat-cream)]/40 uppercase">
+          <p className="mt-5 max-w-xs font-mono text-[10px] leading-relaxed tracking-[0.2em] text-[var(--frat-cream)]/55 uppercase">
             U.P. College of Engineering
             <br />
             Est. MCMLXIX
@@ -30,7 +30,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)]/70 uppercase">
+          <h4 className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)] uppercase">
             The Archive
           </h4>
           <ul className="mt-5 space-y-3 text-sm text-[var(--frat-cream)]/70">
@@ -42,7 +42,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)]/70 uppercase">
+          <h4 className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)] uppercase">
             Correspondence
           </h4>
           <ul className="mt-5 space-y-3 text-sm text-[var(--frat-cream)]/70">
@@ -76,7 +76,7 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-[var(--hairline)] py-6">
-        <Container className="flex flex-col items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/35 uppercase md:flex-row">
+        <Container className="flex flex-col items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/55 uppercase md:flex-row">
           <span>&copy; {new Date().getFullYear()} EMC&sup2; Fraternity, University of the Philippines</span>
           <span>Site by and for the Brotherhood</span>
         </Container>

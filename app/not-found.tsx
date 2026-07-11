@@ -20,7 +20,7 @@ export default function NotFound() {
         <p className="mt-6 max-w-md font-serif text-2xl italic text-[var(--frat-cream)]/80">
           This page is missing from the archive.
         </p>
-        <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--frat-cream)]/50">
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--frat-cream)]/70">
           The record you&rsquo;re looking for may have been moved, or it was never inscribed.
         </p>
         <Link

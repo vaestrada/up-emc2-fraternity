@@ -40,13 +40,13 @@ export default function ProjectsPage() {
                 sizes="(min-width: 768px) 700px, 100vw"
               />
             </div>
-            <p className="mt-5 text-center font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/40 uppercase">
+            <p className="mt-5 text-center font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
               Fig. 03 — Projects &amp; campaigns retrospective
             </p>
           </Reveal>
 
           <Reveal className="mt-16">
-            <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-center text-sm text-[var(--frat-cream)]/50">
+            <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-center text-sm text-[var(--frat-cream)]/70">
               More campaigns are inscribed every year. Have a project or photos to add to the
               ledger?{" "}
               <a href="/contact" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
