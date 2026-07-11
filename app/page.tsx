@@ -9,7 +9,7 @@ import { Marquee } from "@/components/site/marquee";
 import { BrodCard } from "@/components/site/brod-card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { FOUNDING_YEAR, site, projects, prominentBrods } from "@/lib/content";
+import { FOUNDING_YEAR, site, projects, prominentBrods, bulletin } from "@/lib/content";
 
 // The root layout omits og/twitter title+description so every page self-describes;
 // give the homepage card its own timeless blurb (title falls back to the default).
@@ -164,7 +164,7 @@ export default function Home() {
             { render: <>{FOUNDING_YEAR}</>, label: "Year Founded" },
             { render: <Counter to={YEARS} />, label: "Years of Brotherhood" },
             { render: <><Counter to={490} />+</>, label: "Brods on Record" },
-            { render: <Counter to={8} />, label: "Flagship Projects" },
+            { render: <Counter to={projects.length} />, label: "Flagship Projects" },
           ].map((stat, i) => (
             <div
               key={stat.label}
@@ -287,7 +287,7 @@ export default function Home() {
             {projects.slice(0, 5).map((project, i) => (
               <Reveal key={project.slug} delay={i * 0.06}>
                 <Link
-                  href="/projects"
+                  href={`/projects#${project.slug}`}
                   className="group grid grid-cols-[auto_1fr] items-baseline gap-6 border-b border-[var(--hairline)] py-7 transition-colors hover:bg-[var(--frat-gold)]/5 md:grid-cols-[80px_1fr_auto] md:gap-10"
                 >
                   <span className="font-mono text-sm text-[var(--frat-gold)]">
@@ -299,6 +299,9 @@ export default function Home() {
                     </span>
                     <span className="mt-1 hidden max-w-xl text-sm text-[var(--frat-cream)]/70 md:block">
                       {project.description}
+                    </span>
+                    <span className="mt-1.5 block font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase md:hidden">
+                      {project.category}
                     </span>
                   </span>
                   <span className="hidden font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase md:block">
@@ -345,6 +348,53 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      {/* ── Bulletin (dated notices) — rendered only when there are entries ── */}
+      {bulletin.length > 0 ? (
+        <section className="border-y border-[var(--hairline)] bg-[var(--ink)] py-24">
+          <Container>
+            <Reveal>
+              <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+                № 04½ — The Bulletin
+              </p>
+            </Reveal>
+            <div className="mt-12 border-t border-[var(--hairline)]">
+              {bulletin.slice(0, 3).map((item, i) => {
+                const row = (
+                  <div className="grid grid-cols-[auto_1fr] items-baseline gap-6 py-6 md:gap-10">
+                    <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--frat-gold-light)] uppercase">
+                      {item.date}
+                    </span>
+                    <span>
+                      <span className="font-display text-xl text-[var(--frat-cream)] md:text-2xl">
+                        {item.title}
+                      </span>
+                      {item.body ? (
+                        <span className="mt-1 block max-w-xl text-sm leading-relaxed text-[var(--frat-cream)]/70">
+                          {item.body}
+                        </span>
+                      ) : null}
+                    </span>
+                  </div>
+                );
+                return (
+                  <Reveal key={`${item.date}-${item.title}`} delay={i * 0.06}>
+                    <div className="border-b border-[var(--hairline)]">
+                      {item.href ? (
+                        <Link href={item.href} className="block transition-colors hover:bg-[var(--frat-gold)]/5">
+                          {row}
+                        </Link>
+                      ) : (
+                        row
+                      )}
+                    </div>
+                  </Reveal>
+                );
+              })}
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       {/* ── Patronage (donate) ───────────────────────────────── */}
       <section className="blueprint relative overflow-hidden py-32 text-center md:py-44">

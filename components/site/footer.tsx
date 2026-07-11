@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Container } from "@/components/site/container";
 import { FacebookIcon } from "@/components/site/facebook-icon";
 import { LinkedInIcon } from "@/components/site/linkedin-icon";
-import { site } from "@/lib/content";
+import { site, association } from "@/lib/content";
 
 export function Footer() {
   return (
@@ -37,7 +37,7 @@ export function Footer() {
             <li><Link href="/history" className="transition-colors hover:text-[var(--frat-gold-light)]">History</Link></li>
             <li><Link href="/projects" className="transition-colors hover:text-[var(--frat-gold-light)]">Projects &amp; Campaigns</Link></li>
             <li><Link href="/brods" className="transition-colors hover:text-[var(--frat-gold-light)]">Prominent Brods</Link></li>
-            <li><Link href="/donate" className="transition-colors hover:text-[var(--frat-gold-light)]">Give Back</Link></li>
+            <li><Link href="/contribute" className="transition-colors hover:text-[var(--frat-gold-light)]">Add to the Record</Link></li>
           </ul>
         </div>
 
@@ -46,6 +46,11 @@ export function Footer() {
             Correspondence
           </h4>
           <ul className="mt-5 space-y-3 text-sm text-[var(--frat-cream)]/70">
+            <li>
+              <Link href="/donate" className="font-semibold text-[var(--frat-gold-light)] transition-colors hover:text-[var(--frat-cream)]">
+                Give Back &rarr;
+              </Link>
+            </li>
             <li>
               <a
                 href={site.facebook}
@@ -76,9 +81,20 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-[var(--hairline)] py-6">
-        <Container className="flex flex-col items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/55 uppercase md:flex-row">
-          <span>&copy; {new Date().getFullYear()} EMC&sup2; Fraternity, University of the Philippines</span>
-          <span>Site by and for the Brotherhood</span>
+        <Container className="flex flex-col items-center gap-3 text-center font-mono text-[10px] leading-relaxed tracking-[0.2em] text-[var(--frat-cream)]/55 uppercase">
+          <p className="max-w-2xl">
+            Gifts and correspondence are held by {association.legalName}
+            {association.secRegNo ? ` · SEC Reg. No. ${association.secRegNo}` : " · SEC-registered"}. Details you
+            submit go only to the Association and are never published.{" "}
+            <Link href="/privacy" className="text-[var(--frat-cream)]/70 underline underline-offset-4 transition-colors hover:text-[var(--frat-gold-light)]">
+              Privacy
+            </Link>
+          </p>
+          <div className="flex flex-col items-center gap-2 md:flex-row md:gap-6">
+            <span>&copy; {new Date().getFullYear()} EMC&sup2; Fraternity, University of the Philippines</span>
+            <span className="hidden md:inline">·</span>
+            <span>Site by and for the Brotherhood</span>
+          </div>
         </Container>
       </div>
     </footer>

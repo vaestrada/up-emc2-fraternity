@@ -2,9 +2,11 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return ["", "/history", "/projects", "/brods", "/donate", "/contact"].map((path) => ({
-    url: `${SITE_URL}${path}`,
-    changeFrequency: "monthly",
-    priority: path === "" ? 1 : 0.7,
-  }));
+  return ["", "/history", "/projects", "/brods", "/donate", "/contribute", "/contact", "/privacy"].map(
+    (path) => ({
+      url: `${SITE_URL}${path}`,
+      changeFrequency: "monthly",
+      priority: path === "" ? 1 : path === "/privacy" ? 0.3 : 0.7,
+    })
+  );
 }

@@ -31,7 +31,14 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-display text-lg text-[var(--frat-cream)]">The Tambayan</h3>
-                <p className="mt-1 text-sm text-[var(--frat-cream)]/70">{site.base}</p>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=14.6553,121.0685"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-1 inline-block text-sm text-[var(--frat-cream)]/70 underline underline-offset-4 transition-colors hover:text-[var(--frat-gold-light)]"
+                >
+                  {site.base}
+                </a>
                 <p className="mt-2 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
                   14.6553° N / 121.0685° E
                 </p>
@@ -79,8 +86,13 @@ export default function ContactPage() {
             </Reveal>
 
             <Reveal delay={0.2}>
-              <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm text-[var(--frat-cream)]/70">
-                An official e-mail address for the Alumni Association will be published here soon.
+              <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm leading-relaxed text-[var(--frat-cream)]/70">
+                The Association&rsquo;s permanent correspondence address is being established and will be
+                inscribed here. Have a story, photo, or piece of history to share?{" "}
+                <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
+                  Add it to the record
+                </a>
+                .
               </div>
             </Reveal>
           </div>

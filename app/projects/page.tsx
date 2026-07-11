@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
-import { ProjectCard } from "@/components/site/project-card";
 import { Reveal } from "@/components/motion/reveal";
 import { projects } from "@/lib/content";
 
@@ -22,10 +21,38 @@ export default function ProjectsPage() {
 
       <section className="py-24">
         <Container>
-          <div className="grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] sm:grid-cols-2 lg:grid-cols-3">
+          <div className="border-t border-[var(--hairline)]">
             {projects.map((project, i) => (
-              <Reveal key={project.slug} delay={(i % 3) * 0.08} className="h-full">
-                <ProjectCard project={project} index={i} />
+              <Reveal key={project.slug} delay={(i % 4) * 0.06}>
+                <div
+                  id={project.slug}
+                  className="grid scroll-mt-28 grid-cols-[auto_1fr] items-baseline gap-x-6 border-b border-[var(--hairline)] py-8 md:grid-cols-[auto_1fr_auto] md:gap-x-10"
+                >
+                  <span className="font-mono text-[11px] tracking-[0.2em] text-[var(--frat-gold)]">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                      <h2 className="font-display text-2xl leading-tight text-[var(--frat-cream)] md:text-3xl">
+                        {project.title}
+                      </h2>
+                      {project.year ? (
+                        <span className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase">
+                          {project.year}
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--frat-cream)]/70">
+                      {project.description}
+                    </p>
+                    <p className="mt-3 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase md:hidden">
+                      {project.category}
+                    </p>
+                  </div>
+                  <span className="hidden font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase md:block md:justify-self-end">
+                    {project.category}
+                  </span>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -49,8 +76,8 @@ export default function ProjectsPage() {
             <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-center text-sm text-[var(--frat-cream)]/70">
               More campaigns are inscribed every year. Have a project or photos to add to the
               ledger?{" "}
-              <a href="/contact" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
-                Send them in
+              <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
+                Add it to the record
               </a>
               .
             </div>

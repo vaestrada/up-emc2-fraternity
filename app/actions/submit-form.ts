@@ -75,12 +75,16 @@ async function deliver(subject: string, text: string, replyTo: string): Promise<
   return true;
 }
 
+type FormKind = "contact" | "pledge" | "contribute";
+
 type Definition = {
   subject: (name: string) => string;
   fields: { name: string; label: string; maxLength: number; required?: boolean }[];
+  /** when true, the "consent" checkbox must be checked to submit */
+  requireConsent?: boolean;
 };
 
-const FORMS: Record<"contact" | "pledge", Definition> = {
+const FORMS: Record<FormKind, Definition> = {
   contact: {
     subject: (name) => `[Website] Message from ${name}`,
     fields: [
@@ -97,12 +101,27 @@ const FORMS: Record<"contact" | "pledge", Definition> = {
       { name: "batch", label: "Batch", maxLength: 40 },
       { name: "email", label: "Email", maxLength: 254, required: true },
       { name: "cause", label: "Cause", maxLength: 80 },
+      { name: "amount", label: "Amount (PHP)", maxLength: 20 },
+      { name: "reference", label: "Transfer reference no.", maxLength: 64 },
       { name: "message", label: "Message", maxLength: 5000 },
+    ],
+  },
+  contribute: {
+    subject: (name) => `[Website] Archive contribution from ${name}`,
+    requireConsent: true,
+    fields: [
+      { name: "name", label: "Name", maxLength: 120, required: true },
+      { name: "batch", label: "Batch", maxLength: 40 },
+      { name: "email", label: "Email", maxLength: 254, required: true },
+      { name: "kind", label: "Type of contribution", maxLength: 80 },
+      { name: "title", label: "Title", maxLength: 200, required: true },
+      { name: "details", label: "Details", maxLength: 8000, required: true },
+      { name: "links", label: "Links (photos / album / source)", maxLength: 500 },
     ],
   },
 };
 
-async function submit(kind: "contact" | "pledge", formData: FormData): Promise<FormState> {
+async function submit(kind: FormKind, formData: FormData): Promise<FormState> {
   // honeypot — invisible to humans; bots that fill it get a quiet fake success
   if (readField(formData, "website", 200) !== "") {
     return { status: "success", delivered: false };
@@ -132,6 +151,14 @@ async function submit(kind: "contact" | "pledge", formData: FormData): Promise<F
       status: "error",
       delivered: false,
       message: "Please enter a valid email address.",
+      values,
+    };
+  }
+  if (def.requireConsent && formData.get("consent") !== "on") {
+    return {
+      status: "error",
+      delivered: false,
+      message: "Please confirm the consent checkbox so we may edit and publish your contribution.",
       values,
     };
   }
@@ -165,4 +192,8 @@ export async function submitContact(_prev: FormState, formData: FormData): Promi
 
 export async function submitPledge(_prev: FormState, formData: FormData): Promise<FormState> {
   return submit("pledge", formData);
+}
+
+export async function submitContribution(_prev: FormState, formData: FormData): Promise<FormState> {
+  return submit("contribute", formData);
 }

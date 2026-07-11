@@ -3,7 +3,7 @@ import Image from "next/image";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
-import { site, milestones } from "@/lib/content";
+import { site, milestones, founders } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "History",
@@ -37,10 +37,33 @@ export default function HistoryPage() {
                 <p className="mt-3 leading-relaxed">
                   The complete written history — the ten founding scholars by name, the founding
                   chapter&rsquo;s story, and the early years — is being gathered from official
-                  records and will be inscribed here.
+                  records and will be inscribed here.{" "}
+                  <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
+                    Have records to share?
+                  </a>
                 </p>
               </div>
             </Reveal>
+
+            {founders.length > 0 ? (
+              <Reveal delay={0.2}>
+                <div className="mt-10">
+                  <p className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)] uppercase">
+                    The Ten — Founding Scholars
+                  </p>
+                  <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                    {founders.map((f) => (
+                      <li key={f.name} className="text-sm text-[var(--frat-cream)]">
+                        {f.name}
+                        {f.note ? (
+                          <span className="block text-[var(--frat-cream)]/60">{f.note}</span>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            ) : null}
           </div>
 
           <Reveal delay={0.1}>
@@ -78,6 +101,22 @@ export default function HistoryPage() {
                 <p className="mt-1 text-sm leading-relaxed text-[var(--frat-cream)]/70">{m.detail}</p>
               </Reveal>
             ))}
+            <Reveal delay={milestones.length * 0.08} className="relative">
+              <div className="absolute top-3 -left-[45px] h-2.5 w-2.5 rotate-45 border border-[var(--frat-gold)]/50 bg-transparent" />
+              <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-5 text-sm leading-relaxed text-[var(--frat-cream)]/70">
+                <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase">
+                  Entries pending — help us fill the record
+                </p>
+                <p className="mt-3">
+                  Four decades of the brotherhood&rsquo;s story are still uninscribed. If you were
+                  there — a batch, a milestone, a campaign —{" "}
+                  <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
+                    add it to the record
+                  </a>
+                  .
+                </p>
+              </div>
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -88,15 +127,15 @@ export default function HistoryPage() {
           <Reveal className="group">
             <div className="relative mx-auto aspect-[3/2] w-full max-w-4xl overflow-hidden border border-[var(--hairline)]">
               <Image
-                src="/photos/anniv55-group-stage.jpg"
-                alt="Brods gathered for the 55th Anniversary Celebration, February 24, 2024, at Bahay ng Alumni, U.P. Diliman"
+                src="/photos/anniv55-group-outdoor.jpg"
+                alt="Brods gathered outdoors for the 55th Anniversary Celebration, U.P. Diliman, February 24, 2024"
                 fill
                 className="duotone object-cover"
                 sizes="(min-width: 1024px) 800px, 100vw"
               />
             </div>
             <p className="mt-5 text-center font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
-              Fig. 02 — 55th Anniversary Celebration · Bahay ng Alumni · Feb 24 MMXXIV
+              Fig. 02 — 55th Anniversary Celebration · U.P. Diliman · Feb 24 MMXXIV
             </p>
           </Reveal>
         </Container>

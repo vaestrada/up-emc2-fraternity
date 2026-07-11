@@ -8,9 +8,9 @@ import { submitPledge, type FormState } from "@/app/actions/submit-form";
 const INITIAL_FORM_STATE: FormState = { status: "idle", delivered: false };
 
 const CAUSES = [
-  "Scholarships",
   "Campus Projects",
   "Community Outreach",
+  "Scholarship Fund (being established)",
   "Anniversary Fund",
   "Wherever it's needed most",
 ];
@@ -27,8 +27,8 @@ export function PledgeForm() {
         <p className="font-display text-2xl text-[var(--frat-gold-light)]">Salamat, Brod!</p>
         <p className="mt-3 max-w-sm text-sm text-muted-foreground">
           {state.delivered
-            ? "Your pledge has been sent to the Alumni Association. They'll reach out once official donation channels are live."
-            : "Your pledge was noted, but e-mail delivery isn't live yet — please also message the fraternity on Facebook so the Alumni Association sees it."}
+            ? "Your pledge is with the Alumni Association. Once your transfer is matched to its reference number, you'll receive a formal acknowledgment at the email you provided."
+            : "E-mail delivery isn't live yet, so please also send this to the fraternity's Facebook page to make sure it reaches the Association."}
         </p>
       </Card>
     );
@@ -89,6 +89,36 @@ export function PledgeForm() {
               </option>
             ))}
           </select>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="pledge-amount" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+              Amount <span className="font-normal text-muted-foreground">(₱, optional)</span>
+            </label>
+            <input
+              id="pledge-amount"
+              name="amount"
+              inputMode="numeric"
+              maxLength={20}
+              placeholder="5,000"
+              defaultValue={state.values?.amount}
+              className={inputClass}
+            />
+          </div>
+          <div>
+            <label htmlFor="pledge-reference" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+              Transfer reference no. <span className="font-normal text-muted-foreground">(optional)</span>
+            </label>
+            <input
+              id="pledge-reference"
+              name="reference"
+              maxLength={64}
+              placeholder="from your GCash / bank confirmation"
+              defaultValue={state.values?.reference}
+              className={inputClass}
+            />
+          </div>
         </div>
 
         <div>

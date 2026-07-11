@@ -25,11 +25,11 @@ export function ContactForm() {
   if (state.status === "success") {
     return (
       <Card className="flex flex-col items-center justify-center p-12 text-center">
-        <p className="font-display text-2xl text-[var(--frat-gold-light)]">Message received!</p>
+        <p className="font-display text-2xl text-[var(--frat-gold-light)]">Entered into the record.</p>
         <p className="mt-3 max-w-sm text-sm text-muted-foreground">
           {state.delivered
             ? "Your message is on its way to the Alumni Association. Expect a reply at the email you provided."
-            : "Your message was noted, but e-mail delivery isn't live yet — for now, please also message the fraternity on Facebook so it definitely reaches us."}
+            : "E-mail delivery isn't live yet, so please also send this to the fraternity's Facebook page to make sure it reaches us."}
         </p>
       </Card>
     );

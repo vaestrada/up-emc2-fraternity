@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Container } from "@/components/site/container";
@@ -17,6 +18,8 @@ const LINKS = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isActive = (href: string) => pathname === href;
 
   useEffect(() => {
     if (!open) return;
@@ -48,7 +51,13 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-mono text-[11px] tracking-[0.25em] text-[var(--frat-cream)]/70 uppercase transition-colors hover:text-[var(--frat-gold-light)]"
+              aria-current={isActive(link.href) ? "page" : undefined}
+              className={cn(
+                "font-mono text-[11px] tracking-[0.25em] uppercase transition-colors hover:text-[var(--frat-gold-light)]",
+                isActive(link.href)
+                  ? "text-[var(--frat-gold-light)]"
+                  : "text-[var(--frat-cream)]/70"
+              )}
             >
               {link.label}
             </Link>
@@ -89,7 +98,13 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-2 py-3 font-mono text-sm tracking-[0.2em] text-[var(--frat-cream)]/80 uppercase hover:bg-white/5"
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={cn(
+                  "rounded-lg px-2 py-3 font-mono text-sm tracking-[0.2em] uppercase hover:bg-white/5",
+                  isActive(link.href)
+                    ? "text-[var(--frat-gold-light)]"
+                    : "text-[var(--frat-cream)]/80"
+                )}
               >
                 {link.label}
               </Link>

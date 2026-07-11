@@ -29,6 +29,19 @@ export default function NotFound() {
         >
           <ArrowLeft className="h-4 w-4" /> Return to the Archive
         </Link>
+        <nav className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
+          {[
+            { href: "/history", label: "History" },
+            { href: "/projects", label: "Projects" },
+            { href: "/brods", label: "Brods" },
+            { href: "/contact", label: "Contact" },
+            { href: "/donate", label: "Give Back" },
+          ].map((l) => (
+            <Link key={l.href} href={l.href} className="transition-colors hover:text-[var(--frat-gold-light)]">
+              {l.label}
+            </Link>
+          ))}
+        </nav>
       </Container>
     </section>
   );

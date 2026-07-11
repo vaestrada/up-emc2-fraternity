@@ -3,7 +3,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { BrodCard } from "@/components/site/brod-card";
 import { Reveal } from "@/components/motion/reveal";
-import { prominentBrods, officers, inMemoriam } from "@/lib/content";
+import { prominentBrods, officers, inMemoriam, FOUNDING_YEAR } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Prominent Brods",
@@ -33,11 +33,33 @@ export default function BrodsPage() {
             <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-center text-sm text-[var(--frat-cream)]/70">
               This record is just beginning. If your batch has a brod who deserves a citation here —
               in engineering, public service, business, or the arts —{" "}
-              <a href="/contact" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
-                nominate them
+              <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
+                submit a citation
               </a>
               .
             </div>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* The Register — non-PII aggregate */}
+      <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-24">
+        <Container className="max-w-3xl">
+          <Reveal>
+            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+              № 04.2 — The Register
+            </p>
+            <h2 className="mt-6 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              Four hundred ninety, and counting
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 leading-relaxed text-[var(--frat-cream)]/70">
+              The brotherhood&rsquo;s roster runs from the ten founding scholars of {FOUNDING_YEAR} to
+              today&rsquo;s active brods — <strong className="text-[var(--frat-cream)]">490+ names on record</strong>.
+              The citations above are the first formal entries in a register the Association is still building,
+              batch by batch.
+            </p>
           </Reveal>
         </Container>
       </section>

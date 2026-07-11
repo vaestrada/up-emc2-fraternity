@@ -33,11 +33,22 @@ export type Memorial = { name: string; batch?: string; years?: string; note?: st
 // Pending — brods to be remembered, to be provided by the Association.
 export const inMemoriam: Memorial[] = [];
 
+// The ten founding scholars. Names/notes to be provided from official records.
+export type Founder = { name: string; note?: string };
+export const founders: Founder[] = [];
+
+// Dated notices (anniversary dinners, elections, calls). Rendered only when
+// non-empty — an empty bulletin is worse than none. date is ISO (YYYY-MM-DD).
+export type Bulletin = { date: string; title: string; body?: string; href?: string };
+export const bulletin: Bulletin[] = [];
+
 export type Project = {
   slug: string;
   title: string;
   category: string;
   description: string;
+  /** Year or span, e.g. "2020" or "Since 2018". Optional — omitted when unknown. */
+  year?: string;
 };
 
 export const projects: Project[] = [
@@ -94,6 +105,7 @@ export const projects: Project[] = [
     slug: "covid-19-relief",
     title: "COVID-19 Relief Operations",
     category: "Community Outreach",
+    year: "2020",
     description:
       "Pandemic-era relief packing and distribution mobilized by the brotherhood for affected communities.",
   },
@@ -141,6 +153,12 @@ export const milestones = [
     title: "Most Outstanding Student Organization",
     detail:
       "Adjudged one of the Most Outstanding Student Organizations during U.P.'s Diamond Jubilee year.",
+  },
+  {
+    year: "2020",
+    title: "COVID-19 Relief Operations",
+    detail:
+      "The brotherhood mobilized pandemic relief — packing and distributing goods to communities in need.",
   },
   {
     year: "2024",
