@@ -18,6 +18,21 @@ export const site = {
   linkedin: "https://www.linkedin.com/company/up-emc2-fraternity",
 };
 
+// The legal entity that receives and acknowledges donations.
+// secRegNo is a placeholder until the Association provides the official number.
+export const association = {
+  legalName: "EMC² Fraternity Alumni Association, Inc.",
+  secRegNo: null as string | null, // TODO: official SEC registration number
+};
+
+export type Officer = { name: string; role: string; batch?: string };
+// Pending — current council to be provided by the Association.
+export const officers: Officer[] = [];
+
+export type Memorial = { name: string; batch?: string; years?: string; note?: string };
+// Pending — brods to be remembered, to be provided by the Association.
+export const inMemoriam: Memorial[] = [];
+
 export type Project = {
   slug: string;
   title: string;

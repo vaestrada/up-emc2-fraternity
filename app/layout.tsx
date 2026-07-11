@@ -54,16 +54,18 @@ export const metadata: Metadata = {
     locale: "en_PH",
     images: [
       {
-        url: "/photos/anniv55-group-outdoor.jpg",
-        width: 2048,
-        height: 1365,
+        // Pre-cropped to 1.91:1 so FB/LinkedIn/X don't slice the commemorative
+        // plate's wordmark; frames the full group with Quezon Hall behind.
+        url: "/photos/og-default.jpg",
+        width: 1200,
+        height: 630,
         alt: "EMC² Fraternity brods at the 55th Anniversary Celebration, U.P. Diliman",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/photos/anniv55-group-outdoor.jpg"],
+    images: ["/photos/og-default.jpg"],
   },
 };
 
