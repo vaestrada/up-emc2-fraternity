@@ -16,7 +16,7 @@ export default function HistoryPage() {
       <PageHero
         eyebrow="Vol. I — Since 1969"
         title="The Archive"
-        description="Fifty-seven years of Equality, Service, and Brotherhood at the U.P. College of Engineering."
+        description="Equality, Service, and Brotherhood at the U.P. College of Engineering since 1969."
       />
 
       <section className="py-24">

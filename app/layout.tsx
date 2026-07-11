@@ -3,7 +3,13 @@ import { Geist, Geist_Mono, Cinzel, Cormorant } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/site/navbar";
 import { Footer } from "@/components/site/footer";
-import { ThemeProvider } from "@/components/theme-provider";
+import { MotionProvider } from "@/components/motion/motion-provider";
+import { SITE_URL } from "@/lib/site";
+
+// regenerate every route daily so computed years (footer copyright, the
+// home "Years of Brotherhood" counter) never go stale on Jan 1 — segment
+// config on the root layout cascades to every page beneath it.
+export const revalidate = 86400;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,16 +41,14 @@ export const metadata: Metadata = {
   },
   description:
     "The EMC² Fraternity of the U.P. College of Engineering — founded 1969. Equality, Service, Brotherhood.",
-  // TODO: switch to the final domain once the BOT settles domain ownership
-  metadataBase: new URL("https://up-emc2-fraternity.vercel.app"),
-  icons: {
-    icon: "/logo/emc2-mark.png",
-    shortcut: "/logo/emc2-mark.png",
-  },
+  metadataBase: new URL(SITE_URL),
+  // "./" resolves per-route, so every page declares itself canonical
+  alternates: { canonical: "./" },
+  // No title/description here on purpose: Next merges og/twitter shallowly and
+  // its title template does NOT reach them, so hardcoding here would stamp the
+  // homepage card on every route. Omitting them lets each page's resolved title
+  // and description flow into its own card (see per-page metadata exports).
   openGraph: {
-    title: "EMC² Fraternity | University of the Philippines",
-    description:
-      "An exclusive Engineering and Physical Sciences brotherhood — 57 years of Equality, Service, and Brotherhood.",
     siteName: "EMC² Fraternity",
     type: "website",
     locale: "en_PH",
@@ -59,9 +63,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "EMC² Fraternity | University of the Philippines",
-    description:
-      "An exclusive Engineering and Physical Sciences brotherhood — est. 1969.",
     images: ["/photos/anniv55-group-outdoor.jpg"],
   },
 };
@@ -75,10 +76,26 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "EMC² Fraternity",
-  alternateName: "UP EMC² Fraternity",
-  url: "https://up-emc2-fraternity.vercel.app",
-  logo: "https://up-emc2-fraternity.vercel.app/logo/emc2-mark.png",
+  // include ASCII spellings — "EMC2" is what alumni actually type, and ² is not
+  // guaranteed to normalize to 2 in entity matching
+  alternateName: ["UP EMC² Fraternity", "EMC2 Fraternity", "UP EMC2 Fraternity"],
+  description:
+    "An exclusive Engineering and Physical Sciences brotherhood founded in 1969 at the University of the Philippines College of Engineering.",
+  "@id": `${SITE_URL}/#organization`,
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo/emc2-mark.png`,
   foundingDate: "1969",
+  foundingLocation: {
+    "@type": "Place",
+    name: "U.P. College of Engineering, Diliman, Quezon City, Philippines",
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "3rd Floor Lobby, Melchor Hall, University of the Philippines",
+    addressLocality: "Quezon City",
+    addressRegion: "Metro Manila",
+    addressCountry: "PH",
+  },
   sameAs: [
     "https://www.facebook.com/EMC2Fraternity",
     "https://www.linkedin.com/company/up-emc2-fraternity",
@@ -95,7 +112,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${cormorant.variable} font-sans antialiased`}
       >
@@ -103,17 +120,21 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        {/* without JS the reveal animations never fire — force their content visible */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1 !important;transform:none !important;filter:none !important}`}</style>
+        </noscript>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:bg-[var(--frat-gold)] focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:tracking-[0.2em] focus:text-[#1a1305] focus:uppercase"
         >
           Skip to content
         </a>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+        <MotionProvider>
           <Navbar />
           <main id="main">{children}</main>
           <Footer />
-        </ThemeProvider>
+        </MotionProvider>
       </body>
     </html>
   );

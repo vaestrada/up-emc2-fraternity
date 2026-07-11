@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowDown } from "lucide-react";
@@ -10,8 +11,17 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FOUNDING_YEAR, site, projects, prominentBrods } from "@/lib/content";
 
-// regenerate daily so the years-of-brotherhood counter never goes stale on Jan 1
-export const revalidate = 86400;
+// The root layout omits og/twitter title+description so every page self-describes;
+// give the homepage card its own timeless blurb (title falls back to the default).
+export const metadata: Metadata = {
+  openGraph: {
+    description:
+      "An exclusive Engineering and Physical Sciences brotherhood — est. 1969. Equality, Service, Brotherhood.",
+  },
+};
+
+// Daily revalidation is set on the root layout and cascades here, so the
+// "Years of Brotherhood" counter below never goes stale on Jan 1.
 
 const CREDO_LINES = [
   "Equality is our way of life.",
@@ -213,7 +223,7 @@ export default function Home() {
               <h2 className="mt-6 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-5xl">
                 Founded by ten scholars.
                 <br />
-                <span className="text-[var(--frat-cream)]/60">Built by six hundred more.</span>
+                <span className="text-[var(--frat-cream)]/60">Built by hundreds more.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.2}>

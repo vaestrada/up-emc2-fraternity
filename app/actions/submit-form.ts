@@ -114,15 +114,9 @@ async function submit(kind: "contact" | "pledge", formData: FormData): Promise<F
     values[field.name] = readField(formData, field.name, field.maxLength);
   }
 
-  if (isRateLimited(await clientIp())) {
-    return {
-      status: "error",
-      delivered: false,
-      message: "Too many submissions — please wait a few minutes and try again.",
-      values,
-    };
-  }
-
+  // Validate first, so a fixable typo (e.g. missing ".com") doesn't burn a
+  // rate-limit slot — otherwise a fumbling alumnus can lock themselves out
+  // before ever sending a valid message.
   for (const field of def.fields) {
     if (field.required && values[field.name] === "") {
       return {
@@ -138,6 +132,16 @@ async function submit(kind: "contact" | "pledge", formData: FormData): Promise<F
       status: "error",
       delivered: false,
       message: "Please enter a valid email address.",
+      values,
+    };
+  }
+
+  // Only submissions that would actually be delivered count against the limit.
+  if (isRateLimited(await clientIp())) {
+    return {
+      status: "error",
+      delivered: false,
+      message: "Too many submissions — please wait a few minutes and try again.",
       values,
     };
   }
