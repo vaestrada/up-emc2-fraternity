@@ -35,4 +35,6 @@ export async function moderate(formData: FormData): Promise<void> {
   if (!supabase) return;
   await supabase.from(table).update({ status }).eq("id", id);
   revalidatePath("/admin");
+  // Approving/rejecting a contribution changes what the public archive shows.
+  if (table === "contributions") revalidatePath("/history");
 }

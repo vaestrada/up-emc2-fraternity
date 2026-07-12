@@ -4,13 +4,15 @@ import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
 import { site, milestones, founders } from "@/lib/content";
+import { getApprovedContributions } from "@/lib/contributions";
 
 export const metadata: Metadata = {
   title: "History",
   description: "The history, credo, and honors of the EMC² Fraternity since 1969.",
 };
 
-export default function HistoryPage() {
+export default async function HistoryPage() {
+  const contributed = await getApprovedContributions();
   return (
     <>
       <PageHero
@@ -140,6 +142,73 @@ export default function HistoryPage() {
           </Reveal>
         </Container>
       </section>
+
+      {/* The Contributed Record — approved submissions from the brotherhood */}
+      {contributed.length > 0 ? (
+        <section className="blueprint border-t border-[var(--hairline)] py-24">
+          <Container>
+            <Reveal>
+              <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+                The Contributed Record
+              </p>
+              <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+                Inscribed by the brotherhood
+              </h2>
+              <p className="mt-4 max-w-xl leading-relaxed text-[var(--frat-cream)]/70">
+                Memories, photos, and history sent in by brods and alumni, curated into the archive.
+              </p>
+            </Reveal>
+
+            <div className="mt-14 space-y-16">
+              {contributed.map((c, i) => (
+                <Reveal key={c.id} delay={(i % 3) * 0.08}>
+                  <article className="border-t border-[var(--hairline)] pt-8">
+                    {c.kind ? (
+                      <p className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold-light)] uppercase">
+                        {c.kind}
+                      </p>
+                    ) : null}
+                    <h3 className="mt-3 font-display text-2xl text-[var(--frat-cream)] md:text-3xl">
+                      {c.title}
+                    </h3>
+                    <p className="mt-1 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
+                      Contributed by {c.name}
+                      {c.batch ? ` · Batch ${c.batch}` : ""}
+                    </p>
+                    <p className="mt-5 max-w-2xl whitespace-pre-wrap leading-relaxed text-[var(--frat-cream)]/80">
+                      {c.details}
+                    </p>
+                    {c.photos.length > 0 ? (
+                      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:max-w-3xl">
+                        {c.photos.map((url, j) => (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            key={j}
+                            src={url}
+                            alt={`${c.title} — photo ${j + 1}`}
+                            loading="lazy"
+                            className="aspect-square w-full border border-[var(--hairline)] object-cover"
+                          />
+                        ))}
+                      </div>
+                    ) : null}
+                    {c.links ? (
+                      <a
+                        href={c.links}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-4 inline-block font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase underline underline-offset-4"
+                      >
+                        View source &rarr;
+                      </a>
+                    ) : null}
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </section>
+      ) : null}
     </>
   );
 }
