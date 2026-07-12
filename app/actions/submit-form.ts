@@ -77,6 +77,7 @@ async function persist(
         amount: values.amount || null,
         reference: values.reference || null,
         message: values.message || null,
+        consent_public: formData.get("consent_public") === "on",
         ip,
       });
       return !error;

@@ -130,6 +130,7 @@ export default async function AdminPage({
   type Pledge = {
     id: string; created_at: string; status: string; name: string; batch: string | null;
     email: string; cause: string | null; amount: string | null; reference: string | null; message: string | null;
+    consent_public: boolean;
   };
   type Message = {
     id: string; created_at: string; name: string; email: string; topic: string | null; message: string;
@@ -236,7 +237,18 @@ export default async function AdminPage({
           pledges.map((p) => (
             <article key={p.id} className="border border-[var(--hairline)] bg-[var(--ink)] p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <span className={badge(p.status)}>{p.status}</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className={badge(p.status)}>{p.status}</span>
+                  {p.consent_public ? (
+                    <span className="inline-block border border-[var(--frat-gold)]/50 px-2 py-0.5 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-gold-light)] uppercase">
+                      Public OK
+                    </span>
+                  ) : (
+                    <span className="inline-block border border-[var(--hairline)] px-2 py-0.5 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+                      Private
+                    </span>
+                  )}
+                </div>
                 <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
                   {fmt(p.created_at)}
                 </span>

@@ -143,6 +143,31 @@ export default async function HistoryPage() {
         </Container>
       </section>
 
+      {/* For the Studentry — a neutral path for prospective members */}
+      <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-24">
+        <Container className="max-w-2xl">
+          <Reveal>
+            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+              For the Studentry
+            </p>
+            <h2 className="mt-6 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              Interested in the brotherhood?
+            </h2>
+            <p className="mt-6 leading-relaxed text-[var(--frat-cream)]/70">
+              EMC² draws its members from Engineering and the Physical Sciences at the University of
+              the Philippines. To learn more about the fraternity, its work on campus, and how to get
+              in touch, reach out to us directly — we&rsquo;re glad to answer questions.
+            </p>
+            <a
+              href="/contact"
+              className="mt-8 inline-block border border-[var(--frat-gold)]/50 px-6 py-3 font-mono text-xs font-semibold tracking-[0.25em] text-[var(--frat-gold-light)] uppercase transition-colors hover:border-[var(--frat-gold-light)]"
+            >
+              Get in touch
+            </a>
+          </Reveal>
+        </Container>
+      </section>
+
       {/* The Contributed Record — approved submissions from the brotherhood */}
       {contributed.length > 0 ? (
         <section className="blueprint border-t border-[var(--hairline)] py-24">

@@ -138,6 +138,19 @@ export function PledgeForm() {
           />
         </div>
 
+        <label htmlFor="pledge-consent-public" className="flex items-start gap-3 text-[13px] leading-relaxed text-[var(--frat-cream)]/70">
+          <input
+            id="pledge-consent-public"
+            name="consent_public"
+            type="checkbox"
+            className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--frat-gold)]"
+          />
+          <span>
+            You may list my <strong className="text-[var(--frat-cream)]">name</strong> (never the amount) in the
+            fraternity&rsquo;s public Roll of Patrons. Leave unchecked to give privately.
+          </span>
+        </label>
+
         {state.status === "error" ? (
           <p role="alert" className="text-sm text-red-400">
             {state.message}

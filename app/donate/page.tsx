@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { HandCoins, ShieldCheck } from "lucide-react";
+import { HandCoins, ShieldCheck, GraduationCap, Building2, HeartHandshake } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
 import { PledgeForm } from "@/components/site/pledge-form";
 import { GivingGate } from "@/components/site/giving-gate";
-import { association, site } from "@/lib/content";
+import { association, site, donorVoices } from "@/lib/content";
+import { getPatrons } from "@/lib/patrons";
 
 export const metadata: Metadata = {
   title: "Give Back",
@@ -13,7 +14,26 @@ export const metadata: Metadata = {
     "Support the scholarships, campus projects, and outreach programs of the EMC² Fraternity — for brods, alumni, and friends.",
 };
 
-export default function DonatePage() {
+const IMPACT = [
+  {
+    Icon: GraduationCap,
+    title: "Scholarships",
+    body: "Grants for deserving Engineering students — the fund now being established.",
+  },
+  {
+    Icon: Building2,
+    title: "Campus Projects",
+    body: "Spaces like the Thinking Space study lounge inside Melchor Hall.",
+  },
+  {
+    Icon: HeartHandshake,
+    title: "Community Outreach",
+    body: "Relief drives and learning-center work beyond the University.",
+  },
+];
+
+export default async function DonatePage() {
+  const patrons = await getPatrons();
   return (
     <>
       <PageHero
@@ -148,6 +168,48 @@ export default function DonatePage() {
         </Container>
       </section>
 
+      {/* Impact — factual, no invented figures */}
+      <section className="border-t border-[var(--hairline)] py-24">
+        <Container>
+          <Reveal>
+            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+              The Impact
+            </p>
+            <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              What a gift builds
+            </h2>
+          </Reveal>
+          <div className="mt-12 grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] md:grid-cols-3">
+            {IMPACT.map(({ Icon, title, body }, i) => (
+              <Reveal key={title} delay={(i % 3) * 0.08} className="h-full">
+                <div className="flex h-full flex-col bg-[var(--canvas)] p-8">
+                  <Icon className="h-7 w-7 text-[var(--frat-gold-light)]" strokeWidth={1.25} />
+                  <h3 className="mt-5 font-display text-xl text-[var(--frat-cream)]">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--frat-cream)]/70">{body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          {donorVoices.length > 0 ? (
+            <div className="mt-16 grid gap-8 md:grid-cols-2">
+              {donorVoices.map((v, i) => (
+                <Reveal key={i} delay={(i % 2) * 0.08}>
+                  <figure className="border-l border-[var(--frat-gold)]/40 pl-6">
+                    <blockquote className="font-serif text-xl italic leading-relaxed text-[var(--frat-cream)]/85">
+                      &ldquo;{v.quote}&rdquo;
+                    </blockquote>
+                    <figcaption className="mt-3 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase">
+                      {v.by}
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              ))}
+            </div>
+          ) : null}
+        </Container>
+      </section>
+
       <section className="border-t border-[var(--hairline)] py-24">
         <Container className="grid gap-14 md:grid-cols-2 md:items-start">
           <div>
@@ -177,6 +239,40 @@ export default function DonatePage() {
           </Reveal>
         </Container>
       </section>
+
+      {/* Roll of Patrons — only consented + acknowledged pledges, names only */}
+      {patrons.length > 0 ? (
+        <section className="blueprint border-t border-[var(--hairline)] py-24">
+          <Container>
+            <Reveal>
+              <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+                The Roll of Patrons
+              </p>
+              <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+                With the brotherhood&rsquo;s thanks
+              </h2>
+              <p className="mt-4 max-w-xl leading-relaxed text-[var(--frat-cream)]/70">
+                Brods, alumni, and friends who have given — and chosen to be named. Amounts are
+                never listed.
+              </p>
+            </Reveal>
+            <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4">
+              {patrons.map((p, i) => (
+                <Reveal key={i} delay={Math.min(i, 12) * 0.03}>
+                  <span className="font-display text-lg text-[var(--frat-cream)]">
+                    {p.name}
+                    {p.batch ? (
+                      <span className="ml-2 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+                        {p.batch}
+                      </span>
+                    ) : null}
+                  </span>
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </section>
+      ) : null}
     </>
   );
 }

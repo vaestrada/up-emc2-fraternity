@@ -42,6 +42,11 @@ export const founders: Founder[] = [];
 export type Bulletin = { date: string; title: string; body?: string; href?: string };
 export const bulletin: Bulletin[] = [];
 
+// "Why I give" — real donor/alumni quotes. Rendered only when non-empty; do
+// not invent quotes. quote is the words; by is the attribution (name · batch).
+export type DonorVoice = { quote: string; by: string };
+export const donorVoices: DonorVoice[] = [];
+
 export type Project = {
   slug: string;
   title: string;
