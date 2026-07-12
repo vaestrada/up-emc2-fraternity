@@ -24,7 +24,7 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <Card className="flex flex-col items-center justify-center p-12 text-center">
+      <Card role="status" aria-live="polite" className="flex flex-col items-center justify-center p-12 text-center">
         <p className="font-display text-2xl text-[var(--frat-gold-light)]">Entered into the record.</p>
         <p className="mt-3 max-w-sm text-sm text-muted-foreground">
           {state.delivered

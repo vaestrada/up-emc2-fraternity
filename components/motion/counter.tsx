@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { useInView, useReducedMotion } from "framer-motion";
 
 export function Counter({
   to,
@@ -16,11 +16,17 @@ export function Counter({
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
+  const reduceMotion = useReducedMotion();
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     if (!inView) return;
     let frame: number;
+    // Honor prefers-reduced-motion: show the final figure without counting up.
+    if (reduceMotion) {
+      frame = requestAnimationFrame(() => setValue(to));
+      return () => cancelAnimationFrame(frame);
+    }
     const start = performance.now();
     const tick = (now: number) => {
       const t = Math.min((now - start) / (duration * 1000), 1);
@@ -31,7 +37,7 @@ export function Counter({
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [inView, to, duration]);
+  }, [inView, to, duration, reduceMotion]);
 
   return (
     <span ref={ref} className={className}>

@@ -95,7 +95,15 @@ export default async function AdminPage({
             autoFocus
             className="w-full border border-[var(--border)] bg-white/5 px-4 py-3 text-sm text-[var(--frat-cream)] outline-none transition-colors focus:border-[var(--frat-gold)] focus:ring-2 focus:ring-[var(--frat-gold)]/30"
           />
-          {error ? <p className="text-sm text-red-400">Incorrect password.</p> : null}
+          {error === "locked" ? (
+            <p role="alert" className="text-sm text-red-400">
+              Too many attempts — wait a few minutes and try again.
+            </p>
+          ) : error ? (
+            <p role="alert" className="text-sm text-red-400">
+              Incorrect password.
+            </p>
+          ) : null}
           <button
             type="submit"
             className="w-full bg-[var(--frat-gold)] px-6 py-3 font-mono text-xs font-semibold tracking-[0.25em] text-[#1a1305] uppercase transition-colors hover:bg-[var(--frat-gold-light)]"
