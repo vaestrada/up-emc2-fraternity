@@ -29,7 +29,9 @@ export function ContactForm() {
         <p className="mt-3 max-w-sm text-sm text-muted-foreground">
           {state.delivered
             ? "Your message is on its way to the Alumni Association. Expect a reply at the email you provided."
-            : "E-mail delivery isn't live yet, so please also send this to the fraternity's Facebook page to make sure it reaches us."}
+            : state.stored
+            ? "Your message has been recorded and the Alumni Association will see it. Expect a reply at the email you provided."
+            : "We couldn't reach the archive just now — please also send this to the fraternity's Facebook page so it isn't lost."}
         </p>
       </Card>
     );

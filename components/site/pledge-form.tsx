@@ -28,7 +28,9 @@ export function PledgeForm() {
         <p className="mt-3 max-w-sm text-sm text-muted-foreground">
           {state.delivered
             ? "Your pledge is with the Alumni Association. Once your transfer is matched to its reference number, you'll receive a formal acknowledgment at the email you provided."
-            : "E-mail delivery isn't live yet, so please also send this to the fraternity's Facebook page to make sure it reaches the Association."}
+            : state.stored
+            ? "Your pledge has been recorded. Once your transfer is matched to its reference number, the Alumni Association will send a formal acknowledgment to the email you provided."
+            : "We couldn't reach the archive just now — please also send this to the fraternity's Facebook page so your pledge isn't lost."}
         </p>
       </Card>
     );

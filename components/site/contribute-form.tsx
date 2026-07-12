@@ -30,7 +30,9 @@ export function ContributeForm() {
         <p className="mt-3 max-w-sm text-sm text-muted-foreground">
           {state.delivered
             ? "Thank you — the Alumni Association will review your contribution and reach out at the email you provided. Curated entries are inscribed into the archive."
-            : "E-mail delivery isn't live yet, so please also send this to the fraternity's Facebook page to make sure it reaches the Association."}
+            : state.stored
+            ? "Thank you — your contribution has been recorded for the Alumni Association to review. They'll reach out at the email you provided."
+            : "We couldn't reach the archive just now — please send this to the fraternity's Facebook page so it isn't lost."}
         </p>
       </Card>
     );
@@ -101,13 +103,27 @@ export function ContributeForm() {
         </div>
 
         <div>
+          <label htmlFor="c-photos" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            Photos <span className="font-normal text-muted-foreground">(optional)</span>
+          </label>
+          <input
+            id="c-photos"
+            name="photos"
+            type="file"
+            accept="image/*"
+            multiple
+            className="w-full text-sm text-[var(--frat-cream)]/70 file:mr-4 file:cursor-pointer file:border-0 file:bg-[var(--frat-gold)] file:px-4 file:py-2 file:font-mono file:text-[11px] file:font-semibold file:uppercase file:tracking-[0.2em] file:text-[#1a1305] hover:file:bg-[var(--frat-gold-light)]"
+          />
+          <p className="mt-1.5 text-[11px] leading-relaxed text-[var(--frat-cream)]/60">
+            Up to 6 images, 10&nbsp;MB each. They stay private until the Association curates them.
+          </p>
+        </div>
+
+        <div>
           <label htmlFor="c-links" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
-            Links to photos or sources <span className="font-normal text-muted-foreground">(optional)</span>
+            Or link to an album / source <span className="font-normal text-muted-foreground">(optional)</span>
           </label>
           <input id="c-links" name="links" maxLength={500} placeholder="Google Drive / Facebook album / any link" defaultValue={state.values?.links} className={inputClass} />
-          <p className="mt-1.5 text-[11px] leading-relaxed text-[var(--frat-cream)]/60">
-            Photo uploads aren&rsquo;t available yet — paste a link, or the Association will follow up on how to send files.
-          </p>
         </div>
 
         <label htmlFor="c-consent" className="flex items-start gap-3 text-[13px] leading-relaxed text-[var(--frat-cream)]/70">

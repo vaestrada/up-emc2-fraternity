@@ -1,15 +1,99 @@
 "use server";
 
 import { headers } from "next/headers";
+import { getAdminSupabase, CONTRIB_BUCKET } from "@/lib/supabase/server";
 
 export type FormState = {
   status: "idle" | "success" | "error";
   /** true when the message was actually emailed to the Alumni Association */
   delivered: boolean;
+  /** true when the submission was persisted to the database (survives even if email is off) */
+  stored?: boolean;
   message?: string;
   /** submitted values echoed back on error so React's form reset doesn't wipe them */
   values?: Record<string, string>;
 };
+
+const MAX_PHOTOS = 6;
+const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
+
+/** Upload contributed photos to the private bucket; returns storage paths. */
+async function uploadPhotos(formData: FormData, submissionId: string): Promise<string[]> {
+  const supabase = getAdminSupabase();
+  if (!supabase) return [];
+  const files = formData
+    .getAll("photos")
+    .filter((f): f is File => f instanceof File && f.size > 0 && f.type.startsWith("image/"))
+    .slice(0, MAX_PHOTOS);
+
+  const paths: string[] = [];
+  for (const [i, file] of files.entries()) {
+    if (file.size > MAX_PHOTO_BYTES) continue;
+    const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80) || "photo";
+    const path = `${submissionId}/${i}-${safe}`;
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const { error } = await supabase.storage
+      .from(CONTRIB_BUCKET)
+      .upload(path, buffer, { contentType: file.type, upsert: false });
+    if (!error) paths.push(path);
+    else console.error("Photo upload failed:", error.message);
+  }
+  return paths;
+}
+
+/** Persist a submission. Returns true when a row was written. */
+async function persist(
+  kind: FormKind,
+  values: Record<string, string>,
+  ip: string,
+  formData: FormData
+): Promise<boolean> {
+  const supabase = getAdminSupabase();
+  if (!supabase) return false;
+  try {
+    if (kind === "contribute") {
+      const id = crypto.randomUUID();
+      const photo_paths = await uploadPhotos(formData, id);
+      const { error } = await supabase.from("contributions").insert({
+        id,
+        name: values.name,
+        batch: values.batch || null,
+        email: values.email,
+        kind: values.kind || null,
+        title: values.title,
+        details: values.details,
+        links: values.links || null,
+        photo_paths,
+        ip,
+      });
+      return !error;
+    }
+    if (kind === "pledge") {
+      const { error } = await supabase.from("pledges").insert({
+        name: values.name,
+        batch: values.batch || null,
+        email: values.email,
+        cause: values.cause || null,
+        amount: values.amount || null,
+        reference: values.reference || null,
+        message: values.message || null,
+        ip,
+      });
+      return !error;
+    }
+    const { error } = await supabase.from("messages").insert({
+      name: values.name,
+      email: values.email,
+      topic: values.topic || null,
+      message: values.message,
+      ip,
+    });
+    return !error;
+  } catch (error) {
+    console.error("Persist error:", error);
+    return false;
+  }
+}
 
 /* ── Rate limiting ─────────────────────────────────────────────
    In-memory sliding window. Under Vercel's Fluid Compute, instances are
@@ -164,7 +248,8 @@ async function submit(kind: FormKind, formData: FormData): Promise<FormState> {
   }
 
   // Only submissions that would actually be delivered count against the limit.
-  if (isRateLimited(await clientIp())) {
+  const ip = await clientIp();
+  if (isRateLimited(ip)) {
     return {
       status: "error",
       delivered: false,
@@ -173,16 +258,19 @@ async function submit(kind: FormKind, formData: FormData): Promise<FormState> {
     };
   }
 
+  // Persist first so the record survives even when email delivery is off.
+  const stored = await persist(kind, values, ip, formData);
+
   const text = def.fields
     .map((field) => `${field.label}:\n${values[field.name] || "—"}`)
     .join("\n\n");
 
   try {
     const delivered = await deliver(def.subject(values.name), text, values.email);
-    return { status: "success", delivered };
+    return { status: "success", delivered, stored };
   } catch (error) {
     console.error("Form delivery error:", error);
-    return { status: "success", delivered: false };
+    return { status: "success", delivered: false, stored };
   }
 }
 
