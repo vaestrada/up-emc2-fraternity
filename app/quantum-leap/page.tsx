@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
@@ -10,17 +11,17 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Quantum Leap Sports Series",
   description:
-    "Energy, Returned. The fraternity's alumni sports series opens with Pickleball on 22 August 2026.",
+    "Pickleball opens the fraternity's alumni sports series on 22 August 2026.",
   openGraph: {
-    title: "Quantum Leap Sports Series · Pickleball 2026",
+    title: "Quantum Leap Sports Series 2026 · Pickleball",
     description:
-      "Energy, Returned. The fraternity's alumni sports series opens with Pickleball on 22 August 2026.",
+      "Pickleball opens the fraternity's alumni sports series on 22 August 2026. Venue to be announced.",
     images: [
       {
         url: "/quantum-leap/pickleball-2026-og.png",
         width: 1200,
         height: 630,
-        alt: "Quantum Leap Sports Series · Pickleball 2026. Energy, Returned. 22 August 2026.",
+        alt: "Quantum Leap Sports Series 2026, Pickleball. 22 August 2026. Venue to be announced.",
       },
     ],
   },
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
 const FACTS = [
   { k: "Date", v: "22 August 2026", note: "Saturday" },
   { k: "Sport", v: "Pickleball", note: "Edition one" },
-  { k: "Venue", v: "Reveal soon", note: "Metro Manila" },
+  { k: "Venue", v: "To be announced", note: "Metro Manila" },
 ];
 
 const SERIES = [
@@ -49,9 +50,9 @@ export default function QuantumLeapPage() {
   return (
     <>
       <PageHero
-        eyebrow="№ 07 — Quantum Leap"
-        title="Energy, Returned."
-        description="The fraternity's alumni sports series. One sport at a time, played well, beginning with Pickleball in August 2026."
+        eyebrow="№ 07 — Quantum Leap Sports Series 2026"
+        title="Pickleball"
+        description="The first edition of the fraternity's alumni sports series. One sport at a time, played well."
       />
 
       {/* ── The plate ─────────────────────────────────────────────── */}
@@ -59,23 +60,27 @@ export default function QuantumLeapPage() {
         <Container>
           <div className="grid items-center gap-14 md:grid-cols-[1.1fr_1fr] md:gap-20">
             <Reveal>
-              <div className="mx-auto max-w-[420px]">
-                <TeaserVideo
-                  src="/quantum-leap/pickleball-2026-teaser.mp4"
-                  poster="/quantum-leap/pickleball-2026-teaser-poster.jpg"
+              <div className="relative border border-[var(--hairline)]">
+                <Image
+                  src="/quantum-leap/pickleball-2026-poster.png"
+                  alt="A pickleball player silhouetted mid-serve at golden hour. Quantum Leap Sports Series 2026: Pickleball. 22 August 2026, Saturday. Venue to be announced."
+                  width={2160}
+                  height={2700}
+                  className="w-full"
+                  priority
                 />
-                <div className="mt-3 flex items-baseline justify-between gap-4">
-                  <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/50 uppercase">
-                    Fig. 01 — First edition teaser
-                  </p>
-                  <a
-                    href="/quantum-leap/pickleball-2026-poster.png"
-                    download
-                    className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold)] uppercase underline-offset-4 transition-colors hover:text-[var(--frat-gold-light)] hover:underline"
-                  >
-                    Poster ↓
-                  </a>
-                </div>
+              </div>
+              <div className="mt-3 flex items-baseline justify-between gap-4">
+                <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/50 uppercase">
+                  Fig. 01 — First edition plate
+                </p>
+                <a
+                  href="/quantum-leap/pickleball-2026-poster.png"
+                  download
+                  className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold)] uppercase underline-offset-4 transition-colors hover:text-[var(--frat-gold-light)] hover:underline"
+                >
+                  Download ↓
+                </a>
               </div>
             </Reveal>
 
@@ -131,27 +136,49 @@ export default function QuantumLeapPage() {
         </Container>
       </section>
 
-      {/* ── Why the name ──────────────────────────────────────────── */}
+      {/* ── The teaser ────────────────────────────────────────────── */}
       <section className="blueprint border-b border-[var(--hairline)] py-24">
         <Container>
           <Reveal>
             <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-              The motto
+              The teaser
             </p>
           </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-8 max-w-3xl font-serif text-[clamp(1.5rem,3.2vw,2.4rem)] leading-[1.35] text-[var(--frat-cream)] italic">
-              A quantum leap is a jump to a higher energy state. The fraternity is
-              named for the equivalence of mass and energy. So the series takes its
-              measure from the same physics: energy put in, energy returned.
-            </p>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <p className="mt-8 max-w-xl leading-relaxed text-[var(--frat-cream)]/60">
-              Brothers return to the court. Support returns to the brotherhood. The
-              ball returns across the net. Three readings, one line.
-            </p>
-          </Reveal>
+          <div className="mt-12 grid items-center gap-14 md:grid-cols-[1fr_1.05fr] md:gap-20">
+            <Reveal>
+              <div className="mx-auto w-full max-w-[380px]">
+                <TeaserVideo
+                  src="/quantum-leap/pickleball-2026-teaser.mp4"
+                  poster="/quantum-leap/pickleball-2026-teaser-poster.jpg"
+                />
+              </div>
+            </Reveal>
+            <div>
+              <Reveal>
+                <h2 className="font-display text-[clamp(1.8rem,3.2vw,2.7rem)] leading-[1.08] text-[var(--frat-cream)]">
+                  First serve, 22 August.
+                </h2>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <p className="mt-6 max-w-md leading-relaxed text-[var(--frat-cream)]/65">
+                  Nineteen seconds, shot for the feed. Share it with a brod who
+                  has not been back to a court in a while.
+                </p>
+              </Reveal>
+              <Reveal delay={0.15}>
+                <a
+                  href="/quantum-leap/pickleball-2026-teaser.mp4"
+                  download
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "sm" }),
+                    "mt-8"
+                  )}
+                >
+                  Download the teaser
+                </a>
+              </Reveal>
+            </div>
+          </div>
         </Container>
       </section>
 
