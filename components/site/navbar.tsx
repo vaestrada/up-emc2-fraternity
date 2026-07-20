@@ -12,6 +12,9 @@ import { cn } from "@/lib/utils";
 const LINKS = [
   { href: "/history", label: "History" },
   { href: "/projects", label: "Projects" },
+  // Labelled for the programme, not the current edition, so it still reads
+  // true when Quantum Leap moves past pickleball.
+  { href: "/quantum-leap", label: "Sports" },
   { href: "/brods", label: "Brods" },
   { href: "/contact", label: "Contact" },
 ];
