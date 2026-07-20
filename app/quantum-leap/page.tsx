@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
+import { TeaserVideo } from "@/components/site/teaser-video";
 import { Reveal } from "@/components/motion/reveal";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -59,19 +59,24 @@ export default function QuantumLeapPage() {
         <Container>
           <div className="grid items-center gap-14 md:grid-cols-[1.1fr_1fr] md:gap-20">
             <Reveal>
-              <div className="relative border border-[var(--hairline)]">
-                <Image
-                  src="/quantum-leap/pickleball-2026-poster.png"
-                  alt="A pickleball player silhouetted mid-serve at golden hour. Quantum Leap Sports Series 2026: Pickleball. 22 August 2026, Saturday. Venue reveal soon."
-                  width={2160}
-                  height={2700}
-                  className="w-full"
-                  priority
+              <div className="mx-auto max-w-[420px]">
+                <TeaserVideo
+                  src="/quantum-leap/pickleball-2026-teaser.mp4"
+                  poster="/quantum-leap/pickleball-2026-teaser-poster.jpg"
                 />
+                <div className="mt-3 flex items-baseline justify-between gap-4">
+                  <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/50 uppercase">
+                    Fig. 01 — First edition teaser
+                  </p>
+                  <a
+                    href="/quantum-leap/pickleball-2026-poster.png"
+                    download
+                    className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold)] uppercase underline-offset-4 transition-colors hover:text-[var(--frat-gold-light)] hover:underline"
+                  >
+                    Poster ↓
+                  </a>
+                </div>
               </div>
-              <p className="mt-3 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/50 uppercase">
-                Fig. 01 — First edition plate
-              </p>
             </Reveal>
 
             <div>
