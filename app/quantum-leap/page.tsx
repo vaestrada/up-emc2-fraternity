@@ -62,7 +62,7 @@ export default function QuantumLeapPage() {
               <div className="relative border border-[var(--hairline)]">
                 <Image
                   src="/quantum-leap/pickleball-2026-poster.png"
-                  alt="Quantum Leap Sports Series, Pickleball 2026. Energy, Returned. 22 August 2026, Saturday. Venue reveal soon."
+                  alt="A pickleball player silhouetted mid-serve at golden hour. Quantum Leap Sports Series 2026: Pickleball. 22 August 2026, Saturday. Venue reveal soon."
                   width={2160}
                   height={2700}
                   className="w-full"
