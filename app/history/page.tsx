@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
 import { site, milestones, founders, demoGalleryPhotos } from "@/lib/content";
 import { getApprovedContributions } from "@/lib/contributions";
 import { PhotoGallery } from "@/components/site/photo-gallery";
+import { ScrollCinematic } from "@/components/site/scroll-cinematic";
 
 export const metadata: Metadata = {
   title: "History",
@@ -124,25 +124,15 @@ export default async function HistoryPage() {
         </Container>
       </section>
 
-      {/* Photo */}
-      <section className="py-24">
-        <Container>
-          <Reveal className="group">
-            <div className="relative mx-auto aspect-[3/2] w-full max-w-4xl overflow-hidden border border-[var(--hairline)]">
-              <Image
-                src="/photos/anniv55-group-outdoor.jpg"
-                alt="Brods gathered outdoors for the 55th Anniversary Celebration, U.P. Diliman, February 24, 2024"
-                fill
-                className="duotone object-cover"
-                sizes="(min-width: 1024px) 800px, 100vw"
-              />
-            </div>
-            <p className="mt-5 text-center font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
-              Fig. 02 — 55th Anniversary Celebration · U.P. Diliman · Feb 24 MMXXIV
-            </p>
-          </Reveal>
-        </Container>
-      </section>
+      {/* Fifty-Five Years, In Motion — real 55th Anniversary photos, animated */}
+      <ScrollCinematic
+        src="/quantum-leap/demo-history-scroll.mp4"
+        poster="/quantum-leap/demo-history-poster.jpg"
+        eyebrow="Fig. 02 — 55th Anniversary Celebration · U.P. Diliman · Feb 24 MMXXIV"
+        title="Fifty-Five Years, In Motion"
+        description="Three real photographs from the brotherhood's own 55th Anniversary Celebration — no AI content here, just the Association's own archive, brought to life."
+        heightVh={200}
+      />
 
       {/* Brotherhood Life — DEMO PREVIEW, AI-generated, remove before public launch */}
       <section className="blueprint border-t border-[var(--hairline)] py-24">

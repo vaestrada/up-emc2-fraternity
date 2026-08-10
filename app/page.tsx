@@ -7,7 +7,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { Counter } from "@/components/motion/counter";
 import { Marquee } from "@/components/site/marquee";
 import { BrodCard } from "@/components/site/brod-card";
-import { ScrollLegacy } from "@/components/site/scroll-legacy";
+import { ScrollCinematic } from "@/components/site/scroll-cinematic";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FOUNDING_YEAR, site, projects, prominentBrods, bulletin } from "@/lib/content";
@@ -257,7 +257,19 @@ export default function Home() {
         </Container>
       </section>
 
-      <ScrollLegacy />
+      <ScrollCinematic
+        src="/quantum-leap/demo-legacy-scroll.mp4"
+        poster="/quantum-leap/demo-legacy-poster.jpg"
+        eyebrow="Preview — AI-Generated Sequence"
+        title={
+          <>
+            Survey. Build. Compute.
+            <br />
+            Engineered for What&rsquo;s Next.
+          </>
+        }
+        description="From surveying and construction to circuits, chemistry, and artificial intelligence — every discipline the brotherhood has trained in, one continuous scroll, landing on Melchor Hall itself. A symbolic sequence, not archival footage; real footage from the brotherhood’s own archive would replace this once gathered."
+      />
 
       {/* ── The Ledger (projects) ────────────────────────────── */}
       <section className="py-28">

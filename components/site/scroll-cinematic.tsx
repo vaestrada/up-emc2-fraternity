@@ -8,9 +8,24 @@ import { Container } from "@/components/site/container";
  * Scroll-scrubbed cinematic video: a pinned track maps scroll progress (0..1)
  * onto video.currentTime, eased via rAF so a flicked wheel doesn't thrash the
  * decoder. Same technique as CONSTRUX's build-timeline video (see
- * construx-site/assets/js/main.js), reimplemented for React.
+ * construx-site/assets/js/main.js), reimplemented for React. Generic so it
+ * can back more than one page's hero sequence.
  */
-export function ScrollLegacy() {
+export function ScrollCinematic({
+  src,
+  poster,
+  eyebrow,
+  title,
+  description,
+  heightVh = 420,
+}: {
+  src: string;
+  poster: string;
+  eyebrow: string;
+  title: React.ReactNode;
+  description: string;
+  heightVh?: number;
+}) {
   const trackRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useReducedMotion();
@@ -98,33 +113,22 @@ export function ScrollLegacy() {
   }, [reduceMotion]);
 
   return (
-    <section ref={trackRef} className="relative" style={{ height: "420vh" }}>
+    <section ref={trackRef} className="relative" style={{ height: `${heightVh}vh` }}>
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden bg-[var(--ink)]">
         <video
           ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover opacity-70"
-          src="/quantum-leap/demo-legacy-scroll.mp4"
-          poster="/quantum-leap/demo-legacy-poster.jpg"
+          src={src}
+          poster={poster}
           muted
           playsInline
           preload="auto"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-transparent to-[var(--ink)]/40" />
         <Container className="relative text-center">
-          <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-            Preview — AI-Generated Sequence
-          </p>
-          <h2 className="mt-6 font-display text-4xl leading-tight text-[var(--frat-cream)] md:text-6xl">
-            Survey. Build. Compute.
-            <br />
-            Engineered for What&rsquo;s Next.
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-[var(--frat-cream)]/60">
-            From surveying and construction to circuits, chemistry, and artificial intelligence — every
-            discipline the brotherhood has trained in, one continuous scroll, landing on Melchor Hall
-            itself. A symbolic sequence, not archival footage; real footage from the brotherhood&rsquo;s own
-            archive would replace this once gathered.
-          </p>
+          <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">{eyebrow}</p>
+          <h2 className="mt-6 font-display text-4xl leading-tight text-[var(--frat-cream)] md:text-6xl">{title}</h2>
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-[var(--frat-cream)]/60">{description}</p>
         </Container>
       </div>
     </section>
