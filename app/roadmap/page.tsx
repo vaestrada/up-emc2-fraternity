@@ -7,6 +7,14 @@ import { Reveal } from "@/components/motion/reveal";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { roadmap, type RoadmapPhase } from "@/lib/content";
+import {
+  PortalScreenshot,
+  DuesMockup,
+  CheckoutMockup,
+  NewsletterMockup,
+  CompanionAppMockup,
+  AiArchiveMockup,
+} from "@/components/site/roadmap-mockups";
 
 export const metadata: Metadata = {
   title: "What's Next",
@@ -34,6 +42,18 @@ const PHASES: { key: RoadmapPhase; eyebrow: string; title: string; note: string 
     note: "Where this is built to grow, once the fundamentals earn it. Not a promise, not a live product.",
   },
 ];
+
+// Each roadmap item gets a visual — a real screenshot for what's shipped, a
+// concept mockup for what isn't built yet. Keyed by title so lib/content.ts
+// stays UI-free.
+const VISUALS: Record<string, React.ReactNode> = {
+  "The Member Portal": <PortalScreenshot />,
+  "Dues, Recorded Honestly": <DuesMockup />,
+  "Checkout, Once KYB Clears": <CheckoutMockup />,
+  "The Newsletter": <NewsletterMockup />,
+  "A Companion App": <CompanionAppMockup />,
+  "An AI-Native Archive": <AiArchiveMockup />,
+};
 
 export default function RoadmapPage() {
   return (
@@ -68,21 +88,24 @@ export default function RoadmapPage() {
                 </p>
               </Reveal>
 
-              <div className="mt-12 grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] md:grid-cols-2">
+              <div className="mt-12 grid gap-8 md:grid-cols-2">
                 {items.map((item, i) => (
                   <Reveal key={item.title} delay={(i % 2) * 0.08} className="h-full">
-                    <div className="flex h-full flex-col gap-3 bg-[var(--canvas)] p-8">
-                      <div className="flex items-center gap-3">
-                        {phase.key === "now" ? (
-                          <CheckCircle2 className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
-                        ) : phase.key === "future" ? (
-                          <Sparkles className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
-                        ) : (
-                          <ArrowRight className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
-                        )}
-                        <h3 className="font-display text-xl text-[var(--frat-cream)]">{item.title}</h3>
+                    <div className="flex h-full flex-col border border-[var(--hairline)] bg-[var(--canvas)]">
+                      {VISUALS[item.title] ?? null}
+                      <div className="flex flex-1 flex-col gap-3 p-8">
+                        <div className="flex items-center gap-3">
+                          {phase.key === "now" ? (
+                            <CheckCircle2 className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
+                          ) : phase.key === "future" ? (
+                            <Sparkles className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
+                          ) : (
+                            <ArrowRight className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
+                          )}
+                          <h3 className="font-display text-xl text-[var(--frat-cream)]">{item.title}</h3>
+                        </div>
+                        <p className="text-sm leading-relaxed text-[var(--frat-cream)]/70">{item.body}</p>
                       </div>
-                      <p className="text-sm leading-relaxed text-[var(--frat-cream)]/70">{item.body}</p>
                     </div>
                   </Reveal>
                 ))}

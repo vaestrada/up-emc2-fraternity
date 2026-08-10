@@ -98,7 +98,7 @@ export function ScrollLegacy() {
   }, [reduceMotion]);
 
   return (
-    <section ref={trackRef} className="relative" style={{ height: "260vh" }}>
+    <section ref={trackRef} className="relative" style={{ height: "420vh" }}>
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden bg-[var(--ink)]">
         <video
           ref={videoRef}
@@ -115,13 +115,15 @@ export function ScrollLegacy() {
             Preview — AI-Generated Sequence
           </p>
           <h2 className="mt-6 font-display text-4xl leading-tight text-[var(--frat-cream)] md:text-6xl">
-            Drafted in 1969.
+            Survey. Build. Compute.
             <br />
-            Built Every Year Since.
+            Engineered for What&rsquo;s Next.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-[var(--frat-cream)]/60">
-            A symbolic sequence, not archival footage — scroll to move through it. Real footage from the
-            brotherhood&rsquo;s own archive would replace this once gathered.
+            From surveying and construction to circuits, chemistry, and artificial intelligence — every
+            discipline the brotherhood has trained in, one continuous scroll, landing on Melchor Hall
+            itself. A symbolic sequence, not archival footage; real footage from the brotherhood&rsquo;s own
+            archive would replace this once gathered.
           </p>
         </Container>
       </div>
