@@ -71,9 +71,9 @@ export default async function DirectoryPage() {
             <div className="grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] sm:grid-cols-2 lg:grid-cols-3">
               {rows.map((m, i) => (
                 <Reveal key={m.id} delay={Math.min(i, 12) * 0.03} className="h-full">
-                  <div className="flex h-full flex-col gap-3 bg-[var(--canvas)] p-6">
+                  <div className="group flex h-full flex-col gap-3 bg-[var(--canvas)] p-6 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[var(--frat-gold)]/[0.04]">
                     <div>
-                      <p className="font-display text-lg text-[var(--frat-cream)]">
+                      <p className="font-display text-lg text-[var(--frat-cream)] transition-colors duration-500 group-hover:text-[var(--frat-gold-light)]">
                         {m.full_name}
                         {m.nickname ? (
                           <span className="ml-2 text-sm font-normal text-[var(--frat-cream)]/60">
