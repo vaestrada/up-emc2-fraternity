@@ -45,7 +45,22 @@ export const bulletin: Bulletin[] = [];
 // "Why I give" — real donor/alumni quotes. Rendered only when non-empty; do
 // not invent quotes. quote is the words; by is the attribution (name · batch).
 export type DonorVoice = { quote: string; by: string };
-export const donorVoices: DonorVoice[] = [];
+export const donorVoices: DonorVoice[] = [
+  // --- SYNTHETIC DEMO CONTENT — remove before public launch -------------------
+  // AI-drafted placeholder quotes for a board walkthrough (fictional attributions).
+  // Delete before public launch; replace with real donor quotes only.
+  {
+    quote:
+      "I give because Thinking Space was there for me at 2am before a board exam. It's someone else's turn now.",
+    by: "Demo quote — “J. Ramirez” · Batch ’14",
+  },
+  {
+    quote:
+      "The brotherhood carried me through my first year in Diliman. This is just interest on that debt.",
+    by: "Demo quote — “A. Fernandez” · Batch ’08",
+  },
+  // --- END SYNTHETIC DEMO CONTENT ----------------------------------------------
+];
 
 export type Project = {
   slug: string;
@@ -123,6 +138,8 @@ export type Brod = {
   honor: string;
   detail: string;
   image: string;
+  /** True only for AI-generated demo entries — see SYNTHETIC DEMO CONTENT block below. */
+  synthetic?: boolean;
 };
 
 export const prominentBrods: Brod[] = [
@@ -144,7 +161,87 @@ export const prominentBrods: Brod[] = [
       "Serving on the 2026 Board of Trustees of the UP Alumni Engineers, carrying the brotherhood's name into University-wide alumni leadership.",
     image: "/photos/brod-salanguit.jpg",
   },
+
+  // --- SYNTHETIC DEMO CONTENT — remove before public launch --------------------
+  // AI-generated placeholder citations for a board walkthrough (fictional names,
+  // no resemblance to any real brod). Delete this block once real nominations
+  // come in from the Association — see /brods "submit a citation" CTA.
+  {
+    slug: "demo-marcus-villareal",
+    name: "Engr. Marcus Andres Villareal",
+    batch: "’95-A",
+    honor: "Renewable Energy Engineering",
+    detail:
+      "Founding partner of a solar and rural-electrification engineering firm serving off-grid Luzon communities.",
+    image: "/photos/demo-brod-villareal.jpg",
+    synthetic: true,
+  },
+  {
+    slug: "demo-ramon-castillo",
+    name: "Engr. Ramon Diego Castillo",
+    batch: "’78-B",
+    honor: "Public Infrastructure Service",
+    detail:
+      "Retired Regional Director for Infrastructure in the national government engineering service, three decades in public works.",
+    image: "/photos/demo-brod-castillo.jpg",
+    synthetic: true,
+  },
+  {
+    slug: "demo-julian-manalo",
+    name: "Julian Andres Manalo",
+    batch: "’11-C",
+    honor: "Arts & Media",
+    detail:
+      "Documentary filmmaker whose short films on Filipino labor migration have screened at regional festivals.",
+    image: "/photos/demo-brod-manalo.jpg",
+    synthetic: true,
+  },
+  {
+    slug: "demo-andres-buenaventura",
+    name: "Engr. Andres Buenaventura Lim",
+    batch: "’99-A",
+    honor: "Engineering Consultancy & Academe",
+    detail:
+      "Managing Director of a Manila-based engineering consultancy; also serves as adjunct faculty at the College of Engineering.",
+    image: "/photos/demo-brod-buenaventura.jpg",
+    synthetic: true,
+  },
+  // --- END SYNTHETIC DEMO CONTENT ----------------------------------------------
 ];
+
+// --- SYNTHETIC DEMO CONTENT — remove before public launch ----------------------
+// AI-generated placeholder photos for a board walkthrough of what a populated
+// "Brotherhood Life" gallery could look like. Not real events; delete this
+// export (and its usage on /history) once real archive photos are gathered.
+export type GalleryItem = { src: string; alt: string; caption: string };
+export const demoGalleryPhotos: GalleryItem[] = [
+  {
+    src: "/photos/demo-activity-relief-ops.jpg",
+    alt: "Brods distributing relief goods during a barangay relief operation",
+    caption: "Demo — Community Relief Operation",
+  },
+  {
+    src: "/photos/demo-activity-basketball.jpg",
+    alt: "Brods playing pickup basketball on an outdoor campus court",
+    caption: "Demo — Sportsfest, Basketball",
+  },
+  {
+    src: "/photos/demo-activity-study-lounge.jpg",
+    alt: "Brods studying together at a campus study lounge",
+    caption: "Demo — Thinking Space Study Lounge",
+  },
+  {
+    src: "/photos/demo-activity-group-barong.jpg",
+    alt: "Brods gathered outdoors in barong tagalog at a university campus",
+    caption: "Demo — Brotherhood Gathering",
+  },
+  {
+    src: "/photos/demo-activity-bowling.jpg",
+    alt: "A brod bowling as friends cheer at an inter-collegiate tournament",
+    caption: "Demo — Kanalan Bowling Tournament",
+  },
+];
+// --- END SYNTHETIC DEMO CONTENT ------------------------------------------------
 
 export const milestones = [
   {

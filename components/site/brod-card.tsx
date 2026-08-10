@@ -12,6 +12,11 @@ export function BrodCard({ brod, index }: { brod: Brod; index: number }) {
           className="duotone object-cover object-top"
           sizes="(min-width: 768px) 45vw, 100vw"
         />
+        {brod.synthetic ? (
+          <span className="absolute top-3 right-3 border border-[var(--frat-gold)]/60 bg-[var(--ink)]/80 px-2 py-1 font-mono text-[9px] tracking-[0.2em] text-[var(--frat-gold-light)] uppercase backdrop-blur-sm">
+            Demo — AI-generated
+          </span>
+        ) : null}
       </div>
       <p className="mt-5 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold)] uppercase">
         Citation № {String(index + 1).padStart(3, "0")} — Batch {brod.batch}

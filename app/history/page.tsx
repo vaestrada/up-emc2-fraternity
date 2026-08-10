@@ -3,8 +3,9 @@ import Image from "next/image";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
-import { site, milestones, founders } from "@/lib/content";
+import { site, milestones, founders, demoGalleryPhotos } from "@/lib/content";
 import { getApprovedContributions } from "@/lib/contributions";
+import { PhotoGallery } from "@/components/site/photo-gallery";
 
 export const metadata: Metadata = {
   title: "History",
@@ -139,6 +140,35 @@ export default async function HistoryPage() {
             <p className="mt-5 text-center font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
               Fig. 02 — 55th Anniversary Celebration · U.P. Diliman · Feb 24 MMXXIV
             </p>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* Brotherhood Life — DEMO PREVIEW, AI-generated, remove before public launch */}
+      <section className="blueprint border-t border-[var(--hairline)] py-24">
+        <Container>
+          <Reveal>
+            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+              Preview — Brotherhood Life
+            </p>
+            <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              A glimpse of what a full gallery could hold
+            </h2>
+            <p className="mt-4 max-w-xl leading-relaxed text-[var(--frat-cream)]/70">
+              AI-generated placeholder scenes standing in for the real photos the Association is still
+              gathering — outreach, sportsfest, the study lounge, campus gatherings.{" "}
+              <span className="text-[var(--frat-gold-light)]">
+                Sample imagery for this walkthrough, not documentation of an actual event.
+              </span>{" "}
+              Have real photos to swap in?{" "}
+              <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
+                Add them to the record
+              </a>
+              .
+            </p>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-12">
+            <PhotoGallery photos={demoGalleryPhotos} />
           </Reveal>
         </Container>
       </section>

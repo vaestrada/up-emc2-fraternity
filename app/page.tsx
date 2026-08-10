@@ -7,6 +7,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { Counter } from "@/components/motion/counter";
 import { Marquee } from "@/components/site/marquee";
 import { BrodCard } from "@/components/site/brod-card";
+import { ScrollLegacy } from "@/components/site/scroll-legacy";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FOUNDING_YEAR, site, projects, prominentBrods, bulletin } from "@/lib/content";
@@ -255,6 +256,8 @@ export default function Home() {
           </Reveal>
         </Container>
       </section>
+
+      <ScrollLegacy />
 
       {/* ── The Ledger (projects) ────────────────────────────── */}
       <section className="py-28">
