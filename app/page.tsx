@@ -396,6 +396,36 @@ export default function Home() {
         </section>
       ) : null}
 
+      {/* ── What's Next teaser ──────────────────────────────────
+          Sits ahead of the closing Patronage CTA on purpose, so the page's
+          last high-emotion moment stays the give-back ask — this is the
+          quieter "here's where we're headed, and we need hands" note. */}
+      <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-20">
+        <Container className="flex flex-col items-center gap-5 text-center">
+          <Reveal>
+            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+              № 06 — The Next Quantum Leap
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="max-w-2xl font-display text-2xl leading-tight text-[var(--frat-cream)] md:text-3xl">
+              A Member Portal, live today. A companion app and an AI-native archive, on the horizon.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.18}>
+            <p className="max-w-xl text-sm leading-relaxed text-[var(--frat-cream)]/60">
+              This site is a beginning. See what&rsquo;s shipped, what&rsquo;s committed, and what&rsquo;s
+              still just a direction — and how to help build it.
+            </p>
+          </Reveal>
+          <Reveal delay={0.26}>
+            <Link href="/roadmap" className={cn(buttonVariants({ variant: "outline", size: "default" }), "mt-2")}>
+              See What&rsquo;s Next <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Reveal>
+        </Container>
+      </section>
+
       {/* ── Patronage (donate) ───────────────────────────────── */}
       <section className="blueprint relative overflow-hidden py-32 text-center md:py-44">
         <Container className="relative flex flex-col items-center">

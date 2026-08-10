@@ -82,6 +82,24 @@ async function persist(
       });
       return !error;
     }
+    if (kind === "dues") {
+      // Set only by the Portal's dues form (a signed-in member); a visitor
+      // recording dues without an account simply leaves this null.
+      const memberId = readField(formData, "member_id", 64);
+      const { error } = await supabase.from("dues_payments").insert({
+        member_id: memberId || null,
+        name: values.name,
+        batch: values.batch || null,
+        email: values.email,
+        period: values.period,
+        amount: values.amount || null,
+        method: values.method || null,
+        reference: values.reference || null,
+        message: values.message || null,
+        ip,
+      });
+      return !error;
+    }
     const { error } = await supabase.from("messages").insert({
       name: values.name,
       email: values.email,
@@ -160,7 +178,7 @@ async function deliver(subject: string, text: string, replyTo: string): Promise<
   return true;
 }
 
-type FormKind = "contact" | "pledge" | "contribute";
+type FormKind = "contact" | "pledge" | "contribute" | "dues";
 
 type Definition = {
   subject: (name: string) => string;
@@ -202,6 +220,23 @@ const FORMS: Record<FormKind, Definition> = {
       { name: "title", label: "Title", maxLength: 200, required: true },
       { name: "details", label: "Details", maxLength: 8000, required: true },
       { name: "links", label: "Links (photos / album / source)", maxLength: 500 },
+    ],
+  },
+  dues: {
+    // Manual reconciliation, same shape as pledges — automated PayMongo
+    // checkout is gated on KYB approval per the README roadmap, so this is
+    // the honest interim: self-report, admin verifies against the reference
+    // number in the Association's own GCash/Maya/bank transaction history.
+    subject: (name) => `[Website] Dues payment from ${name}`,
+    fields: [
+      { name: "name", label: "Name", maxLength: 120, required: true },
+      { name: "batch", label: "Batch", maxLength: 40 },
+      { name: "email", label: "Email", maxLength: 254, required: true },
+      { name: "period", label: "Membership period", maxLength: 40, required: true },
+      { name: "amount", label: "Amount (PHP)", maxLength: 20 },
+      { name: "method", label: "Payment method", maxLength: 40 },
+      { name: "reference", label: "Transfer reference no.", maxLength: 64 },
+      { name: "message", label: "Message", maxLength: 2000 },
     ],
   },
 };
@@ -285,4 +320,8 @@ export async function submitPledge(_prev: FormState, formData: FormData): Promis
 
 export async function submitContribution(_prev: FormState, formData: FormData): Promise<FormState> {
   return submit("contribute", formData);
+}
+
+export async function submitDues(_prev: FormState, formData: FormData): Promise<FormState> {
+  return submit("dues", formData);
 }

@@ -16,6 +16,7 @@ const LINKS = [
   // true when Quantum Leap moves past pickleball.
   { href: "/quantum-leap", label: "Sports" },
   { href: "/brods", label: "Brods" },
+  { href: "/portal", label: "Portal" },
   { href: "/contact", label: "Contact" },
 ];
 

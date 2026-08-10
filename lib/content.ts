@@ -178,3 +178,52 @@ export const milestones = [
       "The brotherhood marks 57 years of Equality, Service, and Brotherhood — and welcomes its first home online.",
   },
 ];
+
+// /roadmap. "now" = shipped and live; "next" = committed, timing depends on
+// an external party (KYB approval, BOT sign-off); "future" = a direction the
+// site is built to grow into, not a promised feature or a live product.
+export type RoadmapPhase = "now" | "next" | "future";
+export type RoadmapItem = {
+  phase: RoadmapPhase;
+  title: string;
+  body: string;
+};
+
+export const roadmap: RoadmapItem[] = [
+  {
+    phase: "now",
+    title: "The Member Portal",
+    body:
+      "Sign in with a magic link, keep your own record current, and find brods who've opted into the directory. Private by default — you choose what's shown and to whom.",
+  },
+  {
+    phase: "now",
+    title: "Dues, Recorded Honestly",
+    body:
+      "No checkout yet, so no pretending there is one. Send your dues, record the reference number, and the Association matches and acknowledges it — the same trust the brotherhood has always run on, now with a paper trail.",
+  },
+  {
+    phase: "next",
+    title: "Checkout, Once KYB Clears",
+    body:
+      "The Association has applied for a PayMongo merchant account. Automated GCash, Maya, and card checkout for dues and gifts goes live the day that business verification is approved — not before.",
+  },
+  {
+    phase: "next",
+    title: "The Newsletter",
+    body:
+      "A periodic dispatch to every brod on record: new citations, upcoming gatherings, the state of ongoing projects. Built on the same Portal record, so it reaches people who actually asked to hear from us.",
+  },
+  {
+    phase: "future",
+    title: "A Companion App",
+    body:
+      "The Portal, in your pocket — push a notice about a gathering, check the directory between meetings, record a dues payment without opening a laptop. A real project once the web Portal has real, daily use behind it.",
+  },
+  {
+    phase: "future",
+    title: "An AI-Native Archive",
+    body:
+      "Ask it who was in a given batch, surface a citation you half-remember, or draft your own update to the brotherhood from a few notes. A copilot over the archive, not a replacement for the brods who keep it.",
+  },
+];

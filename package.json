@@ -11,6 +11,7 @@
     "check": "pnpm run typecheck && pnpm run lint && pnpm run build"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.110.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -33,14 +34,5 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp",
-      "unrs-resolver"
-    ],
-    "overrides": {
-      "postcss@<8.5.10": ">=8.5.10"
-    }
   }
 }
