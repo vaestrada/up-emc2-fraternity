@@ -26,14 +26,14 @@ export default function ProjectsPage() {
               <Reveal key={project.slug} delay={(i % 4) * 0.06}>
                 <div
                   id={project.slug}
-                  className="grid scroll-mt-28 grid-cols-[auto_1fr] items-baseline gap-x-6 border-b border-[var(--hairline)] py-8 md:grid-cols-[auto_1fr_auto] md:gap-x-10"
+                  className="group -ml-4 grid scroll-mt-28 grid-cols-[auto_1fr] items-baseline gap-x-6 border-b border-[var(--hairline)] py-8 pl-4 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-l-2 hover:border-l-[var(--frat-gold)] hover:bg-[var(--frat-gold)]/[0.03] md:grid-cols-[auto_1fr_auto] md:gap-x-10"
                 >
-                  <span className="font-mono text-[11px] tracking-[0.2em] text-[var(--frat-gold)]">
+                  <span className="font-mono text-[11px] tracking-[0.2em] text-[var(--frat-gold)] transition-colors duration-500 group-hover:text-[var(--frat-gold-light)]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
                     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                      <h2 className="font-display text-2xl leading-tight text-[var(--frat-cream)] md:text-3xl">
+                      <h2 className="font-display text-2xl leading-tight text-[var(--frat-cream)] transition-colors duration-500 group-hover:text-[var(--frat-gold-light)] md:text-3xl">
                         {project.title}
                       </h2>
                       {project.year ? (

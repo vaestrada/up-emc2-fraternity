@@ -4,12 +4,12 @@ import type { Brod } from "@/lib/content";
 export function BrodCard({ brod, index }: { brod: Brod; index: number }) {
   return (
     <div className="group">
-      <div className="relative aspect-square overflow-hidden border border-[var(--hairline)]">
+      <div className="relative aspect-square overflow-hidden border border-[var(--hairline)] transition-colors duration-500 group-hover:border-[var(--frat-gold)]/50">
         <Image
           src={brod.image}
           alt={`${brod.name} — ${brod.honor}`}
           fill
-          className="duotone object-cover object-top"
+          className="duotone object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
           sizes="(min-width: 768px) 45vw, 100vw"
         />
         {brod.synthetic ? (
