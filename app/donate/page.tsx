@@ -182,8 +182,11 @@ export default async function DonatePage() {
           <div className="mt-12 grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] md:grid-cols-3">
             {IMPACT.map(({ Icon, title, body }, i) => (
               <Reveal key={title} delay={(i % 3) * 0.08} className="h-full">
-                <div className="flex h-full flex-col bg-[var(--canvas)] p-8">
-                  <Icon className="h-7 w-7 text-[var(--frat-gold-light)]" strokeWidth={1.25} />
+                <div className="group flex h-full flex-col bg-[var(--canvas)] p-8 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[var(--frat-gold)]/[0.04]">
+                  <Icon
+                    className="h-7 w-7 text-[var(--frat-gold-light)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:-translate-y-0.5"
+                    strokeWidth={1.25}
+                  />
                   <h3 className="mt-5 font-display text-xl text-[var(--frat-cream)]">{title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-[var(--frat-cream)]/70">{body}</p>
                 </div>

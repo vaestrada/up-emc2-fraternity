@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getBrowserSupabase } from "@/lib/supabase/client";
@@ -297,11 +299,27 @@ export function ProfileForm({ userId, profile }: { userId: string; profile: Memb
             {errorMessage}
           </p>
         ) : null}
-        {status === "saved" ? (
-          <p role="status" className="text-sm text-[var(--frat-gold-light)]">
-            Saved.
-          </p>
-        ) : null}
+        <AnimatePresence>
+          {status === "saved" ? (
+            <motion.p
+              role="status"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-2 text-sm text-[var(--frat-gold-light)]"
+            >
+              <motion.span
+                initial={{ scale: 0.4 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 300, damping: 18 }}
+              >
+                <CheckCircle2 className="h-4 w-4" strokeWidth={1.75} />
+              </motion.span>
+              Saved.
+            </motion.p>
+          ) : null}
+        </AnimatePresence>
 
         <div className="flex flex-wrap items-center gap-4 border-t border-[var(--hairline)] pt-6">
           <Button type="submit" variant="accent" disabled={status === "saving"}>

@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { FormSuccess } from "@/components/site/form-success";
 import { submitDues, type FormState } from "@/app/actions/submit-form";
 
 const INITIAL_FORM_STATE: FormState = { status: "idle", delivered: false };
@@ -38,16 +39,16 @@ export function DuesForm({
 
   if (state.status === "success") {
     return (
-      <Card role="status" aria-live="polite" className="flex flex-col items-center justify-center p-12 text-center">
-        <p className="font-display text-2xl text-[var(--frat-gold-light)]">Recorded, Brod</p>
-        <p className="mt-3 max-w-sm text-sm text-[var(--frat-cream)]/70">
-          {state.delivered
+      <FormSuccess
+        title="Recorded, Brod"
+        body={
+          state.delivered
             ? "Your dues record is with the Alumni Association. Once your transfer is matched to its reference number, you'll receive a formal acknowledgment."
             : state.stored
             ? "Your dues record has been saved. Once your transfer is matched to its reference number, the Alumni Association will acknowledge it."
-            : "We couldn't reach the archive just now — please also message the fraternity on Facebook so this isn't lost."}
-        </p>
-      </Card>
+            : "We couldn't reach the archive just now — please also message the fraternity on Facebook so this isn't lost."
+        }
+      />
     );
   }
 

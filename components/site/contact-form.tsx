@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { FormSuccess } from "@/components/site/form-success";
 import { submitContact, type FormState } from "@/app/actions/submit-form";
 
 const INITIAL_FORM_STATE: FormState = { status: "idle", delivered: false };
@@ -24,16 +25,16 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <Card role="status" aria-live="polite" className="flex flex-col items-center justify-center p-12 text-center">
-        <p className="font-display text-2xl text-[var(--frat-gold-light)]">Entered into the record.</p>
-        <p className="mt-3 max-w-sm text-sm text-muted-foreground">
-          {state.delivered
+      <FormSuccess
+        title="Entered into the record."
+        body={
+          state.delivered
             ? "Your message is on its way to the Alumni Association. Expect a reply at the email you provided."
             : state.stored
             ? "Your message has been recorded and the Alumni Association will see it. Expect a reply at the email you provided."
-            : "We couldn't reach the archive just now — please also send this to the fraternity's Facebook page so it isn't lost."}
-        </p>
-      </Card>
+            : "We couldn't reach the archive just now — please also send this to the fraternity's Facebook page so it isn't lost."
+        }
+      />
     );
   }
 
