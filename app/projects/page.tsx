@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
+import { ScrollCinematic } from "@/components/site/scroll-cinematic";
 import { projects } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -56,23 +56,24 @@ export default function ProjectsPage() {
               </Reveal>
             ))}
           </div>
+        </Container>
+      </section>
 
-          <Reveal className="group mt-20">
-            <div className="relative mx-auto aspect-square w-full max-w-xl overflow-hidden border border-[var(--hairline)] md:aspect-[4/3] md:max-w-3xl">
-              <Image
-                src="/photos/projects-campaigns-card.jpg"
-                alt="A retrospective of EMC² Fraternity projects and campaigns"
-                fill
-                className="object-contain"
-                sizes="(min-width: 768px) 700px, 100vw"
-              />
-            </div>
-            <p className="mt-5 text-center font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
-              Fig. 03 — Projects &amp; campaigns retrospective
-            </p>
-          </Reveal>
+      {/* Fig. 03 — the same real retrospective collage already on this page,
+          brought to life: a slow pan through all sixteen photos, top to
+          bottom, exactly as printed. */}
+      <ScrollCinematic
+        src="/quantum-leap/demo-projects-scroll.mp4"
+        poster="/quantum-leap/demo-projects-poster.jpg"
+        eyebrow="Fig. 03 — Projects & Campaigns Retrospective"
+        title="Fifteen Years of Work, In Motion"
+        description="The same sixteen photographs from the brotherhood's projects and campaigns — Kalye Tunes to COVID-19 relief — panned through end to end."
+        heightVh={200}
+      />
 
-          <Reveal className="mt-16">
+      <section className="border-t border-[var(--hairline)] py-24">
+        <Container>
+          <Reveal>
             <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-center text-sm text-[var(--frat-cream)]/70">
               More campaigns are inscribed every year. Have a project or photos to add to the
               ledger?{" "}
