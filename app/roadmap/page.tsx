@@ -64,6 +64,43 @@ export default function RoadmapPage() {
         description="This site is a beginning, not a finished monument. Here's what's already live, what's committed, and what's still just a direction — said plainly, so nothing here reads as a promise it isn't."
       />
 
+      {/* Watch it move — a portable capture of the two flagship concepts below,
+          for a deck or a meeting where the live site isn't in front of you. */}
+      <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-20">
+        <Container className="max-w-3xl text-center">
+          <Reveal>
+            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+              № 09.1 — Watch It Move
+            </p>
+            <h2 className="mt-4 font-display text-3xl text-[var(--frat-cream)] md:text-4xl">
+              The Companion App and AI Archive, in Motion
+            </h2>
+            <p className="mt-3 leading-relaxed text-[var(--frat-cream)]/70">
+              A 24-second capture of the two concepts below, running exactly as they do on this page.
+              Concepts only — nothing here is built yet.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-10">
+            <video
+              className="w-full border border-[var(--hairline)]"
+              src="/quantum-leap/demo-mockup-reel.mp4"
+              poster="/quantum-leap/demo-mockup-reel-poster.jpg"
+              controls
+              muted
+              playsInline
+              preload="metadata"
+            />
+            <a
+              href="/quantum-leap/demo-mockup-reel.mp4"
+              download
+              className="mt-4 inline-block font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase underline underline-offset-4"
+            >
+              Download for your deck &darr;
+            </a>
+          </Reveal>
+        </Container>
+      </section>
+
       {PHASES.map((phase, phaseIndex) => {
         const items = roadmap.filter((r) => r.phase === phase.key);
         if (items.length === 0) return null;
