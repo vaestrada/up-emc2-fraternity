@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Container } from "@/components/site/container";
 
@@ -29,6 +29,26 @@ export function ScrollCinematic({
   const trackRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useReducedMotion();
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  // Don't start fetching (often multi-MB) video until the track is actually
+  // getting close — otherwise every page using this component eagerly
+  // downloads its full video on load, regardless of scroll position.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" }
+    );
+    observer.observe(track);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -118,11 +138,11 @@ export function ScrollCinematic({
         <video
           ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover opacity-70"
-          src={src}
+          src={shouldLoad ? src : undefined}
           poster={poster}
           muted
           playsInline
-          preload="auto"
+          preload={shouldLoad ? "auto" : "none"}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-transparent to-[var(--ink)]/40" />
         <Container className="relative text-center">
