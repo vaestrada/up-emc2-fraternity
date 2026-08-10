@@ -3,6 +3,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { BrodCard } from "@/components/site/brod-card";
 import { Reveal } from "@/components/motion/reveal";
+import { ScrollCinematic } from "@/components/site/scroll-cinematic";
 import { prominentBrods, officers, inMemoriam, FOUNDING_YEAR } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -41,6 +42,19 @@ export default function BrodsPage() {
           </Reveal>
         </Container>
       </section>
+
+      {/* Preview — the four synthetic citations above, in motion. AI-generated
+          placeholders (see lib/content.ts), not real brods; framed here the
+          same way the /history "Brotherhood Life" preview is — clearly a
+          preview, not documentation. */}
+      <ScrollCinematic
+        src="/quantum-leap/demo-brods-scroll.mp4"
+        poster="/quantum-leap/demo-brods-poster.jpg"
+        eyebrow="Preview — A Fuller Register"
+        title="A Glimpse of What the Register Could Hold"
+        description="Four AI-generated placeholder citations, not real brods — a preview of what a fuller register could look like once more of the brotherhood's own citations come in."
+        heightVh={200}
+      />
 
       {/* The Register — non-PII aggregate */}
       <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-24">
