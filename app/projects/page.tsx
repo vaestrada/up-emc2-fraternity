@@ -82,10 +82,16 @@ export default function ProjectsPage() {
             </p>
           </Reveal>
           <Reveal delay={0.1} className="mt-12">
+            {/* aria-label rather than leaning on the image's alt: with an image
+                inside a link the alt becomes the link text, which here is a long
+                sentence that never says the link opens a new tab (WCAG 3.2.5).
+                This states the action and the context change; the alt below still
+                describes the sheet itself if the image fails to load. */}
             <a
               href="/photos/projects-campaigns-card.jpg"
               target="_blank"
               rel="noreferrer"
+              aria-label="Open the full-size Projects and Campaigns retrospective sheet (opens in a new tab)"
               className="group mx-auto block w-full max-w-2xl border border-[var(--hairline)] transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-[var(--frat-gold)]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)]"
             >
               {/* next/image for the on-page render so phones fetch a resized copy
