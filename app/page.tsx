@@ -14,6 +14,12 @@ import { FOUNDING_YEAR, site, projects, prominentBrods, bulletin } from "@/lib/c
 
 // The root layout omits og/twitter title+description so every page self-describes;
 // give the homepage card its own timeless blurb (title falls back to the default).
+//
+// NOTE: declaring `openGraph` here REPLACES the layout's entire openGraph object
+// (Next merges it shallowly), which silently dropped the homepage's og:image and
+// left Messenger/Facebook with no card at all. The image now comes from the
+// file-based app/opengraph-image.tsx, which Next applies per-segment and which
+// survives this override — don't re-add an `images` key expecting it to merge.
 export const metadata: Metadata = {
   openGraph: {
     description:
