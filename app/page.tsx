@@ -264,8 +264,8 @@ export default function Home() {
       </section>
 
       <ScrollCinematic
-        src="/quantum-leap/demo-legacy-scroll.mp4"
-        poster="/quantum-leap/demo-legacy-poster.jpg"
+        src="/quantum-leap/upd-journey-scroll.mp4"
+        poster="/quantum-leap/upd-journey-poster.jpg"
         eyebrow="Preview — AI-Generated Sequence"
         title={
           <>
@@ -274,7 +274,8 @@ export default function Home() {
             Engineered for What&rsquo;s Next.
           </>
         }
-        description="From surveying and construction to circuits, chemistry, and artificial intelligence — every discipline the brotherhood has trained in, one continuous scroll, landing on Melchor Hall itself. A symbolic sequence, not archival footage; real footage from the brotherhood’s own archive would replace this once gathered."
+        description="From the Oblation to Melchor Hall, then surveying and construction through circuits, chemistry, and artificial intelligence — every discipline the brotherhood has trained in, ending on the seal itself. Rendered from real photographs of U.P. Diliman, so the campus is the actual campus. A symbolic sequence, not archival footage."
+        heightVh={450}
       />
 
       {/* ── The Ledger (projects) ────────────────────────────── */}
