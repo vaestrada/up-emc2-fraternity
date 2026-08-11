@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
@@ -87,13 +88,15 @@ export default function ProjectsPage() {
               rel="noreferrer"
               className="group mx-auto block w-full max-w-2xl border border-[var(--hairline)] transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-[var(--frat-gold)]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)]"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              {/* next/image for the on-page render so phones fetch a resized copy
+                  rather than the full 1080² sheet; the anchor above still points at
+                  the untouched original, which is what makes it worth opening. */}
+              <Image
                 src="/photos/projects-campaigns-card.jpg"
                 alt="Retrospective sheet of sixteen photographs from EMC² Fraternity projects and campaigns, including Kalye Tunes at the U.P. Fair, the Mathrix quiz bee, Kanalan bowling, Pautakan, the Thinking Space study lounge at Melchor Hall, Oplan Pag-ibig outreach, and COVID-19 relief operations"
                 width={1080}
                 height={1080}
-                loading="lazy"
+                sizes="(min-width: 768px) 672px, 100vw"
                 className="h-auto w-full"
               />
             </a>
