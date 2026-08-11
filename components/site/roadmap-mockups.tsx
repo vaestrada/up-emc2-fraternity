@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   CheckCircle2,
@@ -58,11 +59,15 @@ const FrameShell = ({ children, concept = true }: { children: React.ReactNode; c
 export function PortalScreenshot() {
   return (
     <div className="relative h-full min-h-[320px] overflow-hidden border border-[var(--hairline)]">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      {/* The source is 1400px wide but this card slot is roughly a third of that,
+          so let next/image size it down rather than shipping the full screenshot
+          to every device. */}
+      <Image
         src="/quantum-leap/demo-portal-screenshot.jpg"
         alt="The live Member Portal sign-in screen"
-        className="h-full w-full object-cover object-top"
+        fill
+        sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
+        className="object-cover object-top"
       />
       <LiveChip label="Live — real screenshot" />
     </div>
