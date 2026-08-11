@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
-import { ScrollCinematic } from "@/components/site/scroll-cinematic";
 import { projects } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -59,17 +58,48 @@ export default function ProjectsPage() {
         </Container>
       </section>
 
-      {/* Fig. 03 — the same real retrospective collage already on this page,
-          brought to life: a slow pan through all sixteen photos, top to
-          bottom, exactly as printed. */}
-      <ScrollCinematic
-        src="/quantum-leap/demo-projects-scroll.mp4"
-        poster="/quantum-leap/demo-projects-poster.jpg"
-        eyebrow="Fig. 03 — Projects & Campaigns Retrospective"
-        title="Fifteen Years of Work, In Motion"
-        description="The same sixteen photographs from the brotherhood's projects and campaigns — Kalye Tunes to COVID-19 relief — panned through end to end."
-        heightVh={200}
-      />
+      {/* Fig. 03 — the real retrospective collage.
+          This was a full-bleed scroll video until a mobile audit showed why that
+          was the wrong treatment: the hero videos are object-cover, so a portrait
+          phone only ever sees the middle ~26% of the frame, which sliced this
+          card's header and every caption mid-word ("...ECTS AND CAMP..."). A
+          text-dense sheet has to be shown whole, not panned across. Contained and
+          tappable at native resolution reads on every screen — and the project
+          names are the point. */}
+      <section className="blueprint border-y border-[var(--hairline)] py-24">
+        <Container>
+          <Reveal>
+            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+              Fig. 03 — Projects &amp; Campaigns Retrospective
+            </p>
+            <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              Fifteen Years of Work, On One Sheet
+            </h2>
+            <p className="mt-4 max-w-xl leading-relaxed text-[var(--frat-cream)]/70">
+              Sixteen photographs from the brotherhood&rsquo;s own campaigns — Kalye Tunes at the
+              U.P. Fair through to the COVID-19 relief operations. Tap to open it full size.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-12">
+            <a
+              href="/photos/projects-campaigns-card.jpg"
+              target="_blank"
+              rel="noreferrer"
+              className="group mx-auto block w-full max-w-2xl border border-[var(--hairline)] transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-[var(--frat-gold)]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)]"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/photos/projects-campaigns-card.jpg"
+                alt="Retrospective sheet of sixteen photographs from EMC² Fraternity projects and campaigns, including Kalye Tunes at the U.P. Fair, the Mathrix quiz bee, Kanalan bowling, Pautakan, the Thinking Space study lounge at Melchor Hall, Oplan Pag-ibig outreach, and COVID-19 relief operations"
+                width={1080}
+                height={1080}
+                loading="lazy"
+                className="h-auto w-full"
+              />
+            </a>
+          </Reveal>
+        </Container>
+      </section>
 
       <section className="border-t border-[var(--hairline)] py-24">
         <Container>
