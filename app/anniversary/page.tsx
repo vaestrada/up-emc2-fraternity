@@ -43,12 +43,13 @@ const ARCHIVE_PLATES = [
    point of publishing six months early is the warm list, and a list built on
    things that turn out not to exist is worse than no list at all.
 
-   Each also carries a still-life. The images are generated (ATTRIBUTION.md)
-   and depict objects, never the fraternity, never its members, never the
-   venue — a trophy that bears no engraving, a programme with a blank cover.
-   They exist to give a reader something to catch on before the words, and
-   they are deliberately contemporary: this is an engineering and physical
-   sciences brotherhood, not an antiquarian society. */
+   Each also carries a scene. The images are generated (ATTRIBUTION.md) and
+   show what the evening could feel like — people, warmth, a room worth being
+   in — because an alumnus deciding whether to come needs to picture it, not
+   read about it. They carry no EMC² crest, no logo, and no text anywhere in
+   frame, so none of them can be mistaken for a photograph of the fraternity
+   or of an event that has happened, and the section says so in as many words.
+   Same convention /history already uses for its preview imagery. */
 const PROGRAMME = [
   {
     image: "/anniversary/awards.jpg",
@@ -93,11 +94,13 @@ export default function AnniversaryPage() {
 
   return (
     <>
-      {/* Ambient hero. A modern institute atrium with a luminous ring — no
-          people, no real venue, no event. It sets a mood; every fact lives in
-          the text over it. The clip is a true seamless loop: one band of light
-          travels the ring exactly once, and the wrap point is a continuous
-          frame step rather than a cut. See ATTRIBUTION.md. */}
+      {/* Ambient hero: a gala in full swing — the feeling the page is selling,
+          which no amount of body copy conveys to someone deciding whether to
+          fly in for it. Generated, and carries no crest, no logo and no text
+          in frame, so it reads as illustration rather than as a photograph of
+          an evening that has already happened; the programme section below
+          says so outright. Seamless loop — the wrap is a continuous frame step
+          inside a dissolve, not a cut. See ATTRIBUTION.md. */}
       <CinematicHero
         src="/anniversary/hero.mp4"
         poster="/anniversary/hero-poster.jpg"
@@ -223,7 +226,12 @@ export default function AnniversaryPage() {
             </h2>
             <p className="mt-5 max-w-2xl leading-relaxed text-[var(--frat-cream)]/60">
               Said plainly, with where each one actually stands. Nothing below is open yet, and
-              nothing below takes money today.
+              nothing below takes money today.{" "}
+              <span className="text-[var(--frat-gold-light)]">
+                The photographs are illustrations of what the evening could be — not documentation
+                of an event that has already happened.
+              </span>{" "}
+              For the brotherhood&rsquo;s own archive, see the plates above.
             </p>
           </Reveal>
 
