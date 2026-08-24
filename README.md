@@ -44,8 +44,18 @@ Fonts: Playfair Display (display) + Geist (body).
 
 ## Member Portal (Phase 2)
 
-Live: sign in at `/portal` with a magic link, edit your own record, opt into the
-`/portal/directory`, record a `/portal/dues` payment. Built entirely on self-service —
+> **⚠️ Not actually live yet — the tables do not exist in production.** Verified
+> 2026-08-24 against the production database: `0001_init` and `0002_patron_consent`
+> are applied, but **`0003_member_portal` and `0004_anniversary_rsvp` have never been
+> run**. So `members`, `dues_payments`, and `anniversary_rsvps` are all missing.
+> Sign-in appears to work (Supabase manages `auth.users`), but saving a profile,
+> recording dues, or submitting an anniversary RSVP all fail against tables that
+> aren't there — the UI shows its "couldn't reach the archive" fallback. Fix by
+> running `supabase/migrations/0003_*.sql` and `0004_*.sql` in the Supabase SQL
+> Editor. Re-verify with the table check in "Verifying the schema" below.
+
+The code, once those migrations are applied: sign in at `/portal` with a magic link,
+edit your own record, opt into the `/portal/directory`, record a `/portal/dues` payment. Built entirely on self-service —
 no bulk import of `members_master.csv` happens here, on purpose. Per [PRIVACY.md](./PRIVACY.md),
 that 490-row roster (birthdates, home addresses, emergency contacts) never goes through
 an AI coding session and never becomes a bulk `INSERT`. A brod's Portal record only ever
@@ -81,11 +91,37 @@ See **[/roadmap](https://up-emc2-fraternity.vercel.app/roadmap)** on the live si
 member-facing version of this list.
 
 1. **Phase 1 — shipped:** public site.
-2. **Phase 2 — shipped:** member portal (Supabase auth, magic links), login-gated
-   directory with per-member opt-in visibility, RLS policies. Bulk `members_master.csv`
-   import deliberately **not** part of this — see "Member Portal" above.
+2. **Phase 2 — built, not yet live:** member portal (Supabase auth, magic links),
+   login-gated directory with per-member opt-in visibility, RLS policies. The code
+   ships and the migration is written, but `0003_member_portal.sql` has never been
+   applied to the production database — see the warning under "Member Portal" above.
+   Bulk `members_master.csv` import deliberately **not** part of this.
 3. **Phase 3 — in progress:** newsletter (Resend + subscribers table), donation campaign
    tracking, PayMongo checkout once KYB is approved.
 4. **Future — direction, not commitment:** a companion mobile app, an AI-native copilot
    over the archive. See `/roadmap` for how these are framed to members — as a direction
    the site is built to grow into, not a promised feature.
+
+## Verifying the schema
+
+The app degrades gracefully when a table is missing, which means a broken schema looks
+identical to a quiet week. Check it explicitly rather than inferring it from the UI —
+with the Supabase URL and secret key in `.env.local`:
+
+```bash
+set -a && . ./.env.local && set +a
+for t in contributions pledges messages members dues_payments anniversary_rsvps; do
+  auth="Authorization: Bearer $SUPABASE_SECRET_KEY"
+  code=$(curl -s -o /dev/null -w '%{http_code}' -H "apikey: $SUPABASE_SECRET_KEY" -H "$auth" "$SUPABASE_URL/rest/v1/$t?select=id&limit=1")
+  [ "$code" = 200 ] && echo "$t EXISTS" || echo "$t MISSING ($code)"
+done
+```
+
+All six should read `EXISTS`. A `404` with `PGRST205` means the table genuinely is not
+there, not that permissions are wrong.
+
+Note also that this Supabase project is on the **free plan, which auto-pauses after
+~7 days of inactivity**. A paused database fails Vercel's resource-provisioning step,
+so deploys die in under a second with `BUILD_FAILED: Resource provisioning failed` and
+no build logs at all. That has happened twice (see commit `0816a2d`). If a deploy fails
+that way, unpause the database first, then redeploy — the code is not the problem.

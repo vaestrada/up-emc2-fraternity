@@ -47,3 +47,10 @@ next-env.d.ts
 
 # but keep the env template
 !.env.example
+
+# Agent skills installed by `npx skills add`. skills-lock.json pins the source
+# and content hash of each one, so these are reproducible — treat them like
+# node_modules. .claude/skills/ in particular holds ABSOLUTE symlinks into
+# .agents/, which would break on any other machine.
+/.agents/
+/.claude/skills/
