@@ -44,15 +44,13 @@ Fonts: Playfair Display (display) + Geist (body).
 
 ## Member Portal (Phase 2)
 
-> **⚠️ Not actually live yet — the tables do not exist in production.** Verified
-> 2026-08-24 against the production database: `0001_init` and `0002_patron_consent`
-> are applied, but **`0003_member_portal` and `0004_anniversary_rsvp` have never been
-> run**. So `members`, `dues_payments`, and `anniversary_rsvps` are all missing.
-> Sign-in appears to work (Supabase manages `auth.users`), but saving a profile,
-> recording dues, or submitting an anniversary RSVP all fail against tables that
-> aren't there — the UI shows its "couldn't reach the archive" fallback. Fix by
-> running `supabase/migrations/0003_*.sql` and `0004_*.sql` in the Supabase SQL
-> Editor. Re-verify with the table check in "Verifying the schema" below.
+> **Live as of 2026-08-24.** `0003_member_portal` and `0004_anniversary_rsvp`
+> are applied; all six tables exist with RLS enabled. Until that date the Portal
+> had never actually worked, because `0003` contained a syntax error: the column
+> was declared `current_role text`, and `current_role` is a reserved word in
+> Postgres, so the file failed with `42601` every time it was run. The column is
+> now quoted, which keeps the name identical for PostgREST and the Portal's
+> client code. Verify with the table check in "Verifying the schema" below.
 
 The code, once those migrations are applied: sign in at `/portal` with a magic link,
 edit your own record, opt into the `/portal/directory`, record a `/portal/dues` payment. Built entirely on self-service —
@@ -91,11 +89,11 @@ See **[/roadmap](https://up-emc2-fraternity.vercel.app/roadmap)** on the live si
 member-facing version of this list.
 
 1. **Phase 1 — shipped:** public site.
-2. **Phase 2 — built, not yet live:** member portal (Supabase auth, magic links),
-   login-gated directory with per-member opt-in visibility, RLS policies. The code
-   ships and the migration is written, but `0003_member_portal.sql` has never been
-   applied to the production database — see the warning under "Member Portal" above.
-   Bulk `members_master.csv` import deliberately **not** part of this.
+2. **Phase 2 — shipped:** member portal (Supabase auth, magic links), login-gated
+   directory with per-member opt-in visibility, RLS policies. Migration applied to
+   production 2026-08-24 — see the note under "Member Portal" above for why it had
+   silently never been applied before then. Bulk `members_master.csv` import
+   deliberately **not** part of this.
 3. **Phase 3 — in progress:** newsletter (Resend + subscribers table), donation campaign
    tracking, PayMongo checkout once KYB is approved.
 4. **Future — direction, not commitment:** a companion mobile app, an AI-native copilot

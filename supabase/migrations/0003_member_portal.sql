@@ -15,7 +15,13 @@ create table if not exists public.members (
   nickname      text,
   batch         text,
   course        text,
-  current_role  text,
+  -- Quoted because current_role is a reserved word in Postgres (the SQL
+  -- standard CURRENT_ROLE function). Unquoted, this file fails outright with
+  -- 42601 syntax error — which is exactly why this migration had never been
+  -- applied and the Member Portal was never actually live. Quoting keeps the
+  -- column name byte-identical for PostgREST and supabase-js, so the eight
+  -- references to `current_role` in the Portal's client code are unaffected.
+  "current_role" text,
   company       text,
   city          text,
   bio           text,
