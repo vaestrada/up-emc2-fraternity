@@ -36,14 +36,32 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  *    of which one is currently painted — a carousel must never be the only
  *    route to its own content.
  */
-export function ProgrammeShowcase({ items }: { items: ShowcaseItem[] }) {
+export function ProgrammeShowcase({
+  items,
+  eyebrow,
+  title,
+}: {
+  items: ShowcaseItem[];
+  /** Page identity, held fixed above the rotating content. */
+  eyebrow: string;
+  title: string;
+}) {
   const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  // Separate from `paused` so a hover doesn't overwrite a deliberate press.
-  const [hovering, setHovering] = useState(false);
+  // Focus pauses, hover does not. Hover-pause is right for a small widget and
+  // wrong for a full-viewport one: the pointer sits over this section almost
+  // the whole time it is on screen, so it would simply never advance. Keyboard
+  // users still get a hold while tabbing through, and the explicit pause
+  // button is what satisfies WCAG 2.2.2 either way.
+  const [holding, setHolding] = useState(false);
   const rootRef = useRef<HTMLElement>(null);
-  const [inView, setInView] = useState(false);
+  const playPauseRef = useRef<HTMLButtonElement>(null);
+  // Defaults to true, not false. The observer's job is to *stop* the timer
+  // once this scrolls away — it must not be the thing that starts it. If the
+  // callback is delayed or never fires, "false" leaves a carousel that simply
+  // never moves, which is the worse failure by far.
+  const [inView, setInView] = useState(true);
 
   const go = useCallback(
     (next: number) => setIndex(((next % items.length) + items.length) % items.length),
@@ -62,7 +80,7 @@ export function ProgrammeShowcase({ items }: { items: ShowcaseItem[] }) {
     return () => observer.disconnect();
   }, []);
 
-  const running = inView && !paused && !hovering && !reduceMotion;
+  const running = inView && !paused && !holding && !reduceMotion;
 
   useEffect(() => {
     if (!running) return;
@@ -88,10 +106,13 @@ export function ProgrammeShowcase({ items }: { items: ShowcaseItem[] }) {
       aria-roledescription="carousel"
       aria-label="What the committee is building"
       onKeyDown={onKeyDown}
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
-      onFocusCapture={() => setHovering(true)}
-      onBlurCapture={() => setHovering(false)}
+      // The play/pause control is excluded on purpose: clicking it leaves it
+      // focused, so if focus alone held the timer, pressing play could never
+      // start it again — the button would be a one-way switch.
+      onFocusCapture={(e) => {
+        if (e.target !== playPauseRef.current) setHolding(true);
+      }}
+      onBlurCapture={() => setHolding(false)}
       className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden border-y border-[var(--hairline)] bg-[var(--ink)]"
     >
       {/* Imagery. Only the active frame is painted; the text for every slide
@@ -133,8 +154,14 @@ export function ProgrammeShowcase({ items }: { items: ShowcaseItem[] }) {
 
       <Container className="relative z-10 pb-16 pt-32 md:pb-20">
         <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-          № 10.2 — In Preparation
+          {eyebrow}
         </p>
+        {/* The one fixed thing on a rotating screen. Without it a visitor
+            landing here reads "The Awards" and has no idea whose, or when. */}
+        <h1 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] leading-tight text-[var(--frat-cream)]">
+          {title}
+        </h1>
+        <div aria-hidden className="mt-7 h-px w-16 bg-[var(--frat-gold)]/50" />
 
         {/* aria-live announces the change without stealing focus. */}
         {/* Enter-only, deliberately: no AnimatePresence and no exit.
@@ -143,7 +170,7 @@ export function ProgrammeShowcase({ items }: { items: ShowcaseItem[] }) {
             looking at the previous slide's words under the new slide's number.
             Re-keying the node remounts it, so the text is correct the instant
             the index changes and the animation is pure decoration on top. */}
-        <div className="mt-6 min-h-[15rem] md:min-h-[13rem]" aria-live="polite" aria-atomic="true">
+        <div className="mt-7 min-h-[15rem] md:min-h-[13rem]" aria-live="polite" aria-atomic="true">
           <motion.div
             key={current.title}
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
@@ -165,6 +192,7 @@ export function ProgrammeShowcase({ items }: { items: ShowcaseItem[] }) {
         {/* Controls: a progress rail per slide, plus a real pause button. */}
         <div className="mt-10 flex items-center gap-5">
           <button
+            ref={playPauseRef}
             type="button"
             onClick={() => setPaused((p) => !p)}
             aria-pressed={paused}

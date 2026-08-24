@@ -23,6 +23,7 @@ export function CinematicHero({
   title,
   description,
   fullHeight = false,
+  as = "h1",
 }: {
   src: string;
   poster: string;
@@ -32,7 +33,11 @@ export function CinematicHero({
   /** Fill the viewport. svh, not vh — mobile browser chrome otherwise
       pushes the CTA below the fold on exactly the phones most brods use. */
   fullHeight?: boolean;
+  /** Heading level. A page gets exactly one h1, so when this renders as a
+      band partway down a page that already has one, it must step down. */
+  as?: "h1" | "h2";
 }) {
+  const Heading = as;
   const videoRef = useRef<HTMLVideoElement>(null);
   // Lazy initializer rather than an effect, so the very first paint already
   // knows whether motion is wanted and we never fetch the file needlessly.
@@ -112,9 +117,9 @@ export function CinematicHero({
           </p>
         </Reveal>
         <Reveal delay={0.1}>
-          <h1 className="mt-6 max-w-3xl font-display text-[clamp(2.8rem,7vw,5.5rem)] font-semibold leading-[1.02] tracking-tight text-[var(--frat-cream)]">
+          <Heading className="mt-6 max-w-3xl font-display text-[clamp(2.8rem,7vw,5.5rem)] font-semibold leading-[1.02] tracking-tight text-[var(--frat-cream)]">
             {title}
-          </h1>
+          </Heading>
         </Reveal>
         {description ? (
           <Reveal delay={0.2}>

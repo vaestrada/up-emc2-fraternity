@@ -95,21 +95,17 @@ export default function AnniversaryPage() {
 
   return (
     <>
-      {/* Ambient hero: the anniversary group portrait, rows of brods in
-          barong on a lit stage, waving. Chosen over a party crowd because it
-          is legible in a quarter-second — anniversary, gathering, occasion —
-          where a dance floor could be any night out. Generated, and carries no
-          crest, no logo and no text in frame, so it reads as illustration
-          rather than as a photograph of an evening that has already happened;
-          the showcase below says so outright. Seamless loop: the wrap is a
-          continuous frame step inside a 0.4s dissolve. See ATTRIBUTION.md. */}
-      <CinematicHero
-        src="/anniversary/hero.mp4"
-        poster="/anniversary/hero-poster.jpg"
-        eyebrow={`№ 10 — ${anniversary.month}`}
+      {/* The page opens on the showcase rather than on a video: one idea per
+          screen, five seconds each, image large enough to carry the feeling.
+          The eyebrow and h1 stay fixed above the rotating content so a visitor
+          landing cold always knows whose anniversary this is and when — a
+          carousel that rotates its own page title tells you nothing.
+          Autoplay pauses on focus and on the explicit control, and is off
+          entirely under prefers-reduced-motion. */}
+      <ProgrammeShowcase
+        items={PROGRAMME}
+        eyebrow={`№ 10 — ${anniversary.month} · ${anniversary.venue}`}
         title={`The ${anniversary.ordinal} Anniversary`}
-        fullHeight
-        description={`${years} years after ten scholars founded the brotherhood at the U.P. College of Engineering, the brods gather again. The date is set; the programme is being written. Put your name down now — nothing is owed, and everything that follows will reach you first.`}
       />
 
       {/* Ceremonial band — the seal mounted on an anodised panel with a single
@@ -217,13 +213,19 @@ export default function AnniversaryPage() {
         </Container>
       </section>
 
-      {/* What's being prepared. A full-viewport showcase rather than a
-          six-card wall: one idea per screen, five seconds each, image large
-          enough to carry the feeling. The honest status line rides with every
-          slide, so nothing reads as a promise even at this scale. Autoplay
-          pauses on hover/focus, has a real pause control, and is disabled
-          outright under prefers-reduced-motion. */}
-      <ProgrammeShowcase items={PROGRAMME} />
+      {/* The brotherhood itself, in motion — placed here rather than at the
+          top so the page leads with what the evening is, and closes on why
+          anyone would come. Not full height: it is a breath before the form,
+          not a second front door. Generated; no crest, no logo, no text in
+          frame. Seamless loop. See ATTRIBUTION.md. */}
+      <CinematicHero
+        src="/anniversary/hero.mp4"
+        poster="/anniversary/hero-poster.jpg"
+        as="h2"
+        eyebrow="№ 10.3 — The Brotherhood"
+        title="Fifty-eight years of the same room"
+        description={`${years} years after ten scholars founded the brotherhood at the U.P. College of Engineering — batches who never overlapped in Diliman, standing shoulder to shoulder. That is the whole of it.`}
+      />
 
       {/* The RSVP — the entire point of publishing this six months early. */}
       <section className="py-24">
@@ -231,7 +233,7 @@ export default function AnniversaryPage() {
           <div>
             <Reveal>
               <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-                № 10.3 — Save the Date
+                № 10.4 — Save the Date
               </p>
               <h2 className="mt-4 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
                 Put your name down
