@@ -12,6 +12,9 @@ import { cn } from "@/lib/utils";
 const LINKS = [
   { href: "/history", label: "History" },
   { href: "/projects", label: "Projects" },
+  // Sits high in the order until February 2027 — it's the one page with a
+  // deadline behind it. Drop it back down once the evening has passed.
+  { href: "/anniversary", label: "58th" },
   // Labelled for the programme, not the current edition, so it still reads
   // true when Quantum Leap moves past pickleball.
   { href: "/quantum-leap", label: "Sports" },

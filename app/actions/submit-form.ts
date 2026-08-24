@@ -17,6 +17,12 @@ export type FormState = {
 const MAX_PHOTOS = 6;
 const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
 
+/* Which anniversary edition an RSVP belongs to. Mirrors `anniversary.edition`
+   in lib/content.ts, restated here because a server action must not import
+   client-facing content just to read one integer. */
+const ANNIVERSARY_EDITION = 58;
+const ATTENDING = ["yes", "maybe", "cannot"];
+
 /** Upload contributed photos to the private bucket; returns storage paths. */
 async function uploadPhotos(formData: FormData, submissionId: string): Promise<string[]> {
   const supabase = getAdminSupabase();
@@ -100,6 +106,41 @@ async function persist(
       });
       return !error;
     }
+    if (kind === "rsvp") {
+      // Checkboxes share a name, so these arrive as several entries rather
+      // than one field — readField would silently keep only the first.
+      const interests = formData
+        .getAll("interests")
+        .filter((v): v is string => typeof v === "string")
+        .map((v) => v.trim().slice(0, 60))
+        .filter(Boolean)
+        .slice(0, 12);
+
+      // upsert, not insert: the unique (edition, lower(email)) index means a
+      // brod who fills the form again is correcting their answer, not adding
+      // a second RSVP. Failing them with a duplicate-key error would be the
+      // worst possible response to someone trying to update their guest count.
+      const { error } = await supabase
+        .from("anniversary_rsvps")
+        .upsert(
+          {
+            edition: ANNIVERSARY_EDITION,
+            name: values.name,
+            batch: values.batch || null,
+            // lowercased to match the (edition, email) unique index the
+            // upsert targets — see 0004_anniversary_rsvp.sql
+            email: values.email.toLowerCase(),
+            attending: ATTENDING.includes(values.attending) ? values.attending : "yes",
+            guests: values.guests || null,
+            interests,
+            message: values.message || null,
+            consent_updates: formData.get("consent_updates") === "on",
+            ip,
+          },
+          { onConflict: "edition,email", ignoreDuplicates: false }
+        );
+      return !error;
+    }
     const { error } = await supabase.from("messages").insert({
       name: values.name,
       email: values.email,
@@ -178,7 +219,7 @@ async function deliver(subject: string, text: string, replyTo: string): Promise<
   return true;
 }
 
-type FormKind = "contact" | "pledge" | "contribute" | "dues";
+type FormKind = "contact" | "pledge" | "contribute" | "dues" | "rsvp";
 
 type Definition = {
   subject: (name: string) => string;
@@ -236,6 +277,20 @@ const FORMS: Record<FormKind, Definition> = {
       { name: "amount", label: "Amount (PHP)", maxLength: 20 },
       { name: "method", label: "Payment method", maxLength: 40 },
       { name: "reference", label: "Transfer reference no.", maxLength: 64 },
+      { name: "message", label: "Message", maxLength: 2000 },
+    ],
+  },
+  rsvp: {
+    // Save-the-date, not a ticket. Nothing here takes money — the Association's
+    // merchant account is unresolved (PLAN.md D7), and an intent list gathered
+    // six months early is worth more than a checkout gathered late.
+    subject: (name) => `[Website] 58th Anniversary — save-the-date from ${name}`,
+    fields: [
+      { name: "name", label: "Name", maxLength: 120, required: true },
+      { name: "batch", label: "Batch", maxLength: 40 },
+      { name: "email", label: "Email", maxLength: 254, required: true },
+      { name: "attending", label: "Intending to attend", maxLength: 20 },
+      { name: "guests", label: "Guests expected", maxLength: 40 },
       { name: "message", label: "Message", maxLength: 2000 },
     ],
   },
@@ -297,9 +352,20 @@ async function submit(kind: FormKind, formData: FormData): Promise<FormState> {
   // Persist first so the record survives even when email delivery is off.
   const stored = await persist(kind, values, ip, formData);
 
-  const text = def.fields
+  let text = def.fields
     .map((field) => `${field.label}:\n${values[field.name] || "—"}`)
     .join("\n\n");
+
+  // Multi-value checkboxes live outside the single-value `fields` list, so
+  // they have to be appended by hand — and they are the most actionable part
+  // of an RSVP for the committee, not an afterthought.
+  if (kind === "rsvp") {
+    const interests = formData.getAll("interests").filter((v) => typeof v === "string");
+    text += `\n\nInterested in:\n${interests.length ? interests.join(", ") : "—"}`;
+    text += `\n\nConsented to anniversary updates:\n${
+      formData.get("consent_updates") === "on" ? "Yes" : "No"
+    }`;
+  }
 
   try {
     const delivered = await deliver(def.subject(values.name), text, values.email);
@@ -324,4 +390,8 @@ export async function submitContribution(_prev: FormState, formData: FormData): 
 
 export async function submitDues(_prev: FormState, formData: FormData): Promise<FormState> {
   return submit("dues", formData);
+}
+
+export async function submitRsvp(_prev: FormState, formData: FormData): Promise<FormState> {
+  return submit("rsvp", formData);
 }

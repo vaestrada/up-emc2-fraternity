@@ -25,6 +25,25 @@ export const association = {
   secRegNo: null as string | null, // TODO: official SEC registration number
 };
 
+/* The next anniversary. The edition number is settled by the Association's own
+   record: the 55th was 24 February 2024 (see `milestones` below), so February
+   2027 is the 58th.
+
+   `date` is deliberately null until the committee fixes the day — the page
+   renders "February 2027" rather than inventing a date the board never set,
+   the same discipline `association.secRegNo` follows. */
+export const anniversary = {
+  edition: 58,
+  ordinal: "58th",
+  year: 2027,
+  month: "February 2027",
+  date: null as string | null, // ISO date once the committee fixes the day
+  venue: "Gimenez Gallery",
+  venueDetail: "College of Fine Arts, U.P. Diliman",
+  venueAddress: "111 Roces St., Diliman, Quezon City",
+  venueConfirmed: false, // held, not contracted — no deposit paid yet
+};
+
 export type Officer = { name: string; role: string; batch?: string };
 // Pending — current council to be provided by the Association.
 export const officers: Officer[] = [];

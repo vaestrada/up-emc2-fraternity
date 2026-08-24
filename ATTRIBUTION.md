@@ -46,3 +46,61 @@ The EMC² seal (`public/logo/emc2-mark.png`) belongs to the EMC² Fraternity. In
 closing shot it is composited into the scene from that file directly, at pixel
 accuracy, rather than drawn by the image model — the model garbles fine lettering
 around a circular seal, and the seal's wording should never be approximate.
+
+## Anniversary page imagery
+
+Generated 2026-08-24 with Google's Gemini models — stills on
+`nano-banana-pro-preview`, the hero clip on `veo-3.1-generate-preview` — then
+recompressed before entering the repo.
+
+An earlier set in a candlelit, classical-antique register was rejected by the
+owner and is kept, unshipped, in the git-ignored `assets/anniversary-v1-classical/`.
+The direction that replaced it: **modern, elegant, alive** — anodised aluminium,
+glass, precise geometry, warm gold light lines, the visual world of an advanced
+engineering and physical sciences institute rather than a hall of antiquities.
+Masters for the shipped set are in `assets/anniversary-v2-modern/`.
+
+| File | What it is | Weight |
+|---|---|---|
+| `hero.mp4` | Seamless 7.2s loop: a band of light travels once around a suspended ring in a modern atrium | 644KB |
+| `hero-poster.jpg` | The loop's own first frame, so playback starts without a jump; also the entire reduced-motion experience | 132KB |
+| `ground-foil.jpg` | Anodised deep-green panel with one machined channel of gold light | 71KB |
+| `awards.jpg` | A blank machined aluminium-and-glass award | 46KB |
+| `sponsorship.jpg` | A blank brushed-steel plate in a precision holder | 55KB |
+| `souvenir.jpg` | A book with a blank blind-debossed cover | 96KB |
+| `merch.jpg` | Folded apparel with a machined pin, a steel rule, a petri dish | 104KB |
+| `reunions.jpg` | A modern banquet room, set and waiting | 150KB |
+| `assistance.jpg` | A luminous sphere in an aluminium cradle | 54KB |
+
+### How the loop is actually seamless
+
+Veo was given the same anchor frame as **both** first and last frame, and asked
+for a motion that is intrinsically cyclical — one band of light travelling once
+around a ring returns to where it started. That got the endpoints to within
+~2% mean pixel difference, which is close but can still read as a flick.
+
+The clip is then rebuilt as `[crossfade(tail → head)] + [body]`: the last 0.8s
+dissolves into the first 0.8s, and the result is trimmed to 7.2s. The wrap point
+therefore lands on a **continuous one-frame step** rather than a cut, and the
+head of the clip is already a dissolve, so there is nothing for the eye to catch.
+Measured residual across the wrap: 2.82/255 mean, which is one frame of ordinary
+motion.
+
+### The constraint every asset is built on
+
+They depict *objects and spaces*, never the fraternity, never its members,
+never the real venue, never the event. The trophy bears no engraving. The
+programme has a blank cover. The atrium is not Gimenez Gallery. The page
+announces an evening that has not happened, so nothing on it may look like
+documentation of one — the imagery sets a mood and the text carries every fact.
+All of it is `alt=""`, because none of it says anything a reader needs.
+
+The photographs on the same page (`public/photos/anniv55-*.jpg`) are the
+opposite case: real, from the Association's own archive of the **55th**
+Anniversary Celebration, and captioned as the 55th so no visitor mistakes them
+for a preview of the 58th.
+
+The commemorative seal (`components/site/anniversary-seal.tsx`) is drawn as SVG
+rather than generated: image models garble letterforms, and a numeral struck on
+a seal should never be approximate. It sets the edition in Arabic numerals, not
+Roman — "LVIII" read as antiquarian beside this imagery.
