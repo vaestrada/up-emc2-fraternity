@@ -7,6 +7,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { RsvpForm } from "@/components/site/rsvp-form";
 import { AnniversarySeal } from "@/components/site/anniversary-seal";
 import { ArchivePlates } from "@/components/site/archive-plates";
+import { ProgrammeShowcase } from "@/components/site/programme-showcase";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { anniversary, association, site, FOUNDING_YEAR } from "@/lib/content";
@@ -94,18 +95,20 @@ export default function AnniversaryPage() {
 
   return (
     <>
-      {/* Ambient hero: a gala in full swing — the feeling the page is selling,
-          which no amount of body copy conveys to someone deciding whether to
-          fly in for it. Generated, and carries no crest, no logo and no text
-          in frame, so it reads as illustration rather than as a photograph of
-          an evening that has already happened; the programme section below
-          says so outright. Seamless loop — the wrap is a continuous frame step
-          inside a dissolve, not a cut. See ATTRIBUTION.md. */}
+      {/* Ambient hero: the anniversary group portrait, rows of brods in
+          barong on a lit stage, waving. Chosen over a party crowd because it
+          is legible in a quarter-second — anniversary, gathering, occasion —
+          where a dance floor could be any night out. Generated, and carries no
+          crest, no logo and no text in frame, so it reads as illustration
+          rather than as a photograph of an evening that has already happened;
+          the showcase below says so outright. Seamless loop: the wrap is a
+          continuous frame step inside a 0.4s dissolve. See ATTRIBUTION.md. */}
       <CinematicHero
         src="/anniversary/hero.mp4"
         poster="/anniversary/hero-poster.jpg"
         eyebrow={`№ 10 — ${anniversary.month}`}
         title={`The ${anniversary.ordinal} Anniversary`}
+        fullHeight
         description={`${years} years after ten scholars founded the brotherhood at the U.P. College of Engineering, the brods gather again. The date is set; the programme is being written. Put your name down now — nothing is owed, and everything that follows will reach you first.`}
       />
 
@@ -214,64 +217,13 @@ export default function AnniversaryPage() {
         </Container>
       </section>
 
-      {/* What's being prepared — honest status on each line. */}
-      <section className="blueprint border-y border-[var(--hairline)] py-24">
-        <Container>
-          <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-              № 10.2 — In Preparation
-            </p>
-            <h2 className="mt-4 max-w-2xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
-              What the committee is building
-            </h2>
-            <p className="mt-5 max-w-2xl leading-relaxed text-[var(--frat-cream)]/60">
-              Said plainly, with where each one actually stands. Nothing below is open yet, and
-              nothing below takes money today.{" "}
-              <span className="text-[var(--frat-gold-light)]">
-                The photographs are illustrations of what the evening could be — not documentation
-                of an event that has already happened.
-              </span>{" "}
-              For the brotherhood&rsquo;s own archive, see the plates above.
-            </p>
-          </Reveal>
-
-          <div className="mt-14 grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] md:grid-cols-2 lg:grid-cols-3">
-            {PROGRAMME.map((item, i) => (
-              <Reveal key={item.title} delay={0.05 * i}>
-                <article className="group flex h-full flex-col overflow-hidden bg-[var(--ink)]">
-                  {/* The hook. Illustrative object, not documentation — the
-                      heading and body carry every fact, so this is alt="". */}
-                  <div className="relative aspect-[3/2] overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt=""
-                      aria-hidden
-                      fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                      className="object-cover opacity-85 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] group-hover:opacity-100"
-                    />
-                    <div
-                      aria-hidden
-                      className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[var(--ink)] to-transparent"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-8 pt-6">
-                    <h3 className="font-display text-xl leading-snug text-[var(--frat-cream)]">
-                      {item.title}
-                    </h3>
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--frat-cream)]/65">
-                      {item.body}
-                    </p>
-                    <p className="mt-6 border-t border-[var(--hairline)] pt-4 font-mono text-[10px] leading-relaxed tracking-[0.15em] text-[var(--frat-cream)]/45 uppercase">
-                      {item.status}
-                    </p>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
+      {/* What's being prepared. A full-viewport showcase rather than a
+          six-card wall: one idea per screen, five seconds each, image large
+          enough to carry the feeling. The honest status line rides with every
+          slide, so nothing reads as a promise even at this scale. Autoplay
+          pauses on hover/focus, has a real pause control, and is disabled
+          outright under prefers-reduced-motion. */}
+      <ProgrammeShowcase items={PROGRAMME} />
 
       {/* The RSVP — the entire point of publishing this six months early. */}
       <section className="py-24">

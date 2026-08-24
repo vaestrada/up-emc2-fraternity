@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Container } from "@/components/site/container";
+import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/motion/reveal";
 
 /**
@@ -21,12 +22,16 @@ export function CinematicHero({
   eyebrow,
   title,
   description,
+  fullHeight = false,
 }: {
   src: string;
   poster: string;
   eyebrow: string;
   title: string;
   description?: string;
+  /** Fill the viewport. svh, not vh — mobile browser chrome otherwise
+      pushes the CTA below the fold on exactly the phones most brods use. */
+  fullHeight?: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   // Lazy initializer rather than an effect, so the very first paint already
@@ -60,7 +65,10 @@ export function CinematicHero({
   }, [reduced]);
 
   return (
-    <section className="relative isolate flex min-h-[86vh] items-end overflow-hidden border-b border-[var(--hairline)]">
+    <section className={cn(
+        "relative isolate flex items-end overflow-hidden border-b border-[var(--hairline)]",
+        fullHeight ? "min-h-[100svh]" : "min-h-[86vh]"
+      )}>
       {/* Poster always renders: it is the reduced-motion experience, and the
           first frame under the video while it buffers. */}
       <Image
