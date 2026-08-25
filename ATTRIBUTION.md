@@ -62,7 +62,7 @@ Masters for the shipped set are in `assets/anniversary-v2-modern/`.
 
 | File | What it is | Weight |
 |---|---|---|
-| `hero.mp4` | Seamless 7.2s loop: a band of light travels once around a suspended ring in a modern atrium | 644KB |
+| `hero.mp4` | Seamless 7.6s loop at full 1080p: a blank sculptural award turning exactly one revolution on a turntable | 1.5MB |
 | `hero-poster.jpg` | The loop's own first frame, so playback starts without a jump; also the entire reduced-motion experience | 132KB |
 | `ground-foil.jpg` | Anodised deep-green panel with one machined channel of gold light | 71KB |
 | `awards.jpg` | A blank machined aluminium-and-glass award | 46KB |
@@ -71,6 +71,15 @@ Masters for the shipped set are in `assets/anniversary-v2-modern/`.
 | `merch.jpg` | Folded apparel with a machined pin, a steel rule, a petri dish | 104KB |
 | `reunions.jpg` | A modern banquet room, set and waiting | 150KB |
 | `assistance.jpg` | A luminous sphere in an aluminium cradle | 54KB |
+
+Several earlier hero clips were rejected in turn — a candlelit hall, a modern
+atrium, a gala crowd, a sixty-strong barong group portrait, a close-up of five
+brods. The lesson that stuck: generated **faces** do not survive scrutiny at
+hero scale, and the more of them in frame the worse it gets. An object on a
+turntable has no such problem, holds up at full 1080p, and rotating it exactly
+360 degrees means the clip returns to its own first frame — the loop is exact
+by construction rather than patched afterwards. All superseded versions are
+kept unshipped under `assets/anniversary-v*/`.
 
 ### How the loop is actually seamless
 

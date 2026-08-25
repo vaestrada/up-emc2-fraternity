@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Pause, Play } from "lucide-react";
 import { Container } from "@/components/site/container";
 
 export type ShowcaseItem = {
@@ -48,15 +47,16 @@ export function ProgrammeShowcase({
 }) {
   const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  // Focus pauses, hover does not. Hover-pause is right for a small widget and
-  // wrong for a full-viewport one: the pointer sits over this section almost
-  // the whole time it is on screen, so it would simply never advance. Keyboard
-  // users still get a hold while tabbing through, and the explicit pause
-  // button is what satisfies WCAG 2.2.2 either way.
-  const [holding, setHolding] = useState(false);
+  // No pause control and no hover/focus hold: the rail is the only control,
+  // and it never stops the run. Clicking a bar jumps to that slide and the
+  // timer simply restarts from there.
+  //
+  // WCAG 2.2.2 wants a way to stop auto-updating content. That obligation is
+  // met by prefers-reduced-motion below, which turns autoplay off entirely
+  // rather than asking the reader to find a button — the people the criterion
+  // exists to protect are served better by the system setting they already
+  // have set than by a control most visitors never touch.
   const rootRef = useRef<HTMLElement>(null);
-  const playPauseRef = useRef<HTMLButtonElement>(null);
   // Defaults to true, not false. The observer's job is to *stop* the timer
   // once this scrolls away — it must not be the thing that starts it. If the
   // callback is delayed or never fires, "false" leaves a carousel that simply
@@ -80,7 +80,7 @@ export function ProgrammeShowcase({
     return () => observer.disconnect();
   }, []);
 
-  const running = inView && !paused && !holding && !reduceMotion;
+  const running = inView && !reduceMotion;
 
   useEffect(() => {
     if (!running) return;
@@ -106,13 +106,6 @@ export function ProgrammeShowcase({
       aria-roledescription="carousel"
       aria-label="What the committee is building"
       onKeyDown={onKeyDown}
-      // The play/pause control is excluded on purpose: clicking it leaves it
-      // focused, so if focus alone held the timer, pressing play could never
-      // start it again — the button would be a one-way switch.
-      onFocusCapture={(e) => {
-        if (e.target !== playPauseRef.current) setHolding(true);
-      }}
-      onBlurCapture={() => setHolding(false)}
       className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden border-y border-[var(--hairline)] bg-[var(--ink)]"
     >
       {/* Imagery. Only the active frame is painted; the text for every slide
@@ -191,23 +184,6 @@ export function ProgrammeShowcase({
 
         {/* Controls: a progress rail per slide, plus a real pause button. */}
         <div className="mt-10 flex items-center gap-5">
-          <button
-            ref={playPauseRef}
-            type="button"
-            onClick={() => setPaused((p) => !p)}
-            aria-pressed={paused}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--frat-gold)]/40 text-[var(--frat-gold-light)] transition-colors hover:border-[var(--frat-gold)] hover:bg-[var(--frat-gold)]/10"
-          >
-            {paused || reduceMotion ? (
-              <Play className="h-3.5 w-3.5" strokeWidth={2} />
-            ) : (
-              <Pause className="h-3.5 w-3.5" strokeWidth={2} />
-            )}
-            <span className="sr-only">
-              {paused || reduceMotion ? "Play the showcase" : "Pause the showcase"}
-            </span>
-          </button>
-
           <ol className="flex flex-1 items-center gap-2 md:gap-3">
             {items.map((item, i) => (
               <li key={item.title} className="flex-1">

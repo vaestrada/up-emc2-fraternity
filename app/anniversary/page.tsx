@@ -213,18 +213,19 @@ export default function AnniversaryPage() {
         </Container>
       </section>
 
-      {/* The brotherhood itself, in motion — placed here rather than at the
-          top so the page leads with what the evening is, and closes on why
-          anyone would come. Not full height: it is a breath before the form,
-          not a second front door. Generated; no crest, no logo, no text in
-          frame. Seamless loop. See ATTRIBUTION.md. */}
+      {/* A ceremonial beat before the form — a breath, not a second front
+          door. The subject is an object on a turntable rather than a crowd:
+          it holds up at 1080p where generated faces do not, and one full
+          revolution returns to its own first frame, so the loop is exact by
+          construction rather than patched. Blank and unengraved, as every
+          object on this page is. See ATTRIBUTION.md. */}
       <CinematicHero
         src="/anniversary/hero.mp4"
         poster="/anniversary/hero-poster.jpg"
         as="h2"
-        eyebrow="№ 10.3 — The Brotherhood"
-        title="Fifty-eight years of the same room"
-        description={`${years} years after ten scholars founded the brotherhood at the U.P. College of Engineering — batches who never overlapped in Diliman, standing shoulder to shoulder. That is the whole of it.`}
+        eyebrow="№ 10.3 — The Standard"
+        title="Fifty-eight years of the same standard"
+        description={`${years} years after ten scholars founded the brotherhood at the U.P. College of Engineering. What gets honoured in February is the work that carried the name since.`}
       />
 
       {/* The RSVP — the entire point of publishing this six months early. */}
