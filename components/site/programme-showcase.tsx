@@ -50,12 +50,6 @@ export function ProgrammeShowcase({
   // No pause control and no hover/focus hold: the rail is the only control,
   // and it never stops the run. Clicking a bar jumps to that slide and the
   // timer simply restarts from there.
-  //
-  // WCAG 2.2.2 wants a way to stop auto-updating content. That obligation is
-  // met by prefers-reduced-motion below, which turns autoplay off entirely
-  // rather than asking the reader to find a button — the people the criterion
-  // exists to protect are served better by the system setting they already
-  // have set than by a control most visitors never touch.
   const rootRef = useRef<HTMLElement>(null);
   // Defaults to true, not false. The observer's job is to *stop* the timer
   // once this scrolls away — it must not be the thing that starts it. If the
@@ -80,7 +74,16 @@ export function ProgrammeShowcase({
     return () => observer.disconnect();
   }, []);
 
-  const running = inView && !reduceMotion;
+  // Advances regardless of prefers-reduced-motion. Gating the timer on it was
+  // wrong: a reader with "reduce motion" set — which Windows turns on whenever
+  // "Show animations" is off, so it is far from rare — got a dead page that
+  // never moved, with no way to tell it was meant to.
+  //
+  // Reduced motion changes the *transition*, not whether content advances:
+  // below, the drift and the vertical slide are dropped and only an opacity
+  // crossfade remains. Translation and zoom are what provoke vestibular
+  // symptoms; a fade does not.
+  const running = inView;
 
   useEffect(() => {
     if (!running) return;
