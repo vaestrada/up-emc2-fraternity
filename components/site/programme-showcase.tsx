@@ -122,7 +122,13 @@ export function ProgrammeShowcase({
     >
       {/* Imagery. Only the active frame is painted; the text for every slide
           lives in the DOM below regardless. */}
-      <AnimatePresence initial={false}>
+      {/* No initial={false} here. That flag suppresses enter animations on the
+          very first render, which meant the opening slide mounted already at
+          its final scale and only started drifting from slide two onward —
+          the one slide every visitor is guaranteed to see was the one that
+          sat still. The first image now fades up and begins its drift like
+          every other. */}
+      <AnimatePresence>
         <motion.div
           key={current.image}
           className="absolute inset-0"
