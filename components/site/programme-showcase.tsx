@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import { Container } from "@/components/site/container";
 
 export type ShowcaseItem = {
@@ -45,7 +45,6 @@ export function ProgrammeShowcase({
   eyebrow: string;
   title: string;
 }) {
-  const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
   // No pause control and no hover/focus hold: the rail is the only control,
   // and it never stops the run. Clicking a bar jumps to that slide and the
@@ -104,6 +103,16 @@ export function ProgrammeShowcase({
   const current = items[index];
 
   return (
+    /* The app wraps everything in MotionConfig reducedMotion="user", which
+       drops transform animations for readers who prefer reduced motion —
+       scale is a transform, so the slow drift was being stripped before this
+       component's own code ran. "never" opts this one section out.
+
+       This is a deliberate owner decision: the drift is wanted for every
+       reader, and the showcase already advances unconditionally. It is the
+       one place on the site that overrides the reader's motion preference,
+       and it is confined to this section rather than loosened globally. */
+    <MotionConfig reducedMotion="never">
     <section
       ref={rootRef}
       aria-roledescription="carousel"
@@ -124,8 +133,8 @@ export function ProgrammeShowcase({
         >
           <motion.div
             className="absolute inset-0"
-            initial={reduceMotion ? false : { scale: 1.06 }}
-            animate={reduceMotion ? undefined : { scale: 1.14 }}
+            initial={{ scale: 1.06 }}
+            animate={{ scale: 1.14 }}
             transition={{ duration: SLIDE_MS / 1000 + 2, ease: "linear" }}
           >
             <Image
@@ -169,7 +178,7 @@ export function ProgrammeShowcase({
         <div className="mt-7 min-h-[15rem] md:min-h-[13rem]" aria-live="polite" aria-atomic="true">
           <motion.div
             key={current.title}
-            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: EASE }}
           >
@@ -243,5 +252,6 @@ export function ProgrammeShowcase({
         </ul>
       </div>
     </section>
+    </MotionConfig>
   );
 }
