@@ -230,32 +230,6 @@ h3 {
   text-shadow: 0 1px 2px rgba(4, 21, 10, 0.7), 0 0 24px rgba(4, 21, 10, 0.5);
 }
 
-/* The seal drawing itself: every stroke has pathLength="1". */
-@keyframes seal-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-@keyframes seal-appear {
-  to {
-    opacity: 1;
-  }
-}
-.seal-stroke {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: seal-draw 1.6s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) forwards;
-}
-.seal-construction {
-  stroke-width: 0.5;
-  opacity: 0.45;
-}
-.seal-fill,
-.seal-text {
-  opacity: 0;
-  animation: seal-appear 1s ease-out 2.4s forwards;
-}
-
 ::selection {
   background: var(--frat-gold);
   color: var(--ink);

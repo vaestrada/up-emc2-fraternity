@@ -5,7 +5,7 @@ import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
 import { SectionLabel } from "@/components/site/section-label";
 import { BrodCard } from "@/components/site/brod-card";
-import { SealDrawing } from "@/components/site/seal-drawing";
+import { Seal } from "@/components/site/seal";
 import { YearScale } from "@/components/site/year-scale";
 import { Chronicle, type Chapter } from "@/components/site/chronicle";
 import { buttonVariants } from "@/components/ui/button";
@@ -213,17 +213,19 @@ export default function Home() {
           <div aria-hidden className="plate-ink absolute inset-0" />
           <div aria-hidden className="plate-hatch absolute inset-0" />
         </div>
-        <div aria-hidden className="absolute inset-0 bg-[var(--ink)]/30" />
-        <div aria-hidden className="absolute inset-x-0 bottom-0 h-[72%] bg-gradient-to-t from-[var(--ink)] via-[var(--ink)]/70 to-transparent" />
+        <div aria-hidden className="absolute inset-0 bg-[var(--ink)]/25" />
+        <div aria-hidden className="absolute inset-x-0 bottom-0 h-[64%] bg-gradient-to-t from-[var(--ink)] via-[var(--ink)]/60 to-transparent" />
 
-        <SealDrawing className="absolute top-28 right-6 hidden h-[34vh] w-auto md:block lg:right-12" />
+        {/* The seal in metal: one instance, right half on wide screens, top-left
+            above the name on phones. One WebGL context, not two. */}
+        <Seal className="absolute top-24 left-4 h-52 w-52 md:top-[9vh] md:right-0 md:left-auto md:h-[74vh] md:w-[44vw]" />
 
         <Container className="relative pt-44 pb-16 md:pb-24">
           <p className="hero-reveal label on-plate" style={delay(0)}>
             University of the Philippines · College of Engineering · Est. {FOUNDING_YEAR}
           </p>
           <h1
-            className="hero-reveal on-plate mt-6 font-display text-[clamp(2.75rem,7vw,6.5rem)] leading-[1] text-[var(--frat-cream)]"
+            className="hero-reveal on-plate mt-6 font-display text-[clamp(2.75rem,6vw,5.5rem)] leading-[1] text-[var(--frat-cream)]"
             style={delay(0.08)}
           >
             EMC&sup2; Fraternity

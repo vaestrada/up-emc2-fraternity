@@ -39,10 +39,11 @@ export function Navbar() {
         <Link href="/" onClick={() => setOpen(false)} aria-label="EMC² Fraternity, home">
           {/* Official lockup as issued; the mark is never re-typeset. */}
           <Image
-            src="/logo/emc2-lockup-white.png"
+            src="/logo/emc2-lockup-white.svg"
+            unoptimized
             alt="EMC² Fraternity — University of the Philippines"
-            width={400}
-            height={169}
+            width={464}
+            height={114}
             className="h-10 w-auto md:h-12"
             priority
           />

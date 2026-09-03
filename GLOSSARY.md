@@ -235,9 +235,9 @@ an engineer will recognise; see `HOMEPAGE-DIRECTIONS.md` for why each was chosen
 | **Parallax** | Background moves slower than foreground, giving depth. Ours is 14% over one viewport. | The hero photograph |
 | **Blend mode** | How a layer's colours combine with what is beneath: `color` keeps the underlying luminosity and applies the layer's hue; `multiply` darkens. | `.plate-ink`, `.plate-hatch` |
 | **Engraving / hatch** | Fine parallel lines that read as an etched plate; here a `repeating-linear-gradient` of 1px lines, multiplied over the photograph. | `.plate-hatch` |
-| **`pathLength`** | An SVG attribute that tells the browser to treat a path as if it were exactly that long, so `stroke-dasharray: 1` and `stroke-dashoffset: 1 → 0` draw any path, whatever its real length. | `components/site/seal-drawing.tsx` |
-| **Draw-on / line-drawing animation** | Animating dash offset so a stroke appears to be drawn by hand. | `.seal-stroke` |
-| **Construction lines** | In draughting, the faint circles and centre lines drawn before the object. Ours draw first at half weight. | `.seal-construction` |
+| **`pathLength`** | An SVG attribute that tells the browser to treat a path as if it were exactly that long, so `stroke-dasharray: 1` and `stroke-dashoffset: 1 → 0` draw any path, whatever its real length. | Used for the first seal drawing; retired the same day for the metal seal |
+| **Draw-on / line-drawing animation** | Animating dash offset so a stroke appears to be drawn by hand. | Retired with the seal drawing |
+| **Construction lines** | In draughting, the faint circles and centre lines drawn before the object. | Retired with the seal drawing |
 | **Scrollytelling** | Long-form pages where scrolling advances a narrative with a fixed element that updates. | `components/site/chronicle.tsx` |
 | **Sticky column** | `position: sticky` on one grid column so it holds while the other scrolls. | Same, `sticky top-44` |
 | **`IntersectionObserver`** | A browser API that reports when an element enters or leaves a region of the viewport, without listening to scroll events. | Same |
@@ -248,3 +248,24 @@ an engineer will recognise; see `HOMEPAGE-DIRECTIONS.md` for why each was chosen
 | **`text-wrap: balance`** | Lets the browser even out the line lengths of a heading so no single word is orphaned on the last line. | `globals.css` |
 | **View Transitions API** | Browser-native morph between two page states, including shared elements across navigations. Deferred here; see directions E. | `HOMEPAGE-DIRECTIONS.md` |
 | **Variable font axes** | A font with continuous weight, width, or optical-size axes set through `font-variation-settings`. Not used; see directions D. | Same |
+
+## 11. The seal in metal: real-time 3D
+
+| Term | What it means | Where it lives here |
+|---|---|---|
+| **WebGL** | The browser's API for drawing with the GPU. Everything 3D on the web runs on it (or its successor, WebGPU). | `components/site/seal-3d.tsx` |
+| **three.js** | The standard JavaScript 3D library: scenes, cameras, lights, materials, geometry, a renderer. | `three` in `package.json` |
+| **react-three-fiber (r3f)** | React bindings for three.js: a scene written as JSX (`<mesh>`, `<meshPhysicalMaterial>`) with hooks like `useFrame` for every rendered frame. | `Canvas`, `useFrame`, `useLoader` |
+| **Vector extraction** | Illustrator `.ai` files are PDF inside; `pdftocairo -svg` turns them into SVG paths with no fonts required. | `public/logo/*.svg` |
+| **SVGLoader** | three's loader that reads SVG paths into shapes the 3D engine can use. | `useLoader(SVGLoader, "/logo/emc2-mark.svg")` |
+| **Extrusion** | Giving a flat shape depth, so a 2D mark becomes a solid. `ExtrudeGeometry` with a **bevel** (a rounded or chamfered edge) is what makes the edges catch light. | `new THREE.ExtrudeGeometry(shapes, { depth, bevelEnabled })` |
+| **PBR material** | Physically based rendering: `metalness` and `roughness` describe a surface the way a material scientist would, and light behaves accordingly. Gold is metalness 1; enamel is low metalness with a **clearcoat** (a glossy varnish layer). | `meshPhysicalMaterial` |
+| **Environment map / image-based lighting** | A 360° image the material reflects. Metal looks like metal only with one. `RoomEnvironment` is three's procedural studio; `PMREMGenerator` prefilters it for each roughness. | `installEnvironment()` |
+| **Key light / rim light** | Studio terms: the main light from one side, and a light from behind or opposite that outlines the edge. | The two `directionalLight`s |
+| **Frame loop / `useFrame`** | A function run before each frame (about 60 per second) to update positions and rotations. Motion in 3D is written here, not in CSS. | The entrance, idle turn, pointer tilt, scroll recession |
+| **Easing in code** | The same idea as CSS easing, as a function: `1 - (1 - t)^4` is an ease-out quart. | `EASE` |
+| **Lerp / damping** | Moving a value part of the way toward its target every frame (`x += (target - x) * 0.06`), which gives smooth, inertial motion for free. | The rotation follow |
+| **Device pixel ratio (`dpr`)** | How many physical pixels per CSS pixel. Capping it at 1.5 keeps a Retina screen from rendering four times the pixels. | `dpr={[1, 1.5]}` |
+| **Context loss** | The GPU can drop a WebGL context under pressure. A page must expect it: ours hands the seal back to the flat mark. | `webglcontextlost` listener |
+| **Code splitting / `next/dynamic`** | Loading a heavy module only when needed, only in the browser, so the rest of the page does not pay for it. | `dynamic(() => import("./seal-3d"), { ssr: false })` |
+| **Progressive enhancement (again)** | The flat vector mark paints first and stays if WebGL is unavailable; the metal seal is added on top when it can be. | `components/site/seal.tsx` |

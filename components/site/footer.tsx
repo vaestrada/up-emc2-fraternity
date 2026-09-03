@@ -13,10 +13,11 @@ export function Footer() {
       <Container className="grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:py-20">
         <div>
           <Image
-            src="/logo/emc2-lockup-white.png"
+            src="/logo/emc2-lockup-white.svg"
+            unoptimized
             alt="EMC² Fraternity — University of the Philippines"
-            width={400}
-            height={169}
+            width={464}
+            height={114}
             className="h-12 w-auto"
           />
           <p className="mt-6 max-w-xs text-[15px] leading-relaxed text-[var(--frat-cream)]/65">
