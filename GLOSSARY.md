@@ -11,27 +11,27 @@ review, a pull request, or a conversation with an engineer.
 
 | Term | What it means | Where it lives here |
 |---|---|---|
-| **Hero** | The first full screen a visitor sees. It carries one idea and one action. | `app/page.tsx` — the "engraved monument" section; `components/site/cinematic-hero.tsx` |
+| **Hero** | The first full screen a visitor sees. It carries one idea and one action. | `app/page.tsx`, a full-bleed photograph with the name bottom-left; `components/site/page-hero.tsx` for inner pages |
 | **Above the fold** | Whatever is visible before scrolling. Borrowed from newspapers. The hero is above the fold. | Same |
-| **Eyebrow** | The small line of text *above* a heading that names the section or category, e.g. `№ 01 — The Credo`. | Every section; `components/site/page-hero.tsx` takes an `eyebrow` prop |
+| **Eyebrow / section label** | The small line of text *above* a heading that names the section. Ours is small Roman capitals in gold with a short rule beneath. | `.label` in `globals.css`; `components/site/section-label.tsx` |
 | **Wordmark** | The organisation's name set as designed text. Distinct from a **logo mark** (the symbol) and a **lockup** (name + symbol locked together). | Hero `h1` is the wordmark; `public/logo/emc2-mark.png` is the mark; `emc2-lockup-white.png` is the lockup |
 | **Navbar / header** | The fixed strip at the top with links. | `components/site/navbar.tsx` |
 | **Sticky / fixed header** | A header that stays put while the page scrolls. `position: fixed` in CSS. | `navbar.tsx` — `fixed inset-x-0 top-0` |
-| **Backdrop blur** | Frosted-glass effect behind a translucent element. | `navbar.tsx` — `backdrop-blur-md` |
-| **CTA (call to action)** | The button you want people to press. A page has one **primary CTA** and at most one secondary. | "Enter the Archive" (primary, gold) and "Give Back" (secondary, outline) |
-| **Marquee** | A strip of text scrolling sideways forever. | `components/site/marquee.tsx` |
-| **Stat band / stats strip** | A row of big numbers with small labels. | Homepage "Year Founded · Years of Brotherhood · Brods on Record" |
+| **Backdrop blur** | Frosted-glass effect behind a translucent element. | Retired from the navbar; a solid bar reads calmer |
+| **CTA (call to action)** | The button you want people to press. A page has one **primary CTA** and at most one secondary. | "Give Back" (primary, gold) and "Read the history" (secondary, a text link) |
+| **Marquee** | A strip of text scrolling sideways forever. | Retired 3 Sep 2026; see section 9 |
+| **Stat band / stats strip** | A row of big numbers with small labels. | Replaced by the facts list on the homepage; see section 9 |
 | **Ledger / register / roll** | The archive's names for lists: a ledger of projects, a register of members, a roll of patrons. | `/projects`, `/brods`, `/donate` |
 | **Card** | A bordered box that groups related content. | `components/ui/card.tsx` |
 | **Plate / figure** | A photograph mounted with a caption, the way a plate sits in a printed record. `Fig. 01` is a figure caption. | `components/site/archive-plates.tsx` |
 | **Timeline** | A vertical list of dated milestones. | `/history` "Milestones" |
-| **Bulletin / notices** | Dated announcements, shown only while relevant. | Homepage "Notices — The Bulletin" |
+| **Bulletin / notices** | Dated announcements, shown only while relevant. | Homepage "Notices" |
 | **Footer** | The bottom strip: secondary links, legal line, social links. | `components/site/footer.tsx` |
 | **Skip link** | A hidden link that appears on keyboard focus so screen-reader and keyboard users can jump past the navigation. | `app/layout.tsx` — "Skip to content" |
 | **Empty state** | What a section shows when it has no data yet. Ours are honest: "Entry pending — the current council". | `/brods` Council, `/history` Founders |
 | **Modal / lightbox** | An overlay that takes over the screen, e.g. a photo enlarged with a close button. | `components/site/photo-gallery.tsx` |
-| **Carousel / showcase** | Content that advances one slide at a time. Ours is a full-screen "showcase" with a progress rail. | `components/site/programme-showcase.tsx` |
-| **Progress rail** | The thin bars showing which slide you are on and how long until the next. | Same file |
+| **Carousel / showcase** | Content that advances one slide at a time. | Retired 3 Sep 2026; the programme is a list now |
+| **Progress rail** | The thin bars showing which slide you are on and how long until the next. | Retired with the carousel |
 | **404 page / not-found** | What renders when a URL does not exist. | `app/not-found.tsx` |
 
 ## 2. Design language
@@ -42,42 +42,42 @@ review, a pull request, or a conversation with an engineer.
 | **Design tokens** | Named values (`--frat-gold`, `--hairline`) used instead of raw numbers, so a change in one place changes everything. | `app/globals.css` `:root` block |
 | **Palette** | The set of colours. Ours is **committed**: one green field, scarce gold, cream for reading. | `DESIGN.md` §Color |
 | **Hairline** | A very thin (1px) rule or border, usually at low opacity. | `--hairline`; `border-[var(--hairline)]` everywhere |
-| **Duotone** | A photo re-coloured into two tones (here green shadows, warm highlights) so every image sits in the same world. Done with a CSS `filter`. | `.duotone` in `globals.css` |
-| **Film grain** | A faint noise texture over the whole page to make flat colour feel like paper or film. | `body::after` in `globals.css` |
-| **Blueprint grid** | A faint drafting grid as a background — "engineering is the ornament". | `.blueprint` |
-| **Display face / body face / mono face** | Fonts by role: display for headlines (Cinzel), serif for italic mottos (Cormorant), sans for body (Geist), monospace for labels and captions (Geist Mono). | `app/layout.tsx` font loading |
-| **Tracking** | Letter-spacing. Eyebrows are set with wide tracking (`tracking-[0.4em]`). | Everywhere on eyebrows |
+| **Duotone** | A photo re-coloured into two tones so every image sits in the same world. Done with a CSS `filter`. | Retired 3 Sep 2026; photographs run in colour |
+| **Film grain** | A faint noise texture over the whole page to make flat colour feel like paper or film. | Retired 3 Sep 2026 |
+| **Blueprint grid** | A faint drafting grid as a background. | Retired 3 Sep 2026 |
+| **Display face / body face / mono face** | Fonts by role: display for titles and the section label (Cinzel), serif for lead lines, item titles, and quotes (Cormorant), sans for body and captions (Geist), monospace only for reference numbers in the admin (Geist Mono). | `app/layout.tsx` font loading; roles in `DESIGN.md` |
+| **Tracking** | Letter-spacing. The section label is tracked 0.22em; buttons 0.14em. | `.label` in `globals.css` |
 | **Leading** | Line height. `leading-tight`, `leading-relaxed`. | Headings vs. paragraphs |
 | **Type scale / fluid type** | Sizes that grow with the viewport. `clamp(2.1rem, 6.6vw, 5.2rem)` means "never smaller than 2.1rem, never larger than 5.2rem, otherwise 6.6% of viewport width". | Hero `h1` |
 | **Contrast ratio** | How readable text is against its background. WCAG AA wants 4.5:1 for body text. Cream on our green is ~14.8:1. Gold on cream is 2.45:1 and fails, which is why gold is never on cream. | `PRODUCT.md`, `REVIEW-2026-08-26.md` |
 | **Anti-references** | Things the design must *not* look like. Naming them is how you keep AI-generated pages from drifting into the same three defaults. | `PRODUCT.md` §Anti-references |
 | **Register (of voice)** | The tone of the copy: ours is "a state hall, not a startup". | `PRODUCT.md` |
-| **Corner ticks** | The small L-shaped marks at the corners of the hero's certificate frame. | Hero frame in `app/page.tsx` |
+| **Corner ticks** | The small L-shaped marks at the corners of a certificate frame. | Retired 3 Sep 2026 |
 | **Ornament vs. evidence** | Our rule for generated imagery: it may set a mood (ornament) but never depict a real event (evidence). | `ATTRIBUTION.md` |
 
 ## 3. Motion and animation
 
 | Term | What it means | Where it lives here |
 |---|---|---|
-| **Framer Motion** | The React animation library this site uses (`motion.div`, `AnimatePresence`, `useInView`). | `components/motion/*`, `programme-showcase.tsx`, `roadmap-mockups.tsx` |
+| **Framer Motion** | The React animation library this site uses (`motion.div`, `AnimatePresence`, `useInView`). | `components/motion/*`, `roadmap-mockups.tsx` |
 | **Reveal (scroll reveal)** | Content fades and rises into place the first time it scrolls into view. | `components/motion/reveal.tsx` |
 | **Variants** | Named animation states ("hidden", "visible") declared once and reused. | `reveal.tsx` `effects` object |
 | **Stagger** | Starting sibling animations a little apart so they cascade instead of popping together. | `delay={i * 0.15}` on the credo lines |
 | **Easing** | The speed curve of an animation. `cubic-bezier(0.22, 1, 0.36, 1)` is an **ease-out quint**: fast start, long soft landing. "Apple's" curve. | `EASE` constants; `.hero-reveal` |
 | **Spring** | Physics-based motion defined by stiffness and damping rather than duration. Used for the success checkmark. | `components/site/form-success.tsx` |
-| **Ken Burns** | Slow zoom/pan on a still photo, named after the documentary maker. | `.animate-kenburns`; the showcase's `scale: 1.06 → 1.14` drift |
-| **Engrave (blur-to-sharp)** | Our name for a title that resolves from a blur, like an inscription coming into focus. | `effect="engrave"`; `.hero-reveal-engrave` |
-| **Light sweep** | A single band of light passing across a surface once. | `.animate-light-sweep` |
-| **Rule draw** | A line that draws itself outward from its centre (`scaleX` from 0 to 1). | `.animate-rule-draw` |
-| **Scroll scrubbing / scroll-driven video** | Mapping scroll position to a video's playhead, so scrolling *is* the timeline. Pinned with `position: sticky`. | `components/site/scroll-cinematic.tsx` |
-| **Pinned section / sticky track** | A tall wrapper whose inner screen sticks while you scroll through it. | Same — `heightVh` is the track length |
-| **Crossfade** | One thing fades out while the next fades in. | Showcase image transitions |
+| **Ken Burns** | Slow zoom or pan on a still photo, named after the documentary maker. | Retired 3 Sep 2026 |
+| **Engrave (blur-to-sharp)** | A title that resolves from a blur. | Retired 3 Sep 2026; titles rise and fade only |
+| **Light sweep** | A single band of light passing across a surface once. | Retired 3 Sep 2026 |
+| **Rule draw** | A line that draws itself outward from its centre. | Retired 3 Sep 2026 |
+| **Scroll scrubbing / scroll-driven video** | Mapping scroll position to a video's playhead, so scrolling *is* the timeline. | Retired 3 Sep 2026 with the AI-generated sequences |
+| **Pinned section / sticky track** | A tall wrapper whose inner screen sticks while you scroll through it. | Retired with scroll scrubbing |
+| **Crossfade** | One thing fades out while the next fades in. | Roadmap mockups |
 | **Enter / exit animation** | Motion when an element appears or disappears. `AnimatePresence` is what lets React animate something that is leaving. | `programme-showcase.tsx`, `profile-form.tsx` "Saved." |
-| **Counter / number tween** | Animating a number from 0 to its value. | `components/motion/counter.tsx` |
+| **Counter / number tween** | Animating a number from 0 to its value. | `components/motion/counter.tsx`, roadmap mockups only |
 | **rAF (requestAnimationFrame)** | Asking the browser to run code right before the next frame; the correct way to drive per-frame animation. | `counter.tsx`, `scroll-cinematic.tsx` |
 | **prefers-reduced-motion** | An operating-system setting that says "less animation, please". Every animation here honours it. | `globals.css` bottom; `MotionConfig reducedMotion="user"` |
-| **Ambient loop** | A long, slow, low-opacity animation that lives in the background (the seal rotating once every 90s). | `.animate-spin-slow` |
-| **Ceremonial restraint** | Our motion principle: few, slow, decisive; stillness is the default. | `DESIGN.md` §Motion |
+| **Ambient loop** | A long, slow, low-opacity animation that lives in the background. | Retired 3 Sep 2026 |
+| **Stillness** | The motion principle now: two movements exist (title rise, section rise) and nothing loops. | `DESIGN.md`, Motion |
 
 ## 4. The framework — Next.js and React
 
@@ -196,3 +196,28 @@ review, a pull request, or a conversation with an engineer.
 | **AI slop** | Generic, default-looking AI output: gradient text, glass cards, icon grids, stock strangers. The anti-references exist to prevent it. | `PRODUCT.md` |
 | **Skill (Claude Code)** | A written procedure an AI coding session follows, so a workflow is repeatable without re-explaining it. | `.claude/skills/emc2-publish/SKILL.md` |
 | **MCP (Model Context Protocol)** | The standard that lets an AI session talk to tools — Supabase, Vercel, Google Drive — directly. | `.mcp.json` |
+
+## 9. What was removed on 3 September 2026, and why
+
+The August design used a set of devices that are each reasonable and, together, are the
+recognisable house style of AI-generated websites. Learning to name them is how you spot
+them in a review before a visitor does.
+
+| Device | Why it reads as generated | What replaced it |
+|---|---|---|
+| Monospace, uppercase, widely tracked labels on everything | The most common default of current design models; it signals "template" the moment it appears on captions and buttons too | One label style: small Roman capitals in the lockup's own face, once per section |
+| Section numbering and figure captions in the archive manner | A stylistic tic borrowed from award-site templates, not from any real archive | Plain section names; sentence-case captions |
+| Stacked atmosphere: grain, grid, watermark, sweep, breathing frame, Ken Burns | Effects layered to manufacture "premium"; a real institution's site is still | Nothing. The surface is the green field |
+| Marquee with star separators | Startup landing-page furniture | Removed |
+| Duotone-filtered photographs | A filter hides that the photographs are real, which is the one thing they should show | Colour photographs, cropped out of their printed frames |
+| Icons in circles, icon-card grids | The component-library default | Rows with hairlines |
+| Dashed "pending" boxes with a tinted fill | A callout pattern from documentation sites | A left gold rule and a sentence |
+| Animated counters and a stat band | Metrics theatre | A facts list |
+| Scroll-scrubbed and AI-generated video | The single strongest "generated" signal, and a Largest Contentful Paint cost | Removed; the real photographs carry the pages |
+| The knowing, em-dash voice ("no checkout yet, so no pretending there is one") | The model's default register when asked to sound honest | Declarative sentences that state the fact |
+
+**How to check a page for it in ten seconds:** count the fonts on screen (should be three at
+most), count the effects that move without you (should be zero after the page settles), find
+any text set in uppercase that is not a label or a button, and look for any photograph that is
+not real. If a section would still be correct without a device, the device is decoration, and
+decoration is where the generated look lives.

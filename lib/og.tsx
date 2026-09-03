@@ -43,11 +43,7 @@ export async function renderOgImage({ eyebrow, title }: { eyebrow: string; title
           flexDirection: "column",
           justifyContent: "space-between",
           backgroundColor: "#04150a",
-          backgroundImage:
-            "linear-gradient(135deg, #071e0c 0%, #04150a 60%), " +
-            "linear-gradient(rgba(195,143,14,0.08) 1px, transparent 1px), " +
-            "linear-gradient(90deg, rgba(195,143,14,0.08) 1px, transparent 1px)",
-          backgroundSize: "100% 100%, 48px 48px, 48px 48px",
+          backgroundImage: "linear-gradient(135deg, #071e0c 0%, #04150a 60%)",
           padding: "72px 80px",
           fontFamily: "Cormorant",
         }}

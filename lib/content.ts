@@ -64,16 +64,16 @@ export type Bulletin = { date: string; title: string; body?: string; href?: stri
 export const bulletin: Bulletin[] = [
   {
     date: "February 2027",
-    title: "The 58th Anniversary — save the date",
+    title: "The 58th Anniversary: save the date",
     body:
-      "Gimenez Gallery, College of Fine Arts, U.P. Diliman. Put your name down now; the awards, sponsorships, souvenir programme, and tickets open later in the year, and everyone on the list hears first.",
+      "Gimenez Gallery, College of Fine Arts, U.P. Diliman. Put your name down now. The awards, sponsorships, souvenir programme, and tickets open later in the year, and everyone on the list hears first.",
     href: "/anniversary",
   },
   {
     date: "September 2026",
     title: "The Member Portal opens, by invitation",
     body:
-      "Keep your own record current and find brods who have opted into the directory. A board member verifies each brod against the roster before an invite goes out — ask the Alumni Association for yours.",
+      "Keep your own record current and find brods who have opted into the directory. A board member verifies each brod against the roster before an invite goes out. Ask the Alumni Association for yours.",
     href: "/portal",
   },
 ];
@@ -188,7 +188,7 @@ export const prominentBrods: Brod[] = [
     honor: "Outstanding Structural Engineer",
     detail:
       "Recognized by the Association of Structural Engineers of the Philippines (ASEP) for excellence in structural engineering practice.",
-    image: "/photos/brod-ison.jpg",
+    image: "/photos/brod-ison-portrait.jpg",
   },
   {
     slug: "erickson-salanguit",
@@ -197,7 +197,7 @@ export const prominentBrods: Brod[] = [
     honor: "Board of Trustees, UP Alumni Engineers",
     detail:
       "Serving on the 2026 Board of Trustees of the UP Alumni Engineers, carrying the brotherhood's name into University-wide alumni leadership.",
-    image: "/photos/brod-salanguit.jpg",
+    image: "/photos/brod-salanguit-portrait.jpg",
   },
 
   // --- SYNTHETIC DEMO CONTENT — remove before public launch --------------------

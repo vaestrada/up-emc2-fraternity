@@ -43,17 +43,17 @@ export default function PrivacyPage() {
           {SECTIONS.map((s, i) => (
             <Reveal key={s.h} delay={i * 0.08}>
               <div>
-                <h2 className="font-mono text-[11px] tracking-[0.35em] text-[var(--frat-gold)] uppercase">
+                <h2 className="label">
                   {s.h}
                 </h2>
-                <p className="mt-4 leading-relaxed text-[var(--frat-cream)]/70">{s.p}</p>
+                <p className="prose-archive mt-4 text-[17px] leading-[1.7]">{s.p}</p>
               </div>
             </Reveal>
           ))}
           <Reveal delay={0.4}>
             <p className="border-t border-[var(--hairline)] pt-8 text-sm leading-relaxed text-[var(--frat-cream)]/60">
-              This is the Association&rsquo;s current, good-faith commitment; a fuller written policy will be
-              published as the Association formalizes it. Questions?{" "}
+              This is the Association&rsquo;s current, good-faith commitment. A fuller written policy will be
+              published as the Association formalises it. Questions?{" "}
               <a href="/contact" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
                 Contact us
               </a>

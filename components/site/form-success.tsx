@@ -28,7 +28,7 @@ export function FormSuccess({ title, body }: { title: string; body: string }) {
         initial={reduceMotion ? false : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.15, ease: EASE }}
-        className="mt-5 font-display text-2xl text-[var(--frat-gold-light)]"
+        className="mt-5 font-serif text-2xl font-semibold text-[var(--frat-cream)]"
       >
         {title}
       </motion.p>

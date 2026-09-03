@@ -48,9 +48,9 @@ export default async function DirectoryPage() {
   return (
     <>
       <PageHero
-        eyebrow="№ 07 — The Directory"
+        eyebrow="The Directory"
         title="The Brotherhood, Found"
-        description={`${rows.length} brod${rows.length === 1 ? "" : "s"} listed — everyone here chose to be found. Each member controls their own visibility from their Portal record.`}
+        description={`${rows.length} brod${rows.length === 1 ? "" : "s"} listed. Everyone here chose to be found, and each member controls their own visibility from their Portal record.`}
       />
 
       <section className="py-24">
@@ -73,7 +73,7 @@ export default async function DirectoryPage() {
                 <Reveal key={m.id} delay={Math.min(i, 12) * 0.03} className="h-full">
                   <div className="group flex h-full flex-col gap-3 bg-[var(--canvas)] p-6 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[var(--frat-gold)]/[0.04]">
                     <div>
-                      <p className="font-display text-lg text-[var(--frat-cream)] transition-colors duration-500 group-hover:text-[var(--frat-gold-light)]">
+                      <p className="font-serif text-xl font-semibold text-[var(--frat-cream)]">
                         {m.full_name}
                         {m.nickname ? (
                           <span className="ml-2 text-sm font-normal text-[var(--frat-cream)]/60">
@@ -82,7 +82,7 @@ export default async function DirectoryPage() {
                         ) : null}
                       </p>
                       {m.batch ? (
-                        <p className="mt-1 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-gold-light)] uppercase">
+                        <p className="mt-1 label">
                           Batch {m.batch}
                         </p>
                       ) : null}

@@ -4,5 +4,5 @@ export const size = ogSize;
 export const contentType = ogContentType;
 
 export default async function Image() {
-  return renderOgImage({ eyebrow: "№ 04 — Citations", title: "Excellence, on the Record" });
+  return renderOgImage({ eyebrow: "Citations", title: "Excellence, on the Record" });
 }

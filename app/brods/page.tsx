@@ -3,13 +3,13 @@ import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { BrodCard } from "@/components/site/brod-card";
 import { Reveal } from "@/components/motion/reveal";
-import { ScrollCinematic } from "@/components/site/scroll-cinematic";
+import { SectionLabel } from "@/components/site/section-label";
 import { prominentBrods, officers, inMemoriam, FOUNDING_YEAR } from "@/lib/content";
-import { DEMO_CONTENT, withoutDemo } from "@/lib/demo";
+import { withoutDemo } from "@/lib/demo";
 
 export const metadata: Metadata = {
   title: "Prominent Brods",
-  description: "Brods of the EMC² Fraternity recognized for excellence, honor, and service.",
+  description: "Brods of the EMC² Fraternity recognised for excellence, honour, and service.",
 };
 
 export default function BrodsPage() {
@@ -17,110 +17,89 @@ export default function BrodsPage() {
   return (
     <>
       <PageHero
-        eyebrow="№ 04 — Citations"
-        title="Excellence, on the Record"
+        eyebrow="Citations"
+        title="Prominent Brods"
         description="Brothers who carry the credo into their professions, public service, and the University's alumni community."
       />
 
-      <section className="py-24">
+      <section className="border-b border-[var(--hairline)] py-20 md:py-28">
         <Container>
-          <div className="grid gap-10 md:grid-cols-2">
+          <div className="grid gap-12 md:grid-cols-2 md:gap-14 lg:grid-cols-3">
             {brods.map((brod, i) => (
-              <Reveal key={brod.slug} delay={i * 0.1}>
-                <BrodCard brod={brod} index={i} />
+              <Reveal key={brod.slug} delay={(i % 3) * 0.06}>
+                <BrodCard brod={brod} />
               </Reveal>
             ))}
           </div>
 
           <Reveal className="mt-16">
-            <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-center text-sm text-[var(--frat-cream)]/70">
-              This record is just beginning. If your batch has a brod who deserves a citation here —
-              in engineering, public service, business, or the arts —{" "}
-              <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
-                submit a citation
-              </a>
-              .
+            <div className="max-w-2xl border-l-2 border-[var(--frat-gold)]/50 pl-6">
+              <p className="label">Nominations</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
+                This record is just beginning. If your batch has a brod who deserves a citation here,
+                in engineering, public service, business, or the arts,{" "}
+                <a href="/contribute" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+                  submit a citation
+                </a>
+                .
+              </p>
             </div>
           </Reveal>
         </Container>
       </section>
 
-      {/* Preview — the four synthetic citations above, in motion. AI-generated
-          placeholders (see lib/content.ts), not real brods; framed here the
-          same way the /history "Brotherhood Life" preview is — clearly a
-          preview, not documentation. Gated with the rest of the demo content. */}
-      {DEMO_CONTENT ? (
-        <ScrollCinematic
-          src="/quantum-leap/demo-brods-scroll.mp4"
-          poster="/quantum-leap/demo-brods-poster.jpg"
-          eyebrow="Preview — A Fuller Register"
-          title="A Glimpse of What the Register Could Hold"
-          description="Four AI-generated placeholder citations, not real brods — a preview of what a fuller register could look like once more of the brotherhood's own citations come in."
-          heightVh={200}
-        />
-      ) : null}
-
-      {/* The Register — non-PII aggregate */}
-      <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-24">
-        <Container className="max-w-3xl">
+      {/* The register */}
+      <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
+        <Container className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
           <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-              № 04.2 — The Register
-            </p>
-            <h2 className="mt-6 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
-              Four hundred ninety, and counting
+            <SectionLabel>The register</SectionLabel>
+            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              Four hundred ninety, and counting.
             </h2>
           </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-6 leading-relaxed text-[var(--frat-cream)]/70">
+          <Reveal delay={0.08}>
+            <p className="lead">
               The brotherhood&rsquo;s roster runs from the ten founding scholars of {FOUNDING_YEAR} to
-              today&rsquo;s active brods — <strong className="text-[var(--frat-cream)]">490+ names on record</strong>.
-              The citations above are the first formal entries in a register the Association is still building,
-              batch by batch.
+              today&rsquo;s active brods: 490 names on record.
+            </p>
+            <p className="prose-archive mt-6 text-[17px] leading-[1.7]">
+              The citations above are the first formal entries in a register the Association is
+              still building, batch by batch.
             </p>
           </Reveal>
         </Container>
       </section>
 
-      {/* The Council — current officers */}
-      <section className="blueprint border-t border-[var(--hairline)] py-24">
-        <Container>
+      {/* The council */}
+      <section className="border-b border-[var(--hairline)] py-20 md:py-28">
+        <Container className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
           <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-              № 04.1 — The Council
-            </p>
-            <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
-              Those who steward the brotherhood today
+            <SectionLabel>The council</SectionLabel>
+            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              Those who steward the brotherhood today.
             </h2>
           </Reveal>
-
           {officers.length > 0 ? (
-            <div className="mt-12 grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] sm:grid-cols-2 lg:grid-cols-3">
+            <div className="border-t border-[var(--hairline)]">
               {officers.map((officer, i) => (
-                <Reveal key={`${officer.role}-${officer.name}`} delay={(i % 3) * 0.08}>
-                  <div className="h-full bg-[var(--canvas)] p-6">
-                    <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase">
-                      {officer.role}
-                    </p>
-                    <p className="mt-3 font-display text-xl text-[var(--frat-cream)]">{officer.name}</p>
-                    {officer.batch ? (
-                      <p className="mt-1 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
-                        Batch {officer.batch}
-                      </p>
-                    ) : null}
+                <Reveal key={`${officer.role}-${officer.name}`} delay={i * 0.04}>
+                  <div className="grid grid-cols-[1fr_auto] items-baseline gap-6 border-b border-[var(--hairline)] py-5">
+                    <div>
+                      <p className="font-serif text-xl font-semibold text-[var(--frat-cream)]">{officer.name}</p>
+                      <p className="caption mt-1">{officer.role}</p>
+                    </div>
+                    {officer.batch ? <p className="caption">Batch {officer.batch}</p> : null}
                   </div>
                 </Reveal>
               ))}
             </div>
           ) : (
-            <Reveal delay={0.1} className="mt-12">
-              <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm leading-relaxed text-[var(--frat-cream)]/70">
-                <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase">
-                  Entry pending — the current council
-                </p>
-                <p className="mt-3">
-                  The roster of the brotherhood&rsquo;s current officers is being confirmed and
-                  will be inscribed here.
+            <Reveal delay={0.08}>
+              <div className="border-l-2 border-[var(--frat-gold)]/50 pl-6">
+                <p className="label">Entry pending</p>
+                <p className="mt-3 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
+                  The roster of the brotherhood&rsquo;s current officers is being confirmed and will be
+                  inscribed here.
                 </p>
               </div>
             </Reveal>
@@ -128,39 +107,34 @@ export default function BrodsPage() {
         </Container>
       </section>
 
-      {/* In Memoriam */}
-      <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-24">
-        <Container className="max-w-3xl text-center">
+      {/* In memoriam */}
+      <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
+        <Container className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
           <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-              In Memoriam
-            </p>
-            <h2 className="mt-6 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
-              Brods who have gone ahead
+            <SectionLabel>In memoriam</SectionLabel>
+            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              Brods who have gone ahead.
             </h2>
           </Reveal>
-
           {inMemoriam.length > 0 ? (
-            <ul className="mt-12 space-y-6 text-left">
+            <ul className="border-t border-[var(--hairline)]">
               {inMemoriam.map((m) => (
                 <Reveal key={`${m.name}-${m.years ?? ""}`}>
-                  <li className="border-b border-[var(--hairline)] pb-6">
-                    <p className="font-serif text-2xl text-[var(--frat-cream)]">{m.name}</p>
-                    <p className="mt-1 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
+                  <li className="border-b border-[var(--hairline)] py-5">
+                    <p className="font-serif text-2xl font-semibold text-[var(--frat-cream)]">{m.name}</p>
+                    <p className="caption mt-1">
                       {[m.batch ? `Batch ${m.batch}` : null, m.years].filter(Boolean).join(" · ")}
                     </p>
-                    {m.note ? (
-                      <p className="mt-3 leading-relaxed text-[var(--frat-cream)]/70">{m.note}</p>
-                    ) : null}
+                    {m.note ? <p className="mt-3 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">{m.note}</p> : null}
                   </li>
                 </Reveal>
               ))}
             </ul>
           ) : (
-            <Reveal delay={0.1}>
-              <p className="mx-auto mt-8 max-w-md font-serif text-xl italic leading-relaxed text-[var(--frat-cream)]/70">
-                A place of remembrance is being prepared, so the brothers we have lost are never
-                absent from the record.
+            <Reveal delay={0.08}>
+              <p className="lead text-[var(--frat-cream)]/75">
+                A place of remembrance is being prepared, so the brothers we have lost are never absent
+                from the record.
               </p>
             </Reveal>
           )}

@@ -51,7 +51,7 @@ export function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
               src={photo.src}
               alt={photo.alt}
               fill
-              className="duotone object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover"
               sizes="(min-width: 768px) 30vw, 45vw"
             />
           </button>
@@ -101,12 +101,12 @@ export function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
                 src={photos[openIndex].src}
                 alt={photos[openIndex].alt}
                 fill
-                className="duotone object-contain"
+                className="object-contain"
                 sizes="90vw"
                 priority
               />
             </div>
-            <p className="mt-5 text-center font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
+            <p className="caption mt-5 text-center">
               {photos[openIndex].caption}
             </p>
           </div>

@@ -39,7 +39,7 @@ const SPRING = { type: "spring", stiffness: 300, damping: 30, mass: 0.8 } as con
 
 function Chip({ label }: { label: string }) {
   return (
-    <span className="absolute top-3 right-3 z-10 border border-[var(--frat-gold)]/60 bg-[var(--ink)]/80 px-2 py-1 font-mono text-[9px] tracking-[0.2em] text-[var(--frat-gold-light)] uppercase backdrop-blur-sm">
+    <span className="absolute top-3 right-3 z-10 border border-[var(--frat-gold)]/60 bg-[var(--ink)]/80 px-2 py-1 font-sans text-[9px] tracking-[0.2em] text-[var(--frat-gold-light)] uppercase backdrop-blur-sm">
       {label}
     </span>
   );
@@ -52,7 +52,7 @@ function Stage({ children, chip }: { children: React.ReactNode; chip: string }) 
   return (
     <div
       aria-hidden="true"
-      className="blueprint relative flex h-full min-h-[380px] items-center justify-center overflow-hidden border border-[var(--hairline)] bg-[var(--ink)] p-8 md:min-h-[440px]"
+      className="relative flex h-full min-h-[380px] items-center justify-center overflow-hidden border border-[var(--hairline)] bg-[var(--ink)] p-8 md:min-h-[440px]"
     >
       <Chip label={chip} />
       {children}
@@ -108,10 +108,10 @@ export function DuesMockup() {
           transition={{ ...SPRING, delay: 0.3 }}
         >
           <CheckCircle2 className="h-5 w-5" strokeWidth={1.5} />
-          <p className="font-mono text-[10px] tracking-[0.2em] uppercase">Recorded, Brod</p>
+          <p className="font-sans text-[10px] tracking-[0.2em] uppercase">Recorded, Brod</p>
         </motion.div>
         <p className="mt-5 font-display text-4xl text-[var(--frat-cream)]">₱500.00</p>
-        <p className="mt-1 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/50 uppercase">
+        <p className="mt-1 font-sans text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/50 uppercase">
           AY 2026&ndash;2027 &middot; GCash &middot; Ref. 1029&hellip;
         </p>
         <div className="mt-6 grid grid-cols-4 gap-2">
@@ -149,7 +149,7 @@ export function AdminQueueMockup() {
     <Stage chip="Live — sample figures">
       <Rise className="w-full max-w-md border border-[var(--hairline)] bg-[var(--canvas)]">
         <div className="flex items-center justify-between border-b border-[var(--hairline)] px-5 py-3">
-          <p className="font-mono text-[9px] tracking-[0.25em] text-[var(--frat-gold)] uppercase">
+          <p className="font-sans text-[9px] tracking-[0.25em] text-[var(--frat-gold)] uppercase">
             The Register &mdash; Moderation
           </p>
           <ShieldCheck className="h-4 w-4 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
@@ -157,7 +157,7 @@ export function AdminQueueMockup() {
         <div className="grid grid-cols-3 divide-x divide-[var(--hairline)]">
           {TILES.map((t) => (
             <div key={t.label} className="px-4 py-5">
-              <p className="font-mono text-[8px] tracking-[0.2em] text-[var(--frat-cream)]/50 uppercase">{t.label}</p>
+              <p className="font-sans text-[8px] tracking-[0.2em] text-[var(--frat-cream)]/50 uppercase">{t.label}</p>
               <p className="mt-2 font-display text-3xl text-[var(--frat-gold-light)]">
                 <Counter to={t.value} duration={1.4} />
               </p>
@@ -179,7 +179,7 @@ export function AdminQueueMockup() {
           <motion.span
             animate={reduceMotion ? {} : { y: [0, 3, 0] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: 1.8 }}
-            className="flex items-center gap-1 font-mono text-[9px] tracking-[0.2em] text-[var(--frat-gold-light)] uppercase"
+            className="flex items-center gap-1 font-sans text-[9px] tracking-[0.2em] text-[var(--frat-gold-light)] uppercase"
           >
             <Download className="h-3 w-3" strokeWidth={1.75} /> CSV
           </motion.span>
@@ -209,7 +209,7 @@ export function CheckoutMockup() {
   return (
     <Stage chip="Concept — waits on KYB">
       <Rise className="w-full max-w-sm border border-[var(--hairline)] bg-[var(--canvas)] p-7">
-        <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--frat-gold)] uppercase">Pay Dues</p>
+        <p className="font-sans text-[10px] tracking-[0.2em] text-[var(--frat-gold)] uppercase">Pay Dues</p>
         <p className="mt-2 font-display text-4xl text-[var(--frat-cream)]">₱500.00</p>
         <div className="mt-6 space-y-2">
           {METHODS.map(({ icon: Icon, label }, i) => {
@@ -246,7 +246,7 @@ export function CheckoutMockup() {
           whileHover={reduceMotion ? undefined : { scale: 1.02 }}
           whileTap={reduceMotion ? undefined : { scale: 0.98 }}
           transition={SPRING}
-          className="mt-6 flex h-12 items-center justify-center bg-[var(--frat-gold)] font-mono text-xs font-semibold tracking-[0.2em] text-[var(--ink)] uppercase"
+          className="mt-6 flex h-12 items-center justify-center bg-[var(--frat-gold)] font-sans text-xs font-semibold tracking-[0.2em] text-[var(--ink)] uppercase"
         >
           Pay ₱500.00
         </motion.div>
@@ -266,7 +266,7 @@ export function NewsletterMockup() {
     <Stage chip="Concept">
       <Rise className="w-full max-w-md border border-[var(--hairline)] bg-[var(--canvas)]">
         <div className="border-b border-[var(--hairline)] p-5">
-          <p className="font-mono text-[9px] tracking-[0.15em] text-[var(--frat-cream)]/50 uppercase">
+          <p className="font-sans text-[9px] tracking-[0.15em] text-[var(--frat-cream)]/50 uppercase">
             From: EMC² Fraternity Alumni Association
           </p>
           <p className="mt-1 font-display text-xl text-[var(--frat-cream)]">The Quarterly Dispatch</p>
@@ -323,13 +323,13 @@ export function PipelineMockup() {
                 className="relative flex h-28 flex-col items-center justify-center border px-2 text-center"
               >
                 <FileText className="h-5 w-5 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
-                <p className="mt-3 font-mono text-[9px] tracking-[0.15em] text-[var(--frat-cream)]/80 uppercase">{s}</p>
+                <p className="mt-3 font-sans text-[9px] tracking-[0.15em] text-[var(--frat-cream)]/80 uppercase">{s}</p>
               </motion.div>
             );
           })}
         </div>
         <div className="mt-5 flex items-center justify-between border border-[var(--hairline)] bg-[var(--canvas)] px-4 py-3">
-          <p className="font-mono text-[9px] tracking-[0.15em] text-[var(--frat-cream)]/60 uppercase">
+          <p className="font-sans text-[9px] tracking-[0.15em] text-[var(--frat-cream)]/60 uppercase">
             Status
           </p>
           <AnimatePresence mode="wait">
@@ -339,7 +339,7 @@ export function PipelineMockup() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.3, ease: EASE }}
-              className="font-mono text-[9px] tracking-[0.15em] text-[var(--frat-gold-light)] uppercase"
+              className="font-sans text-[9px] tracking-[0.15em] text-[var(--frat-gold-light)] uppercase"
             >
               {["Ready for review", "Approved", "Published"][stage]}
             </motion.p>
@@ -367,7 +367,7 @@ function DirectoryScreen() {
     >
       <div className="mt-2 flex items-center gap-2 border-b border-[var(--hairline)] px-4 pb-2">
         <div className="h-3 w-3 rounded-full bg-[var(--frat-gold)]" />
-        <p className="font-mono text-[9px] tracking-[0.15em] text-[var(--frat-cream)] uppercase">Directory</p>
+        <p className="font-sans text-[9px] tracking-[0.15em] text-[var(--frat-cream)] uppercase">Directory</p>
       </div>
       <div className="space-y-2 px-3 py-3">
         {["Ison, R. ’84-F", "Salanguit, E. ’03-B", "dela Cruz, J. ’12-A"].map((name, i) => (
@@ -405,7 +405,7 @@ function DuesScreen() {
       >
         <CheckCircle2 className="h-6 w-6 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
       </motion.div>
-      <p className="mt-3 font-mono text-[9px] tracking-[0.15em] text-[var(--frat-cream)] uppercase">Dues Recorded</p>
+      <p className="mt-3 font-sans text-[9px] tracking-[0.15em] text-[var(--frat-cream)] uppercase">Dues Recorded</p>
       <p className="mt-1 font-display text-xl text-[var(--frat-gold-light)]">₱500.00</p>
     </motion.div>
   );
@@ -423,7 +423,7 @@ function NotificationScreen() {
       >
         <Bell className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
         <div className="min-w-0">
-          <p className="font-mono text-[8px] tracking-[0.1em] text-[var(--frat-cream)] uppercase">EMC² Portal</p>
+          <p className="font-sans text-[8px] tracking-[0.1em] text-[var(--frat-cream)] uppercase">EMC² Portal</p>
           <p className="mt-0.5 text-[9px] leading-snug text-[var(--frat-cream)]/70">
             58th Anniversary — tickets open Monday
           </p>
@@ -457,7 +457,7 @@ export function CompanionAppMockup() {
         className="relative h-[22rem] w-[11rem] overflow-hidden rounded-[2rem] border-4 border-[var(--frat-cream)]/15 bg-[var(--canvas)] shadow-2xl"
       >
         <div className="flex items-center justify-between px-4 pt-3 text-[var(--frat-cream)]/70">
-          <span className="font-mono text-[9px]">9:41</span>
+          <span className="font-sans text-[9px]">9:41</span>
           <div className="flex items-center gap-1">
             <Signal className="h-3 w-3" strokeWidth={2} />
             <BatteryFull className="h-3 w-3" strokeWidth={2} />
@@ -593,7 +593,7 @@ export function AiArchiveMockup() {
         <motion.div layout transition={{ duration: 0.3 }} className="mr-auto min-h-[7rem] max-w-[90%] border border-[var(--hairline)] bg-[var(--canvas)] px-4 py-3">
           <div className="flex items-center gap-1.5 text-[var(--frat-gold-light)]">
             <Sparkles className="h-3 w-3" strokeWidth={1.5} />
-            <span className="font-mono text-[8px] tracking-[0.15em] uppercase">Archive Copilot</span>
+            <span className="font-sans text-[8px] tracking-[0.15em] uppercase">Archive Copilot</span>
           </div>
 
           {!showAnswer && (phase === "thinking" || (!reduceMotion && phase === "question")) ? <TypingDots /> : null}
@@ -605,7 +605,7 @@ export function AiArchiveMockup() {
                 initial={reduceMotion ? false : { opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: reduceMotion ? 0 : 1.6 }}
-                className="mt-2 font-mono text-[8px] tracking-[0.15em] text-[var(--frat-gold)]/70 uppercase"
+                className="mt-2 font-sans text-[8px] tracking-[0.15em] text-[var(--frat-gold)]/70 uppercase"
               >
                 Source: {pair.source}
               </motion.p>
@@ -628,14 +628,14 @@ export function LedgerMockup() {
   return (
     <Stage chip="Concept — figures to come">
       <Rise className="w-full max-w-md border border-[var(--hairline)] bg-[var(--canvas)] p-6">
-        <p className="font-mono text-[9px] tracking-[0.25em] text-[var(--frat-gold)] uppercase">
+        <p className="font-sans text-[9px] tracking-[0.25em] text-[var(--frat-gold)] uppercase">
           Brotherhood Assistance Fund &mdash; Ledger
         </p>
         <div className="mt-5 space-y-4">
           {ROWS.map((r, i) => (
             <div key={r.label}>
               <div className="flex items-baseline justify-between">
-                <span className="font-mono text-[9px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">{r.label}</span>
+                <span className="font-sans text-[9px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">{r.label}</span>
                 <span className="font-display text-lg text-[var(--frat-cream)]">{r.amount}</span>
               </div>
               <div className="mt-1.5 h-px w-full bg-[var(--hairline)]">
@@ -651,7 +651,7 @@ export function LedgerMockup() {
           ))}
         </div>
         <div className="mt-6 flex items-center justify-between border-t border-[var(--hairline)] pt-4">
-          <span className="font-mono text-[9px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">Brods assisted</span>
+          <span className="font-sans text-[9px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">Brods assisted</span>
           <span className="font-display text-2xl text-[var(--frat-gold-light)]">
             <Counter to={4} duration={1.2} />
           </span>

@@ -14,9 +14,9 @@ export default function ProjectsPage() {
   return (
     <>
       <PageHero
-        eyebrow="№ 03 — The Ledger"
+        eyebrow="Projects and campaigns"
         title="Works in Service"
-        description="From quiz bees to disaster relief — the brotherhood's work in the College of Engineering and beyond."
+        description="From quiz bees to disaster relief: the brotherhood's work in the College of Engineering and beyond."
       />
 
       <section className="py-24">
@@ -26,30 +26,30 @@ export default function ProjectsPage() {
               <Reveal key={project.slug} delay={(i % 4) * 0.06}>
                 <div
                   id={project.slug}
-                  className="group -ml-4 grid scroll-mt-28 grid-cols-[auto_1fr] items-baseline gap-x-6 border-b border-[var(--hairline)] py-8 pl-4 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-l-2 hover:border-l-[var(--frat-gold)] hover:bg-[var(--frat-gold)]/[0.03] md:grid-cols-[auto_1fr_auto] md:gap-x-10"
+                  className="grid scroll-mt-28 grid-cols-[2.5rem_1fr] items-baseline gap-x-4 border-b border-[var(--hairline)] py-7 md:grid-cols-[3.5rem_1fr_12rem] md:gap-x-8"
                 >
-                  <span className="font-mono text-[11px] tracking-[0.2em] text-[var(--frat-gold)] transition-colors duration-500 group-hover:text-[var(--frat-gold-light)]">
+                  <span className="caption tabular-nums">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
                     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                      <h2 className="font-display text-2xl leading-tight text-[var(--frat-cream)] transition-colors duration-500 group-hover:text-[var(--frat-gold-light)] md:text-3xl">
+                      <h2 className="font-serif text-2xl font-semibold leading-snug text-[var(--frat-cream)] md:text-3xl">
                         {project.title}
                       </h2>
                       {project.year ? (
-                        <span className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase">
+                        <span className="label">
                           {project.year}
                         </span>
                       ) : null}
                     </div>
-                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--frat-cream)]/70">
+                    <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-[var(--frat-cream)]/65">
                       {project.description}
                     </p>
-                    <p className="mt-3 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase md:hidden">
+                    <p className="caption mt-2 md:hidden">
                       {project.category}
                     </p>
                   </div>
-                  <span className="hidden font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase md:block md:justify-self-end">
+                  <span className="hidden caption md:block md:justify-self-end">
                     {project.category}
                   </span>
                 </div>
@@ -67,18 +67,18 @@ export default function ProjectsPage() {
           text-dense sheet has to be shown whole, not panned across. Contained and
           tappable at native resolution reads on every screen — and the project
           names are the point. */}
-      <section className="blueprint border-y border-[var(--hairline)] py-24">
+      <section className="border-y border-[var(--hairline)] py-24">
         <Container>
           <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-              Fig. 03 — Projects &amp; Campaigns Retrospective
+            <p className="label">
+              From the archive
             </p>
-            <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
-              Fifteen Years of Work, On One Sheet
+            <h2 className="mt-7 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              Fifteen years of work, on one sheet.
             </h2>
             <p className="mt-4 max-w-xl leading-relaxed text-[var(--frat-cream)]/70">
-              Sixteen photographs from the brotherhood&rsquo;s own campaigns — Kalye Tunes at the
-              U.P. Fair through to the COVID-19 relief operations. Tap to open it full size.
+              Sixteen photographs from the brotherhood&rsquo;s own campaigns, Kalye Tunes at the
+              U.P. Fair through to the COVID-19 relief operations. Open it full size.
             </p>
           </Reveal>
           <Reveal delay={0.1} className="mt-12">
@@ -92,7 +92,7 @@ export default function ProjectsPage() {
               target="_blank"
               rel="noreferrer"
               aria-label="Open the full-size Projects and Campaigns retrospective sheet (opens in a new tab)"
-              className="group mx-auto block w-full max-w-2xl border border-[var(--hairline)] transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-[var(--frat-gold)]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)]"
+              className="mx-auto block w-full max-w-2xl border border-[var(--hairline)] transition-colors hover:border-[var(--frat-cream)]/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)]"
             >
               {/* next/image for the on-page render so phones fetch a resized copy
                   rather than the full 1080² sheet; the anchor above still points at
@@ -113,7 +113,7 @@ export default function ProjectsPage() {
       <section className="border-t border-[var(--hairline)] py-24">
         <Container>
           <Reveal>
-            <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-center text-sm text-[var(--frat-cream)]/70">
+            <div className="max-w-2xl border-l-2 border-[var(--frat-gold)]/50 pl-6 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
               More campaigns are inscribed every year. Have a project or photos to add to the
               ledger?{" "}
               <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">

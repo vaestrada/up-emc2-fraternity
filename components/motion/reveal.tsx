@@ -1,27 +1,18 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-const effects: Record<"rise" | "engrave", Variants> = {
-  rise: {
-    hidden: { opacity: 0, y: 28 },
-    visible: (delay: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] },
-    }),
-  },
-  // blur-to-sharp, like an inscription coming into focus — for ceremonial titles
-  engrave: {
-    hidden: { opacity: 0, y: 14, filter: "blur(10px)" },
-    visible: (delay: number) => ({
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 1.3, delay, ease: [0.22, 1, 0.36, 1] },
-    }),
-  },
+/* One entrance for everything below the fold: a short rise and fade, once,
+   when the block scrolls into view. Quiet enough that nobody notices it as
+   an effect; present enough that sections arrive rather than appear. */
+const variants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const },
+  }),
 };
 
 export function Reveal({
@@ -29,22 +20,22 @@ export function Reveal({
   className,
   delay = 0,
   as = "div",
-  effect = "rise",
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
   as?: "div" | "p" | "h1" | "h2" | "h3" | "span" | "li";
+  /** Kept for call-site compatibility; there is one effect now. */
   effect?: "rise" | "engrave";
 }) {
   const Component = motion[as];
   return (
     <Component
       className={cn(className)}
-      variants={effects[effect]}
+      variants={variants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-60px" }}
       custom={delay}
     >
       {children}

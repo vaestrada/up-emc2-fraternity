@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle2, ArrowRight, Sparkles, HeartHandshake } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
@@ -38,7 +37,7 @@ const PHASES: { key: RoadmapPhase; number: string; eyebrow: string; title: strin
     number: "09.2",
     eyebrow: "Committed",
     title: "Next",
-    note: "Underway — timing depends on an outside approval or a named volunteer, not on effort.",
+    note: "Underway. Timing depends on an outside approval or a named volunteer, not on effort.",
   },
   {
     key: "future",
@@ -67,9 +66,9 @@ export default function RoadmapPage() {
   return (
     <>
       <PageHero
-        eyebrow="№ 09 — The Next Quantum Leap"
+        eyebrow="The Next Quantum Leap"
         title="What's Next"
-        description="This site is a beginning, not a finished monument. Here's what's already live, what's committed, and what's still just a direction — said plainly, so nothing here reads as a promise it isn't."
+        description="What is live, what is committed, and what is still a direction, said plainly so nothing here reads as a promise it is not."
       />
 
       {/* The index — three phases, jump links, counts. A reader lands knowing
@@ -88,8 +87,8 @@ export default function RoadmapPage() {
                 )}
               >
                 <span>
-                  <span className="block font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)] uppercase">
-                    № {phase.number} — {phase.eyebrow}
+                  <span className="label block">
+                    {phase.eyebrow}
                   </span>
                   <span className="mt-2 block font-display text-2xl text-[var(--frat-cream)] transition-colors group-hover:text-[var(--frat-gold-light)]">
                     {phase.title}
@@ -113,18 +112,18 @@ export default function RoadmapPage() {
             id={phase.key}
             className={cn(
               "scroll-mt-24 border-t border-[var(--hairline)] py-24",
-              phaseIndex % 2 === 1 ? "bg-[var(--ink)]" : "blueprint"
+              phaseIndex % 2 === 1 ? "bg-[var(--ink)]" : ""
             )}
           >
             <Container>
               <Reveal>
-                <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-                  № {phase.number} — {phase.eyebrow}
+                <p className="label">
+                  {phase.eyebrow}
                 </p>
-                <h2 className="mt-4 font-display text-3xl text-[var(--frat-cream)] md:text-5xl">
+                <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
                   {phase.title}
                 </h2>
-                <p className="mt-4 max-w-xl leading-relaxed text-[var(--frat-cream)]/60">
+                <p className="prose-archive mt-6 text-[15px] leading-relaxed">
                   {phase.note}
                 </p>
               </Reveal>
@@ -140,22 +139,15 @@ export default function RoadmapPage() {
                       <article className="grid items-center gap-8 md:grid-cols-2 md:gap-14">
                         <div className={cn("h-full", flip && "md:order-2")}>{VISUALS[item.title] ?? null}</div>
                         <div className={cn(flip && "md:order-1")}>
-                          <p className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)] uppercase">
+                          <p className="label">
                             Entry {phase.number}.{i + 1}
                           </p>
-                          <div className="mt-4 flex items-center gap-3">
-                            {phase.key === "now" ? (
-                              <CheckCircle2 className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
-                            ) : phase.key === "future" ? (
-                              <Sparkles className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
-                            ) : (
-                              <ArrowRight className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
-                            )}
-                            <h3 className="font-display text-2xl leading-tight text-[var(--frat-cream)] md:text-3xl">
+                          <div className="mt-4">
+                            <h3 className="font-serif text-3xl font-semibold leading-tight text-[var(--frat-cream)]">
                               {item.title}
                             </h3>
                           </div>
-                          <p className="mt-5 max-w-lg leading-relaxed text-[var(--frat-cream)]/70">
+                          <p className="prose-archive mt-5 text-[17px] leading-[1.7]">
                             {item.body}
                           </p>
                           {item.title === "The Member Portal" ? (
@@ -195,21 +187,17 @@ export default function RoadmapPage() {
       <section className="border-t border-[var(--hairline)] py-24">
         <Container className="max-w-3xl text-center">
           <Reveal>
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[var(--frat-gold)]/40">
-              <HeartHandshake className="h-6 w-6 text-[var(--frat-gold-light)]" strokeWidth={1.25} />
-            </div>
             <h2 className="mt-6 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
               None of this gets built alone.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 leading-relaxed text-[var(--frat-cream)]/70">
-              This site — like the brotherhood itself — is built by whoever shows up. If you have a
-              photo from the archive, a citation worth adding, a correction, or the time and skill to
-              help build what&rsquo;s above, the brotherhood needs it more than it needs another set of
-              good intentions.
+              This site, like the brotherhood itself, is built by whoever shows up. If you have a
+              photograph from the archive, a citation worth adding, a correction, or the time and skill
+              to help build what is above, the brotherhood needs it.
             </p>
-            <p className="mt-4 font-serif text-lg italic text-[var(--frat-gold-light)]">
+            <p className="lead mt-4">
               Add to the record. Or help build the next one.
             </p>
           </Reveal>

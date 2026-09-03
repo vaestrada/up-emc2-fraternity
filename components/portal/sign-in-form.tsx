@@ -67,7 +67,7 @@ export function SignInForm() {
   if (status === "sent") {
     return (
       <Card role="status" aria-live="polite" className="flex flex-col items-center p-12 text-center">
-        <p className="font-display text-2xl text-[var(--frat-gold-light)]">Check your inbox</p>
+        <p className="font-serif text-2xl font-semibold text-[var(--frat-cream)]">Check your inbox</p>
         <p className="mt-3 max-w-sm text-sm text-[var(--frat-cream)]/70">
           A sign-in link is on its way to <strong className="text-[var(--frat-cream)]">{email}</strong>.
           Open it on this device to enter the Portal — no password to remember.

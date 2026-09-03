@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LayoutDashboard, Users, HandCoins } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
@@ -35,12 +34,12 @@ export default async function PortalPage({
   return (
     <>
       <PageHero
-        eyebrow="№ 06 — The Portal"
+        eyebrow="The Portal"
         title={user ? "Your Record" : "Enter the Portal"}
         description={
           user
-            ? "Keep your record current so the brotherhood — and the Association — can reach the real you."
-            : "A private space for verified brods to keep their record current and find one another. Sign in with the email the Alumni Association invited you at — the Portal is by invitation, so a stranger's address gets no link."
+            ? "Keep your record current so the brotherhood and the Association can reach you."
+            : "A private space for verified brods to keep their record current and find one another. Sign in with the email the Alumni Association invited you at. The Portal is by invitation; a stranger's address gets no link."
         }
       />
 
@@ -53,9 +52,9 @@ export default async function PortalPage({
           {!user && error === "auth" ? (
             <div
               role="alert"
-              className="mb-8 border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-5 text-sm leading-relaxed text-[var(--frat-cream)]/80"
+              className="mb-8 border-l-2 border-[var(--frat-gold)]/50 pl-5 py-1 text-sm leading-relaxed text-[var(--frat-cream)]/80"
             >
-              That sign-in link didn&rsquo;t work — it may have expired, been used already, or been
+              That sign-in link did not work. It may have expired, been used already, or been
               opened on a different device from the one that requested it. Request a fresh link
               below and open it on this device.
             </div>
@@ -66,30 +65,23 @@ export default async function PortalPage({
                 <ProfileForm userId={user.id} profile={profile} />
               </Reveal>
               <Reveal delay={0.1}>
-                <div className="grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] sm:grid-cols-2">
+                <div className="border-t border-[var(--hairline)]">
                   {[
                     {
                       href: "/portal/directory",
-                      Icon: Users,
                       title: "The Directory",
-                      body: "Browse brods who've opted in.",
+                      body: "Browse brods who have opted in to be found.",
                     },
                     {
                       href: "/portal/dues",
-                      Icon: HandCoins,
                       title: "Membership Dues",
-                      body: "Record a dues payment for acknowledgment.",
+                      body: "Record a dues payment for acknowledgement.",
                     },
-                  ].map(({ href, Icon, title, body }) => (
-                    <div key={href} className="flex items-center justify-between gap-4 bg-[var(--surface)] p-6">
-                      <div className="flex items-center gap-4">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--frat-gold)]/40">
-                          <Icon className="h-5 w-5 text-[var(--frat-gold-light)]" strokeWidth={1.25} />
-                        </div>
-                        <div>
-                          <p className="font-display text-lg text-[var(--frat-cream)]">{title}</p>
-                          <p className="text-sm text-[var(--frat-cream)]/60">{body}</p>
-                        </div>
+                  ].map(({ href, title, body }) => (
+                    <div key={href} className="flex items-center justify-between gap-4 border-b border-[var(--hairline)] py-5">
+                      <div>
+                        <p className="font-serif text-xl font-semibold text-[var(--frat-cream)]">{title}</p>
+                        <p className="text-[14px] text-[var(--frat-cream)]/60">{body}</p>
                       </div>
                       <Link href={href} className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
                         Open
@@ -110,11 +102,10 @@ export default async function PortalPage({
       {!user ? (
         <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-16">
           <Container className="flex max-w-2xl flex-col items-center gap-3 text-center">
-            <LayoutDashboard className="h-6 w-6 text-[var(--frat-gold-light)]" strokeWidth={1.25} />
-            <p className="font-serif text-lg italic text-[var(--frat-cream)]/80">
-              &ldquo;A record kept is a brotherhood remembered.&rdquo;
+            <p className="lead text-[var(--frat-cream)]/85">
+              A record kept is a brotherhood remembered.
             </p>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-[var(--frat-cream)]/60">
+            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-[var(--frat-cream)]/60">
               Not invited yet? A board member verifies each brod against the roster before
               sending an invite.{" "}
               <Link href="/contact" className="text-[var(--frat-gold-light)] underline underline-offset-4">

@@ -83,7 +83,7 @@ export function TeaserVideo({
           aria-label="Play the teaser"
           className="absolute inset-0 grid place-items-center bg-[var(--ink)]/45 transition-colors hover:bg-[var(--ink)]/25"
         >
-          <span className="flex items-center gap-3 border border-[var(--frat-gold)]/60 bg-[var(--ink)]/80 px-5 py-3 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase">
+          <span className="flex items-center gap-3 border border-[var(--frat-gold)]/60 bg-[var(--ink)]/80 px-5 py-3 label">
             <Play className="h-3.5 w-3.5" aria-hidden />
             Play teaser
           </span>
@@ -95,7 +95,7 @@ export function TeaserVideo({
         onClick={toggleSound}
         aria-label={muted ? "Unmute the teaser" : "Mute the teaser"}
         aria-pressed={!muted}
-        className="absolute right-3 bottom-3 flex items-center gap-2 border border-[var(--frat-gold)]/50 bg-[var(--ink)]/75 px-3 py-2 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase backdrop-blur-sm transition-colors hover:border-[var(--frat-gold-light)] hover:bg-[var(--ink)]/90"
+        className="absolute right-3 bottom-3 flex items-center gap-2 border border-[var(--frat-gold)]/50 bg-[var(--ink)]/75 px-3 py-2 label backdrop-blur-sm transition-colors hover:border-[var(--frat-gold-light)] hover:bg-[var(--ink)]/90"
       >
         {muted ? (
           <VolumeX className="h-3.5 w-3.5" aria-hidden />

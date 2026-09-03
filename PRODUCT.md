@@ -22,6 +22,8 @@ Engraved, learned, quietly powerful. Three words: monumental, precise, fraternal
 - Generic student-org sites: clip-art crests, centered Word-document layouts, rainbow Facebook embeds.
 - SaaS landing-page tropes: gradient text, glass cards, hero-metric blocks, identical icon-card grids.
 - Anything that feels rented: stock photos of strangers, template themes.
+- The AI-default "tech-luxury" kit (removed 3 September 2026): monospace uppercase tracked labels, `No. 01 -` style numbering, film grain, blueprint grids, rotating watermarks, light sweeps, breathing frames, Ken Burns drift, marquees with star separators, duotone-filtered photographs, icons in circles, dashed "pending" boxes, animated counters, scroll-scrubbed video, and AI-generated imagery or footage presented as atmosphere.
+- The AI-default voice: em-dash asides, self-aware commentary about honesty, wordplay in running copy.
 
 ## Design Principles
 

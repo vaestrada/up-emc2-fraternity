@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { MapPin } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
 import { ContactForm } from "@/components/site/contact-form";
-import { FacebookIcon } from "@/components/site/facebook-icon";
-import { LinkedInIcon } from "@/components/site/linkedin-icon";
 import { site } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -13,91 +10,70 @@ export const metadata: Metadata = {
   description: "Reach the EMC² Fraternity and its Alumni Association.",
 };
 
+const linkClass =
+  "text-[15px] text-[var(--frat-cream)] underline underline-offset-4 decoration-[var(--frat-cream)]/30 transition-colors hover:decoration-[var(--frat-cream)]";
+
 export default function ContactPage() {
   return (
     <>
       <PageHero
         eyebrow="Correspondence"
         title="Contact the Brotherhood"
-        description="Questions, nominations, partnerships, or just checking in — the tambayan door is open."
+        description="Questions, nominations, partnerships, or just checking in. The tambayan door is open."
       />
 
-      <section className="py-24">
-        <Container className="grid gap-14 md:grid-cols-[1fr_1.2fr] md:items-start">
-          <div className="space-y-10">
-            <Reveal className="flex gap-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[var(--frat-gold)]/40">
-                <MapPin className="h-5 w-5 text-[var(--frat-gold-light)]" strokeWidth={1.25} />
-              </div>
-              <div>
-                <h3 className="font-display text-lg text-[var(--frat-cream)]">The Tambayan</h3>
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=14.6553,121.0685"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-1 inline-block text-sm text-[var(--frat-cream)]/70 underline underline-offset-4 transition-colors hover:text-[var(--frat-gold-light)]"
-                >
-                  {site.base}
-                </a>
-                <p className="mt-2 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
-                  14.6553° N / 121.0685° E
-                </p>
-              </div>
+      <section className="py-20 md:py-28">
+        <Container className="grid gap-14 md:grid-cols-[1fr_1.3fr] md:gap-20">
+          <div>
+            <Reveal>
+              <dl className="border-t border-[var(--hairline)]">
+                <div className="border-b border-[var(--hairline)] py-6">
+                  <dt className="caption">The tambayan</dt>
+                  <dd className="mt-2">
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=14.6553,121.0685"
+                      target="_blank"
+                      rel="noreferrer"
+                      className={linkClass}
+                    >
+                      {site.base}
+                    </a>
+                  </dd>
+                </div>
+                <div className="border-b border-[var(--hairline)] py-6">
+                  <dt className="caption">Facebook, the fastest way to reach us today</dt>
+                  <dd className="mt-2">
+                    <a href={site.facebook} target="_blank" rel="noreferrer" className={linkClass}>
+                      facebook.com/EMC2Fraternity
+                    </a>
+                  </dd>
+                </div>
+                <div className="border-b border-[var(--hairline)] py-6">
+                  <dt className="caption">LinkedIn, for professional and alumni networking</dt>
+                  <dd className="mt-2">
+                    <a href={site.linkedin} target="_blank" rel="noreferrer" className={linkClass}>
+                      linkedin.com/company/up-emc2-fraternity
+                    </a>
+                  </dd>
+                </div>
+              </dl>
             </Reveal>
-
-            <Reveal delay={0.1} className="flex gap-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[var(--frat-gold)]/40">
-                <FacebookIcon className="h-5 w-5 text-[var(--frat-gold-light)]" />
-              </div>
-              <div>
-                <h3 className="font-display text-lg text-[var(--frat-cream)]">Facebook</h3>
-                <p className="mt-1 text-sm text-[var(--frat-cream)]/70">
-                  The fastest way to reach us today is the official page:
+            <Reveal delay={0.1}>
+              <div className="mt-10 border-l-2 border-[var(--frat-gold)]/50 pl-6">
+                <p className="label">Entry pending</p>
+                <p className="mt-3 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
+                  The Association&rsquo;s permanent correspondence address is being established and will
+                  be published here. Have a story, photograph, or piece of history to share?{" "}
+                  <a href="/contribute" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+                    Add it to the record
+                  </a>
+                  .
                 </p>
-                <a
-                  href={site.facebook}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-1 inline-block text-sm font-semibold text-[var(--frat-gold-light)] underline underline-offset-4"
-                >
-                  facebook.com/EMC2Fraternity
-                </a>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.15} className="flex gap-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[var(--frat-gold)]/40">
-                <LinkedInIcon className="h-5 w-5 text-[var(--frat-gold-light)]" />
-              </div>
-              <div>
-                <h3 className="font-display text-lg text-[var(--frat-cream)]">LinkedIn</h3>
-                <p className="mt-1 text-sm text-[var(--frat-cream)]/70">
-                  For professional and alumni networking:
-                </p>
-                <a
-                  href={site.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-1 inline-block text-sm font-semibold text-[var(--frat-gold-light)] underline underline-offset-4"
-                >
-                  linkedin.com/company/up-emc2-fraternity
-                </a>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.2}>
-              <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm leading-relaxed text-[var(--frat-cream)]/70">
-                The Association&rsquo;s permanent correspondence address is being established and will be
-                inscribed here. Have a story, photo, or piece of history to share?{" "}
-                <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
-                  Add it to the record
-                </a>
-                .
               </div>
             </Reveal>
           </div>
 
-          <Reveal delay={0.15}>
+          <Reveal delay={0.1}>
             <ContactForm />
           </Reveal>
         </Container>

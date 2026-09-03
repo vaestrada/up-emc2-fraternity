@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { HandCoins, ShieldAlert } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
@@ -29,19 +28,16 @@ export default async function DuesPage() {
   return (
     <>
       <PageHero
-        eyebrow="№ 08 — Membership Dues"
+        eyebrow="Membership Dues"
         title="Record Your Dues"
-        description="Automated checkout is coming once the Association's PayMongo application clears business verification. Until then, dues are recorded the same way the brotherhood has always reconciled gifts — transfer, then tell us."
+        description="Automated checkout arrives once the Association's PayMongo application clears business verification. Until then, dues are recorded the way the brotherhood has always reconciled gifts: transfer, then tell us."
       />
 
       <section className="py-24">
         <Container className="grid max-w-4xl gap-14 md:grid-cols-2 md:items-start">
           <div>
             <Reveal>
-              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[var(--frat-gold)]/40">
-                <HandCoins className="h-6 w-6 text-[var(--frat-gold-light)]" strokeWidth={1.25} />
-              </div>
-              <h2 className="mt-6 font-display text-3xl text-[var(--frat-cream)] md:text-4xl">
+              <h2 className="font-display text-3xl text-[var(--frat-cream)] md:text-4xl">
                 How it works today
               </h2>
             </Reveal>
@@ -67,8 +63,7 @@ export default async function DuesPage() {
               </ol>
             </Reveal>
             <Reveal delay={0.15}>
-              <div className="mt-8 flex gap-3 border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-5 text-xs leading-relaxed text-[var(--frat-cream)]/70">
-                <ShieldAlert className="h-4 w-4 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
+              <div className="mt-8 border-l-2 border-[var(--frat-gold)]/50 pl-5 text-[14px] leading-relaxed text-[var(--frat-cream)]/70">
                 <span>
                   We don&rsquo;t process payments directly — nothing here touches your card or bank
                   login. This form only records what you already sent, for the Association to verify

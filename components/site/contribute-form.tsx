@@ -113,7 +113,7 @@ export function ContributeForm() {
             type="file"
             accept="image/*"
             multiple
-            className="w-full text-sm text-[var(--frat-cream)]/70 file:mr-4 file:cursor-pointer file:border-0 file:bg-[var(--frat-gold)] file:px-4 file:py-2 file:font-mono file:text-[11px] file:font-semibold file:uppercase file:tracking-[0.2em] file:text-[#1a1305] hover:file:bg-[var(--frat-gold-light)]"
+            className="w-full text-sm text-[var(--frat-cream)]/70 file:mr-4 file:cursor-pointer file:border-0 file:bg-[var(--frat-gold)] file:px-4 file:py-2 file:font-sans file:text-[11px] file:font-semibold file:uppercase file:tracking-[0.2em] file:text-[#1a1305] hover:file:bg-[var(--frat-gold-light)]"
           />
           <p className="mt-1.5 text-[11px] leading-relaxed text-[var(--frat-cream)]/60">
             Up to 6 images, 10&nbsp;MB each. They stay private until the Association curates them.

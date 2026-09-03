@@ -2,66 +2,91 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
+import { SectionLabel } from "@/components/site/section-label";
+import { ArchivePlates } from "@/components/site/archive-plates";
+import { PhotoGallery } from "@/components/site/photo-gallery";
 import { site, milestones, founders, demoGalleryPhotos } from "@/lib/content";
 import { DEMO_CONTENT } from "@/lib/demo";
 import { getApprovedContributions } from "@/lib/contributions";
-import { PhotoGallery } from "@/components/site/photo-gallery";
-import { ScrollCinematic } from "@/components/site/scroll-cinematic";
 
 export const metadata: Metadata = {
   title: "History",
-  description: "The history, credo, and honors of the EMC² Fraternity since 1969.",
+  description: "The history, credo, and honours of the EMC² Fraternity since 1969.",
 };
+
+const PLATES = [
+  {
+    src: "/photos/anniv55-gazebo.jpg",
+    alt: "Brods gathered at the gazebo during the 55th Anniversary Celebration",
+    figure: "The gazebo, U.P. Diliman",
+    caption: "55th Anniversary Celebration, 24 February 2024.",
+  },
+  {
+    src: "/photos/anniv55-stage.jpg",
+    alt: "Brods gathered on stage at the 55th Anniversary Celebration",
+    figure: "Bahay ng Alumni",
+    caption: "Brods of every batch on stage.",
+  },
+  {
+    src: "/photos/anniv55-outdoor.jpg",
+    alt: "Brods gathered before Quezon Hall at the 55th Anniversary Celebration",
+    figure: "Quezon Hall",
+    caption: "The brotherhood, 1967 to 2023 batches.",
+  },
+];
 
 export default async function HistoryPage() {
   const contributed = await getApprovedContributions();
   return (
     <>
       <PageHero
-        eyebrow="Vol. I — Since 1969"
-        title="The Archive"
-        description="Equality, Service, and Brotherhood at the U.P. College of Engineering since 1969."
+        eyebrow="Since 1969"
+        title="The History"
+        description="Equality, Service, and Brotherhood at the U.P. College of Engineering for more than half a century."
+        image={{
+          src: "/photos/anniv55-gazebo.jpg",
+          alt: "Brods gathered at the gazebo during the 55th Anniversary Celebration",
+          caption: "The 55th Anniversary Celebration, U.P. Diliman, 24 February 2024.",
+        }}
       />
 
-      <section className="py-24">
-        <Container className="grid gap-16 md:grid-cols-2 md:items-start">
+      {/* The founding */}
+      <section className="border-b border-[var(--hairline)] py-20 md:py-28">
+        <Container className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
+          <Reveal>
+            <SectionLabel>The founding</SectionLabel>
+            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              Ten scholars, one college.
+            </h2>
+          </Reveal>
           <div>
-            <Reveal>
-              <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-                The Founding
-              </p>
-              <p className="mt-6 leading-relaxed text-[var(--frat-cream)]/60">{site.about}</p>
+            <Reveal delay={0.08}>
+              <p className="lead">{site.about.split(". ")[0]}.</p>
+              <div className="prose-archive mt-6 text-[17px] leading-[1.7]">
+                <p>{site.about.split(". ").slice(1).join(". ")}</p>
+              </div>
             </Reveal>
-
-            <Reveal delay={0.15}>
-              <div className="mt-10 border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-6 text-sm text-[var(--frat-cream)]/70">
-                <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase">
-                  Entry pending — full founding story
-                </p>
-                <p className="mt-3 leading-relaxed">
-                  The complete written history — the ten founding scholars by name, the founding
-                  chapter&rsquo;s story, and the early years — is being gathered from official
-                  records and will be inscribed here.{" "}
-                  <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
+            <Reveal delay={0.14}>
+              <div className="mt-10 border-l-2 border-[var(--frat-gold)]/50 pl-6">
+                <p className="label">Entry pending</p>
+                <p className="mt-3 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
+                  The complete written history, the ten founding scholars by name, and the early
+                  years are being gathered from official records.{" "}
+                  <a href="/contribute" className="text-[var(--frat-gold-light)] underline underline-offset-4">
                     Have records to share?
                   </a>
                 </p>
               </div>
             </Reveal>
-
             {founders.length > 0 ? (
               <Reveal delay={0.2}>
                 <div className="mt-10">
-                  <p className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)] uppercase">
-                    The Ten — Founding Scholars
-                  </p>
+                  <p className="label">The ten founding scholars</p>
                   <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2">
                     {founders.map((f) => (
-                      <li key={f.name} className="text-sm text-[var(--frat-cream)]">
+                      <li key={f.name} className="text-[15px] text-[var(--frat-cream)]">
                         {f.name}
-                        {f.note ? (
-                          <span className="block text-[var(--frat-cream)]/60">{f.note}</span>
-                        ) : null}
+                        {f.note ? <span className="block text-[var(--frat-cream)]/60">{f.note}</span> : null}
                       </li>
                     ))}
                   </ul>
@@ -69,122 +94,125 @@ export default async function HistoryPage() {
               </Reveal>
             ) : null}
           </div>
+        </Container>
+      </section>
 
-          <Reveal delay={0.1}>
-            <div className="border border-[var(--hairline)] bg-[var(--ink)] p-10 text-center">
-              <p className="font-serif text-3xl leading-relaxed text-[var(--frat-cream)] italic">
-                &ldquo;{site.credo}&rdquo;
-              </p>
-              <p className="mt-6 font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)] uppercase">
-                The Credo
-              </p>
-              <div className="mx-auto my-8 h-px w-16 bg-[var(--hairline)]" />
-              <p className="font-serif text-xl text-[var(--frat-cream)]/80">{site.mission}</p>
-              <p className="mt-4 font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)] uppercase">
-                Alumni Association Mission
-              </p>
-            </div>
+      {/* The credo and the mission */}
+      <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
+        <Container className="grid gap-12 md:grid-cols-2 md:gap-20">
+          <Reveal>
+            <SectionLabel>The credo</SectionLabel>
+            <p className="mt-7 font-serif text-2xl font-medium leading-snug text-[var(--frat-cream)] md:text-3xl">
+              &ldquo;{site.credo}&rdquo;
+            </p>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <SectionLabel>The Alumni Association&rsquo;s mission</SectionLabel>
+            <p className="mt-7 font-serif text-2xl font-medium leading-snug text-[var(--frat-cream)]/85 md:text-3xl">
+              {site.mission}
+            </p>
           </Reveal>
         </Container>
       </section>
 
-      {/* Timeline */}
-      <section className="blueprint border-y border-[var(--hairline)] py-24">
-        <Container>
+      {/* Milestones */}
+      <section className="border-b border-[var(--hairline)] py-20 md:py-28">
+        <Container className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
           <Reveal>
-            <h2 className="text-center font-display text-3xl text-[var(--frat-cream)] md:text-4xl">
-              Milestones
+            <SectionLabel>Milestones</SectionLabel>
+            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              The record so far.
             </h2>
           </Reveal>
-          <div className="mx-auto mt-16 max-w-2xl space-y-14 border-l border-[var(--frat-gold)]/40 pl-10">
+          <div className="border-t border-[var(--hairline)]">
             {milestones.map((m, i) => (
-              <Reveal key={m.year} delay={i * 0.08} className="relative">
-                <div className="absolute top-3 -left-[45px] h-2.5 w-2.5 rotate-45 bg-[var(--frat-gold)]" />
-                <p className="font-display text-4xl font-semibold text-[var(--frat-gold-light)] md:text-5xl">{m.year}</p>
-                <p className="mt-2 font-display text-lg text-[var(--frat-cream)]">{m.title}</p>
-                <p className="mt-1 text-sm leading-relaxed text-[var(--frat-cream)]/70">{m.detail}</p>
+              <Reveal key={m.year} delay={i * 0.04}>
+                <div className="grid grid-cols-[5rem_1fr] gap-6 border-b border-[var(--hairline)] py-6 md:grid-cols-[7rem_1fr] md:gap-10">
+                  <p className="font-display text-2xl text-[var(--frat-gold-light)]">{m.year}</p>
+                  <div>
+                    <p className="font-serif text-2xl font-semibold leading-snug text-[var(--frat-cream)]">{m.title}</p>
+                    <p className="mt-2 text-[15px] leading-relaxed text-[var(--frat-cream)]/65">{m.detail}</p>
+                  </div>
+                </div>
               </Reveal>
             ))}
-            <Reveal delay={milestones.length * 0.08} className="relative">
-              <div className="absolute top-3 -left-[45px] h-2.5 w-2.5 rotate-45 border border-[var(--frat-gold)]/50 bg-transparent" />
-              <div className="border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-5 text-sm leading-relaxed text-[var(--frat-cream)]/70">
-                <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase">
-                  Entries pending — help us fill the record
-                </p>
-                <p className="mt-3">
-                  Four decades of the brotherhood&rsquo;s story are still uninscribed. If you were
-                  there — a batch, a milestone, a campaign —{" "}
-                  <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
-                    add it to the record
-                  </a>
-                  .
-                </p>
+            <Reveal delay={milestones.length * 0.04}>
+              <div className="py-6">
+                <div className="border-l-2 border-[var(--frat-gold)]/50 pl-6">
+                  <p className="label">Entries pending</p>
+                  <p className="mt-3 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
+                    Four decades of the brotherhood&rsquo;s story are still to be inscribed. If you
+                    were there,{" "}
+                    <a href="/contribute" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+                      add it to the record
+                    </a>
+                    .
+                  </p>
+                </div>
               </div>
             </Reveal>
           </div>
         </Container>
       </section>
 
-      {/* Fifty-Five Years, In Motion — real 55th Anniversary photos, animated */}
-      <ScrollCinematic
-        src="/quantum-leap/demo-history-scroll.mp4"
-        poster="/quantum-leap/demo-history-poster.jpg"
-        eyebrow="Fig. 02 — 55th Anniversary Celebration · U.P. Diliman · Feb 24 MMXXIV"
-        title="Fifty-Five Years, In Motion"
-        description="Three real photographs from the brotherhood's own 55th Anniversary Celebration — no AI content here, just the Association's own archive, brought to life."
-        heightVh={200}
-      />
-
-      {/* Brotherhood Life — DEMO PREVIEW, AI-generated. Gated by lib/demo.ts:
-          NEXT_PUBLIC_DEMO_CONTENT=off removes it for the public launch. */}
-      {DEMO_CONTENT ? (
-      <section className="blueprint border-t border-[var(--hairline)] py-24">
+      {/* From the archive */}
+      <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
         <Container>
           <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-              Preview — Brotherhood Life
-            </p>
-            <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
-              A glimpse of what a full gallery could hold
+            <SectionLabel>From the archive</SectionLabel>
+            <h2 className="mt-7 max-w-2xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              Fifty-five years, in one afternoon.
             </h2>
-            <p className="mt-4 max-w-xl leading-relaxed text-[var(--frat-cream)]/70">
-              AI-generated placeholder scenes standing in for the real photos the Association is still
-              gathering — outreach, sportsfest, the study lounge, campus gatherings.{" "}
-              <span className="text-[var(--frat-gold-light)]">
-                Sample imagery for this walkthrough, not documentation of an actual event.
-              </span>{" "}
-              Have real photos to swap in?{" "}
-              <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
-                Add them to the record
-              </a>
-              .
-            </p>
           </Reveal>
-          <Reveal delay={0.1} className="mt-12">
-            <PhotoGallery photos={demoGalleryPhotos} />
-          </Reveal>
+          <div className="mt-12">
+            <ArchivePlates plates={PLATES} />
+          </div>
         </Container>
       </section>
+
+      {/* Brotherhood life — placeholder gallery, gated by lib/demo.ts */}
+      {DEMO_CONTENT ? (
+        <section className="border-b border-[var(--hairline)] py-20 md:py-28">
+          <Container>
+            <Reveal>
+              <SectionLabel>Brotherhood life</SectionLabel>
+              <h2 className="mt-7 max-w-2xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+                A gallery, awaiting the real photographs.
+              </h2>
+              <p className="prose-archive mt-6 text-[15px] leading-relaxed">
+                These scenes are AI-generated placeholders for the outreach, sportsfest, study-lounge,
+                and campus gatherings the Association is still collecting photographs of. They are
+                sample imagery for this walkthrough, not documentation of any event.{" "}
+                <a href="/contribute" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+                  Have real photographs?
+                </a>
+              </p>
+            </Reveal>
+            <Reveal delay={0.1} className="mt-12">
+              <PhotoGallery photos={demoGalleryPhotos} />
+            </Reveal>
+          </Container>
+        </section>
       ) : null}
 
-      {/* For the Studentry — a neutral path for prospective members */}
-      <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-24">
-        <Container className="max-w-2xl">
+      {/* For the studentry */}
+      <section className="border-b border-[var(--hairline)] py-20 md:py-28">
+        <Container className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
           <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-              For the Studentry
-            </p>
-            <h2 className="mt-6 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+            <SectionLabel>For the studentry</SectionLabel>
+            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
               Interested in the brotherhood?
             </h2>
-            <p className="mt-6 leading-relaxed text-[var(--frat-cream)]/70">
-              EMC² draws its members from Engineering and the Physical Sciences at the University of
-              the Philippines. To learn more about the fraternity, its work on campus, and how to get
-              in touch, reach out to us directly — we&rsquo;re glad to answer questions.
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="prose-archive text-[17px] leading-[1.7]">
+              EMC&sup2; draws its members from Engineering and the Physical Sciences at the University
+              of the Philippines. To learn about the fraternity, its work on campus, and how to get in
+              touch, reach out to us directly. We are glad to answer questions.
             </p>
             <a
               href="/contact"
-              className="mt-8 inline-block border border-[var(--frat-gold)]/50 px-6 py-3 font-mono text-xs font-semibold tracking-[0.25em] text-[var(--frat-gold-light)] uppercase transition-colors hover:border-[var(--frat-gold-light)]"
+              className="mt-8 inline-flex h-10 items-center border border-[var(--frat-cream)]/30 px-5 font-sans text-[11px] font-medium tracking-[0.14em] text-[var(--frat-cream)] uppercase transition-colors hover:border-[var(--frat-cream)]/70"
             >
               Get in touch
             </a>
@@ -192,41 +220,31 @@ export default async function HistoryPage() {
         </Container>
       </section>
 
-      {/* The Contributed Record — approved submissions from the brotherhood */}
+      {/* The contributed record */}
       {contributed.length > 0 ? (
-        <section className="blueprint border-t border-[var(--hairline)] py-24">
+        <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
           <Container>
             <Reveal>
-              <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-                The Contributed Record
-              </p>
-              <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
-                Inscribed by the brotherhood
+              <SectionLabel>The contributed record</SectionLabel>
+              <h2 className="mt-7 max-w-2xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+                Inscribed by the brotherhood.
               </h2>
-              <p className="mt-4 max-w-xl leading-relaxed text-[var(--frat-cream)]/70">
-                Memories, photos, and history sent in by brods and alumni, curated into the archive.
+              <p className="prose-archive mt-6 text-[15px] leading-relaxed">
+                Memories, photographs, and history sent in by brods and alumni, curated into the archive.
               </p>
             </Reveal>
 
-            <div className="mt-14 space-y-16">
+            <div className="mt-12 space-y-14">
               {contributed.map((c, i) => (
-                <Reveal key={c.id} delay={(i % 3) * 0.08}>
+                <Reveal key={c.id} delay={(i % 3) * 0.06}>
                   <article className="border-t border-[var(--hairline)] pt-8">
-                    {c.kind ? (
-                      <p className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold-light)] uppercase">
-                        {c.kind}
-                      </p>
-                    ) : null}
-                    <h3 className="mt-3 font-display text-2xl text-[var(--frat-cream)] md:text-3xl">
-                      {c.title}
-                    </h3>
-                    <p className="mt-1 font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
+                    {c.kind ? <p className="label">{c.kind}</p> : null}
+                    <h3 className="mt-3 font-serif text-2xl font-semibold leading-snug text-[var(--frat-cream)] md:text-3xl">{c.title}</h3>
+                    <p className="caption mt-2">
                       Contributed by {c.name}
-                      {c.batch ? ` · Batch ${c.batch}` : ""}
+                      {c.batch ? `, Batch ${c.batch}` : ""}
                     </p>
-                    <p className="mt-5 max-w-2xl whitespace-pre-wrap leading-relaxed text-[var(--frat-cream)]/80">
-                      {c.details}
-                    </p>
+                    <p className="prose-archive mt-5 whitespace-pre-wrap text-[17px] leading-[1.7]">{c.details}</p>
                     {c.photos.length > 0 ? (
                       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:max-w-3xl">
                         {c.photos.map((url, j) => (
@@ -234,7 +252,7 @@ export default async function HistoryPage() {
                           <img
                             key={j}
                             src={url}
-                            alt={`${c.title} — photo ${j + 1}`}
+                            alt={`${c.title}, photograph ${j + 1}`}
                             loading="lazy"
                             className="aspect-square w-full border border-[var(--hairline)] object-cover"
                           />
@@ -246,9 +264,9 @@ export default async function HistoryPage() {
                         href={c.links}
                         target="_blank"
                         rel="noreferrer"
-                        className="mt-4 inline-block font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase underline underline-offset-4"
+                        className="mt-4 inline-block text-[15px] text-[var(--frat-gold-light)] underline underline-offset-4"
                       >
-                        View source &rarr;
+                        View source
                       </a>
                     ) : null}
                   </article>

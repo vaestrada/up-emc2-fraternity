@@ -55,7 +55,7 @@ export default function QuantumLeapPage() {
   return (
     <>
       <PageHero
-        eyebrow="№ 07 — Quantum Leap Sports Series 2026"
+        eyebrow="Quantum Leap Sports Series, 2026"
         title="Pickleball"
         description="The first edition of the fraternity's alumni sports series, held 22 August 2026. One sport at a time, played well."
       />
@@ -76,15 +76,15 @@ export default function QuantumLeapPage() {
                 />
               </div>
               <div className="mt-3 flex items-baseline justify-between gap-4">
-                <p className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/50 uppercase">
+                <p className="caption">
                   Fig. 01 — First edition plate
                 </p>
                 <a
                   href="/quantum-leap/pickleball-2026-poster.png"
                   download
-                  className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold)] uppercase underline-offset-4 transition-colors hover:text-[var(--frat-gold-light)] hover:underline"
+                  className="label underline-offset-4 transition-colors hover:text-[var(--frat-gold-light)] hover:underline"
                 >
-                  Download ↓
+                  Download the plate
                 </a>
               </div>
             </Reveal>
@@ -126,14 +126,14 @@ export default function QuantumLeapPage() {
                       key={f.k}
                       className="grid grid-cols-[7rem_1fr] items-baseline gap-4 border-b border-[var(--hairline)] py-4"
                     >
-                      <dt className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold)] uppercase">
+                      <dt className="label">
                         {f.k}
                       </dt>
                       <dd className="flex flex-wrap items-baseline gap-x-3">
-                        <span className="font-display text-xl text-[var(--frat-cream)]">
+                        <span className="font-serif text-xl font-semibold text-[var(--frat-cream)]">
                           {f.v}
                         </span>
-                        <span className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/50 uppercase">
+                        <span className="caption">
                           {f.note}
                         </span>
                       </dd>
@@ -147,10 +147,10 @@ export default function QuantumLeapPage() {
       </section>
 
       {/* ── The teaser ────────────────────────────────────────────── */}
-      <section className="blueprint border-b border-[var(--hairline)] py-24">
+      <section className="border-b border-[var(--hairline)] py-24">
         <Container>
           <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+            <p className="label">
               The teaser
             </p>
           </Reveal>
@@ -172,7 +172,7 @@ export default function QuantumLeapPage() {
               <Reveal delay={0.1}>
                 <p className="mt-6 max-w-md leading-relaxed text-[var(--frat-cream)]/65">
                   Nineteen seconds, shot for the feed ahead of the first edition. Share it
-                  with a brod who has not been back to a court in a while — the series
+                  with a brod who has not been back to a court in a while. The series
                   continues.
                 </p>
               </Reveal>
@@ -197,7 +197,7 @@ export default function QuantumLeapPage() {
       <section className="py-24">
         <Container>
           <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+            <p className="label">
               The series
             </p>
           </Reveal>
@@ -221,7 +221,7 @@ export default function QuantumLeapPage() {
                   key={e.n}
                   className="grid grid-cols-[auto_1fr_auto] items-baseline gap-x-6 border-b border-[var(--hairline)] py-6 md:gap-x-10"
                 >
-                  <span className="font-mono text-[11px] tracking-[0.2em] text-[var(--frat-gold)]">
+                  <span className="caption tabular-nums">
                     {e.n}
                   </span>
                   <span
@@ -234,7 +234,7 @@ export default function QuantumLeapPage() {
                   >
                     {e.sport}
                   </span>
-                  <span className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/50 uppercase">
+                  <span className="caption">
                     {e.status}
                   </span>
                 </div>

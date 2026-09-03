@@ -219,7 +219,7 @@ export function ProfileForm({ userId, profile }: { userId: string; profile: Memb
         </div>
 
         <div className="border-t border-[var(--hairline)] pt-6">
-          <p className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold-light)] uppercase">
+          <p className="label">
             Portal-only contact
           </p>
           <p className="mt-2 text-xs text-[var(--frat-cream)]/50">

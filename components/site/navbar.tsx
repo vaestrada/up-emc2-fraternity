@@ -12,13 +12,9 @@ import { cn } from "@/lib/utils";
 const LINKS = [
   { href: "/history", label: "History" },
   { href: "/projects", label: "Projects" },
-  // Sits high in the order until February 2027 — it's the one page with a
-  // deadline behind it. Drop it back down once the evening has passed.
-  { href: "/anniversary", label: "58th" },
-  // Labelled for the programme, not the current edition, so it still reads
-  // true when Quantum Leap moves past pickleball.
-  { href: "/quantum-leap", label: "Sports" },
   { href: "/brods", label: "Brods" },
+  { href: "/anniversary", label: "58th Anniversary" },
+  { href: "/quantum-leap", label: "Sports" },
   { href: "/portal", label: "Portal" },
   { href: "/contact", label: "Contact" },
 ];
@@ -26,7 +22,7 @@ const LINKS = [
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   useEffect(() => {
     if (!open) return;
@@ -38,32 +34,31 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--hairline)] bg-[var(--canvas)]/75 backdrop-blur-md">
-      <Container className="flex h-20 items-center justify-between">
-        <Link href="/" onClick={() => setOpen(false)}>
-          {/* Official lockup as issued — the mark is never re-typeset. */}
-          {/* declared at ~3x rendered size so the optimizer serves a sane variant, not w=3840 */}
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--hairline)] bg-[var(--canvas)]/95">
+      <Container className="flex h-[4.5rem] items-center justify-between md:h-20">
+        <Link href="/" onClick={() => setOpen(false)} aria-label="EMC² Fraternity, home">
+          {/* Official lockup as issued; the mark is never re-typeset. */}
           <Image
             src="/logo/emc2-lockup-white.png"
             alt="EMC² Fraternity — University of the Philippines"
             width={400}
             height={169}
-            className="h-12 w-auto md:h-14"
+            className="h-10 w-auto md:h-12"
             priority
           />
         </Link>
 
-        <nav className="hidden items-center gap-9 md:flex">
+        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
           {LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               aria-current={isActive(link.href) ? "page" : undefined}
               className={cn(
-                "font-mono text-[11px] tracking-[0.25em] uppercase transition-colors hover:text-[var(--frat-gold-light)]",
+                "font-sans text-[12px] font-medium tracking-[0.12em] uppercase transition-colors",
                 isActive(link.href)
                   ? "text-[var(--frat-gold-light)]"
-                  : "text-[var(--frat-cream)]/70"
+                  : "text-[var(--frat-cream)]/70 hover:text-[var(--frat-cream)]"
               )}
             >
               {link.label}
@@ -71,35 +66,33 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <Link href="/donate" className={cn(buttonVariants({ variant: "accent", size: "sm" }))}>
             Give Back
           </Link>
         </div>
 
         <button
-          className="text-[var(--frat-cream)] md:hidden"
+          className="text-[var(--frat-cream)] lg:hidden"
           aria-label="Toggle menu"
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {open ? <X className="h-6 w-6" strokeWidth={1.5} /> : <Menu className="h-6 w-6" strokeWidth={1.5} />}
         </button>
       </Container>
 
       <div
         id="mobile-menu"
-        // inert when closed so the collapsed (but not display:none) links stay
-        // out of the tab order and the accessibility tree
         inert={!open}
         className={cn(
-          "grid overflow-hidden border-t border-[var(--hairline)] bg-[var(--canvas)]/95 transition-all duration-300 md:hidden",
+          "grid overflow-hidden border-t border-[var(--hairline)] bg-[var(--canvas)] transition-all duration-300 lg:hidden",
           open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 border-t-0"
         )}
       >
         <div className="overflow-hidden">
-          <Container className="flex flex-col gap-1 py-4">
+          <Container className="flex flex-col py-3">
             {LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -107,10 +100,8 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={cn(
-                  "rounded-lg px-2 py-3 font-mono text-sm tracking-[0.2em] uppercase hover:bg-white/5",
-                  isActive(link.href)
-                    ? "text-[var(--frat-gold-light)]"
-                    : "text-[var(--frat-cream)]/80"
+                  "border-b border-[var(--hairline)] py-4 font-sans text-[13px] font-medium tracking-[0.12em] uppercase",
+                  isActive(link.href) ? "text-[var(--frat-gold-light)]" : "text-[var(--frat-cream)]/85"
                 )}
               >
                 {link.label}
@@ -119,7 +110,7 @@ export function Navbar() {
             <Link
               href="/donate"
               onClick={() => setOpen(false)}
-              className="mt-2 bg-[var(--frat-gold)] px-4 py-3 text-center font-mono text-xs font-semibold tracking-[0.25em] text-[#1a1305] uppercase"
+              className={cn(buttonVariants({ variant: "accent", size: "default" }), "mt-4 mb-2")}
             >
               Give Back
             </Link>
