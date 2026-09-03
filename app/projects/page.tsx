@@ -33,7 +33,7 @@ export default function ProjectsPage() {
                   </span>
                   <div>
                     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                      <h2 className="font-serif text-2xl font-semibold leading-snug text-[var(--frat-cream)] md:text-3xl">
+                      <h2 className="font-sans text-[22px] font-bold leading-snug text-[var(--fg)] md:text-3xl">
                         {project.title}
                       </h2>
                       {project.year ? (
@@ -42,7 +42,7 @@ export default function ProjectsPage() {
                         </span>
                       ) : null}
                     </div>
-                    <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-[var(--frat-cream)]/65">
+                    <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-[var(--fg)]/65">
                       {project.description}
                     </p>
                     <p className="caption mt-2 md:hidden">
@@ -73,10 +73,10 @@ export default function ProjectsPage() {
             <p className="label">
               From the archive
             </p>
-            <h2 className="mt-7 max-w-3xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+            <h2 className="mt-7 max-w-3xl display text-[2rem] md:text-[2.75rem]">
               Fifteen years of work, on one sheet.
             </h2>
-            <p className="mt-4 max-w-xl leading-relaxed text-[var(--frat-cream)]/70">
+            <p className="mt-4 max-w-xl leading-relaxed text-[var(--fg)]/70">
               Sixteen photographs from the brotherhood&rsquo;s own campaigns, Kalye Tunes at the
               U.P. Fair through to the COVID-19 relief operations. Open it full size.
             </p>
@@ -92,7 +92,7 @@ export default function ProjectsPage() {
               target="_blank"
               rel="noreferrer"
               aria-label="Open the full-size Projects and Campaigns retrospective sheet (opens in a new tab)"
-              className="mx-auto block w-full max-w-2xl border border-[var(--hairline)] transition-colors hover:border-[var(--frat-cream)]/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)]"
+              className="mx-auto block w-full max-w-2xl border border-[var(--hairline)] transition-colors hover:border-[var(--fg)]/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)]"
             >
               {/* next/image for the on-page render so phones fetch a resized copy
                   rather than the full 1080² sheet; the anchor above still points at
@@ -113,10 +113,10 @@ export default function ProjectsPage() {
       <section className="border-t border-[var(--hairline)] py-24">
         <Container>
           <Reveal>
-            <div className="max-w-2xl border-l-2 border-[var(--frat-gold)]/50 pl-6 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
+            <div className="max-w-2xl border-l-2 border-[var(--frat-gold)]/50 pl-6 text-[15px] leading-relaxed text-[var(--fg)]/70">
               More campaigns are inscribed every year. Have a project or photos to add to the
               ledger?{" "}
-              <a href="/contribute" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
+              <a href="/contribute" className="font-semibold text-[var(--brand)] underline underline-offset-4">
                 Add it to the record
               </a>
               .

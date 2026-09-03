@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const linkClass =
-  "text-[15px] text-[var(--frat-cream)] underline underline-offset-4 decoration-[var(--frat-cream)]/30 transition-colors hover:decoration-[var(--frat-cream)]";
+  "text-[15px] text-[var(--fg)] underline underline-offset-4 decoration-[var(--fg)]/30 transition-colors hover:decoration-[var(--fg)]";
 
 export default function ContactPage() {
   return (
@@ -61,10 +61,10 @@ export default function ContactPage() {
             <Reveal delay={0.1}>
               <div className="mt-10 border-l-2 border-[var(--frat-gold)]/50 pl-6">
                 <p className="label">Entry pending</p>
-                <p className="mt-3 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
+                <p className="mt-3 text-[15px] leading-relaxed text-[var(--fg)]/70">
                   The Association&rsquo;s permanent correspondence address is being established and will
                   be published here. Have a story, photograph, or piece of history to share?{" "}
-                  <a href="/contribute" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+                  <a href="/contribute" className="text-[var(--brand)] underline underline-offset-4">
                     Add it to the record
                   </a>
                   .

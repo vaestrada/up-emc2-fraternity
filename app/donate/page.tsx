@@ -48,7 +48,7 @@ export default async function DonatePage() {
           <GivingGate>
             <Reveal>
               <SectionLabel>How to give</SectionLabel>
-              <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              <h2 className="mt-7 display text-[2rem] md:text-[2.75rem]">
                 {association.legalName}
               </h2>
               <p className="prose-archive mt-6 text-[17px] leading-[1.7]">
@@ -66,7 +66,7 @@ export default async function DonatePage() {
                 ].map((row) => (
                   <div key={row.k} className="grid grid-cols-[11rem_1fr] gap-4 border-b border-[var(--hairline)] py-4">
                     <dt className="caption pt-0.5">{row.k}</dt>
-                    <dd className="text-[15px] text-[var(--frat-cream)]/85">{row.v}</dd>
+                    <dd className="text-[15px] text-[var(--fg)]/85">{row.v}</dd>
                   </div>
                 ))}
               </dl>
@@ -88,11 +88,11 @@ export default async function DonatePage() {
       </section>
 
       {/* Where a gift goes */}
-      <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
+      <section className="border-b border-[var(--hairline)] bg-[var(--tint)] py-20 md:py-28">
         <Container className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
           <Reveal>
             <SectionLabel>Where your gift goes</SectionLabel>
-            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+            <h2 className="mt-7 display text-[2rem] md:text-[2.75rem]">
               Three things, and nothing else.
             </h2>
           </Reveal>
@@ -101,8 +101,8 @@ export default async function DonatePage() {
               {IMPACT.map((item, i) => (
                 <Reveal key={item.title} delay={i * 0.05}>
                   <div className="grid gap-2 border-b border-[var(--hairline)] py-6 md:grid-cols-[12rem_1fr] md:gap-8">
-                    <h3 className="font-serif text-2xl font-semibold leading-snug text-[var(--frat-cream)]">{item.title}</h3>
-                    <p className="text-[15px] leading-relaxed text-[var(--frat-cream)]/70">{item.body}</p>
+                    <h3 className="font-sans text-[22px] font-bold leading-snug text-[var(--fg)]">{item.title}</h3>
+                    <p className="text-[15px] leading-relaxed text-[var(--fg)]/70">{item.body}</p>
                   </div>
                 </Reveal>
               ))}
@@ -111,17 +111,17 @@ export default async function DonatePage() {
               <dl className="mt-10 grid gap-8 sm:grid-cols-2">
                 <div>
                   <dt className="caption">Received and acknowledged by</dt>
-                  <dd className="mt-2 text-[15px] text-[var(--frat-cream)]">{association.legalName}</dd>
+                  <dd className="mt-2 text-[15px] text-[var(--fg)]">{association.legalName}</dd>
                 </div>
                 <div>
                   <dt className="caption">SEC registration</dt>
-                  <dd className="mt-2 text-[15px] text-[var(--frat-cream)]/85">
+                  <dd className="mt-2 text-[15px] text-[var(--fg)]/85">
                     {association.secRegNo ?? "Registration number to be added."}
                   </dd>
                 </div>
                 <div className="sm:col-span-2">
                   <dt className="caption">Your privacy</dt>
-                  <dd className="mt-2 max-w-xl text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
+                  <dd className="mt-2 max-w-xl text-[15px] leading-relaxed text-[var(--fg)]/70">
                     Details you share are used only to record and acknowledge your gift, and are handled
                     under the Philippine Data Privacy Act of 2012. We do not sell or share your
                     information.
@@ -144,7 +144,7 @@ export default async function DonatePage() {
               {voices.map((v, i) => (
                 <Reveal key={i} delay={(i % 2) * 0.06}>
                   <figure>
-                    <blockquote className="font-serif text-2xl font-medium leading-snug text-[var(--frat-cream)]/90">
+                    <blockquote className="font-serif text-2xl font-medium leading-snug text-[var(--fg)]/90">
                       &ldquo;{v.quote}&rdquo;
                     </blockquote>
                     <figcaption className="caption mt-4">{v.by}</figcaption>
@@ -162,7 +162,7 @@ export default async function DonatePage() {
           <div>
             <Reveal>
               <SectionLabel>Make a pledge</SectionLabel>
-              <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              <h2 className="mt-7 display text-[2rem] md:text-[2.75rem]">
                 Tell the Association what your gift is for.
               </h2>
             </Reveal>
@@ -172,7 +172,7 @@ export default async function DonatePage() {
                 scholarship, a campus project, an outreach campaign, and include your transfer
                 reference so it can be recorded and acknowledged.
               </p>
-              <p className="lead mt-6 text-[var(--frat-cream)]/80">
+              <p className="lead mt-6 text-[var(--fg)]/80">
                 Every pledge, whatever the size, is an act of Service and Sacrifice for the next
                 generation of brods.
               </p>
@@ -186,11 +186,11 @@ export default async function DonatePage() {
 
       {/* Roll of patrons */}
       {patrons.length > 0 ? (
-        <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
+        <section className="border-b border-[var(--hairline)] bg-[var(--tint)] py-20 md:py-28">
           <Container>
             <Reveal>
               <SectionLabel>The Roll of Patrons</SectionLabel>
-              <h2 className="mt-7 max-w-2xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              <h2 className="mt-7 max-w-2xl display text-[2rem] md:text-[2.75rem]">
                 With the brotherhood&rsquo;s thanks.
               </h2>
               <p className="prose-archive mt-6 text-[15px] leading-relaxed">
@@ -200,7 +200,7 @@ export default async function DonatePage() {
             <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4">
               {patrons.map((p, i) => (
                 <Reveal key={i} delay={Math.min(i, 12) * 0.03}>
-                  <span className="font-serif text-xl font-medium text-[var(--frat-cream)]">
+                  <span className="font-serif text-xl font-medium text-[var(--fg)]">
                     {p.name}
                     {p.batch ? <span className="caption ml-2">{p.batch}</span> : null}
                   </span>

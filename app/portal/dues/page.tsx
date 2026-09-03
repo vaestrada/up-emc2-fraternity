@@ -37,33 +37,33 @@ export default async function DuesPage() {
         <Container className="grid max-w-4xl gap-14 md:grid-cols-2 md:items-start">
           <div>
             <Reveal>
-              <h2 className="font-display text-3xl text-[var(--frat-cream)] md:text-4xl">
+              <h2 className="display text-[2rem] md:text-[2.75rem]">
                 How it works today
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <ol className="mt-6 space-y-4 text-sm leading-relaxed text-[var(--frat-cream)]/70">
+              <ol className="mt-6 space-y-4 text-sm leading-relaxed text-[var(--fg)]/70">
                 <li>
-                  <strong className="text-[var(--frat-cream)]">1. Send your dues</strong> via the
+                  <strong className="text-[var(--fg)]">1. Send your dues</strong> via the
                   Association&rsquo;s official GCash, Maya, or bank transfer channel — see{" "}
-                  <a href="/donate" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+                  <a href="/donate" className="text-[var(--brand)] underline underline-offset-4">
                     Give Back
                   </a>{" "}
                   for current details.
                 </li>
                 <li>
-                  <strong className="text-[var(--frat-cream)]">2. Record it here</strong> with your
+                  <strong className="text-[var(--fg)]">2. Record it here</strong> with your
                   transfer&rsquo;s reference number, so it can be matched to the Association&rsquo;s
                   own transaction history.
                 </li>
                 <li>
-                  <strong className="text-[var(--frat-cream)]">3. Get acknowledged</strong> by email
+                  <strong className="text-[var(--fg)]">3. Get acknowledged</strong> by email
                   once the Association verifies the match.
                 </li>
               </ol>
             </Reveal>
             <Reveal delay={0.15}>
-              <div className="mt-8 border-l-2 border-[var(--frat-gold)]/50 pl-5 text-[14px] leading-relaxed text-[var(--frat-cream)]/70">
+              <div className="mt-8 border-l-2 border-[var(--frat-gold)]/50 pl-5 text-[14px] leading-relaxed text-[var(--fg)]/70">
                 <span>
                   We don&rsquo;t process payments directly — nothing here touches your card or bank
                   login. This form only records what you already sent, for the Association to verify

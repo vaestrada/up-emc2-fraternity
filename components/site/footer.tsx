@@ -6,65 +6,84 @@ import { LinkedInIcon } from "@/components/site/linkedin-icon";
 import { site, association } from "@/lib/content";
 
 const linkClass = "transition-colors hover:text-[var(--frat-cream)]";
+const heading = "text-[13px] font-bold tracking-[0.12em] text-[var(--frat-gold-light)] uppercase";
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--hairline)] bg-[var(--ink)] text-[var(--frat-cream)]">
-      <Container className="grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:py-20">
+    <footer className="on-dark bg-[var(--ink)] text-[var(--frat-cream)]">
+      <Container className="grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:py-24">
         <div>
           <Image
             src="/logo/emc2-lockup-white.svg"
-            unoptimized
             alt="EMC² Fraternity — University of the Philippines"
             width={464}
             height={114}
-            className="h-12 w-auto"
+            unoptimized
+            className="h-14 w-auto"
           />
-          <p className="mt-6 max-w-xs text-[15px] leading-relaxed text-[var(--frat-cream)]/65">
+          <p className="mt-6 max-w-xs text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
             An exclusive Engineering and Physical Sciences brotherhood, founded in 1969 at the
             U.P. College of Engineering.
           </p>
-          <p className="caption mt-5">
+          <p className="mt-5 text-[14px] leading-relaxed text-[var(--frat-cream)]/55">
             3rd Floor Lobby, Melchor Hall, U.P. Diliman
             <br />
             Quezon City, Philippines
           </p>
+          <div className="mt-6 flex gap-3">
+            <a
+              href={site.facebook}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--frat-cream)]/25 transition-colors hover:bg-[var(--frat-cream)]/10"
+            >
+              <FacebookIcon className="h-4 w-4" />
+            </a>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--frat-cream)]/25 transition-colors hover:bg-[var(--frat-cream)]/10"
+            >
+              <LinkedInIcon className="h-4 w-4" />
+            </a>
+          </div>
         </div>
 
         <div>
-          <p className="label">The record</p>
-          <ul className="mt-5 space-y-3 text-[15px] text-[var(--frat-cream)]/70">
+          <p className={heading}>The record</p>
+          <ul className="mt-5 space-y-3 text-[15px] text-[var(--frat-cream)]/75">
             <li><Link href="/history" className={linkClass}>History</Link></li>
             <li><Link href="/projects" className={linkClass}>Projects and campaigns</Link></li>
             <li><Link href="/brods" className={linkClass}>Prominent brods</Link></li>
-            <li><Link href="/anniversary" className={linkClass}>The 58th Anniversary</Link></li>
-            <li><Link href="/quantum-leap" className={linkClass}>Quantum Leap Sports Series</Link></li>
             <li><Link href="/roadmap" className={linkClass}>What&rsquo;s next</Link></li>
           </ul>
         </div>
 
         <div>
-          <p className="label">Correspondence</p>
-          <ul className="mt-5 space-y-3 text-[15px] text-[var(--frat-cream)]/70">
-            <li><Link href="/donate" className={cn2("text-[var(--frat-gold-light)] hover:text-[var(--frat-cream)]")}>Give back</Link></li>
-            <li><Link href="/portal" className={linkClass}>Member Portal</Link></li>
+          <p className={heading}>Get involved</p>
+          <ul className="mt-5 space-y-3 text-[15px] text-[var(--frat-cream)]/75">
+            <li><Link href="/anniversary" className={linkClass}>The 58th Anniversary</Link></li>
+            <li><Link href="/quantum-leap" className={linkClass}>Quantum Leap Sports Series</Link></li>
             <li><Link href="/contribute" className={linkClass}>Add to the record</Link></li>
+            <li><Link href="/donate" className={linkClass}>Give back</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <p className={heading}>Brods</p>
+          <ul className="mt-5 space-y-3 text-[15px] text-[var(--frat-cream)]/75">
+            <li><Link href="/portal" className={linkClass}>Member Portal</Link></li>
+            <li><Link href="/portal/directory" className={linkClass}>Directory</Link></li>
+            <li><Link href="/portal/dues" className={linkClass}>Dues</Link></li>
             <li><Link href="/contact" className={linkClass}>Contact the fraternity</Link></li>
-            <li>
-              <a href={site.facebook} target="_blank" rel="noreferrer" className={`flex items-center gap-2 ${linkClass}`}>
-                <FacebookIcon className="h-4 w-4" /> Facebook
-              </a>
-            </li>
-            <li>
-              <a href={site.linkedin} target="_blank" rel="noreferrer" className={`flex items-center gap-2 ${linkClass}`}>
-                <LinkedInIcon className="h-4 w-4" /> LinkedIn
-              </a>
-            </li>
           </ul>
         </div>
       </Container>
 
-      <div className="border-t border-[var(--hairline)] py-6">
+      <div className="border-t border-[var(--frat-cream)]/10 py-6">
         <Container className="flex flex-col gap-3 text-[13px] leading-relaxed text-[var(--frat-cream)]/50 md:flex-row md:items-center md:justify-between">
           <p className="max-w-2xl">
             Gifts and correspondence are received by {association.legalName}
@@ -79,8 +98,4 @@ export function Footer() {
       </div>
     </footer>
   );
-}
-
-function cn2(extra: string) {
-  return `transition-colors ${extra}`;
 }

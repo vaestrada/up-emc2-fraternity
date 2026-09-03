@@ -5,7 +5,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { Container } from "@/components/site/container";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -13,12 +12,15 @@ const LINKS = [
   { href: "/history", label: "History" },
   { href: "/projects", label: "Projects" },
   { href: "/brods", label: "Brods" },
-  { href: "/anniversary", label: "58th Anniversary" },
+  { href: "/anniversary", label: "58th" },
   { href: "/quantum-leap", label: "Sports" },
   { href: "/portal", label: "Portal" },
   { href: "/contact", label: "Contact" },
 ];
 
+/* A floating island: the mark, the links, and the one gold action, in a
+   rounded bar that sits over any ground. Always present, as asked; never a
+   hidden menu on desktop. */
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -34,32 +36,26 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--hairline)] bg-[var(--canvas)]">
-      <Container className="flex h-[4.5rem] items-center justify-between md:h-20">
-        <Link href="/" onClick={() => setOpen(false)} aria-label="EMC² Fraternity, home">
-          {/* Official lockup as issued; the mark is never re-typeset. */}
-          <Image
-            src="/logo/emc2-lockup-white.svg"
-            unoptimized
-            alt="EMC² Fraternity — University of the Philippines"
-            width={464}
-            height={114}
-            className="h-10 w-auto md:h-12"
-            priority
-          />
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-5">
+      <div className="island mx-auto flex h-16 max-w-6xl items-center justify-between rounded-full pr-2 pl-5 md:pl-6">
+        <Link href="/" onClick={() => setOpen(false)} aria-label="EMC² Fraternity, home" className="flex items-center">
+          <Image src="/logo/emc2-mark.svg" alt="" width={114} height={114} unoptimized className="h-9 w-9" />
+          <span className="ml-3 hidden font-display text-[15px] font-bold tracking-wide text-[var(--fg)] sm:block">
+            EMC&sup2; Fraternity
+          </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
           {LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               aria-current={isActive(link.href) ? "page" : undefined}
               className={cn(
-                "font-sans text-[12px] font-medium tracking-[0.12em] uppercase transition-colors",
+                "rounded-full px-3.5 py-2 text-[14px] font-semibold transition-colors",
                 isActive(link.href)
-                  ? "text-[var(--frat-gold-light)]"
-                  : "text-[var(--frat-cream)]/70 hover:text-[var(--frat-cream)]"
+                  ? "bg-[var(--fg)]/8 text-[var(--fg)]"
+                  : "text-[var(--fg)]/75 hover:bg-[var(--fg)]/5 hover:text-[var(--fg)]"
               )}
             >
               {link.label}
@@ -67,33 +63,32 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
-          <Link href="/donate" className={cn(buttonVariants({ variant: "accent", size: "sm" }))}>
+        <div className="flex items-center gap-2">
+          <Link href="/donate" className={cn(buttonVariants({ variant: "gold", size: "sm" }))}>
             Give Back
           </Link>
+          <button
+            className="flex h-10 w-10 items-center justify-center rounded-full text-[var(--fg)] transition-colors hover:bg-[var(--fg)]/5 lg:hidden"
+            aria-label="Toggle menu"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X className="h-5 w-5" strokeWidth={2} /> : <Menu className="h-5 w-5" strokeWidth={2} />}
+          </button>
         </div>
-
-        <button
-          className="text-[var(--frat-cream)] lg:hidden"
-          aria-label="Toggle menu"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="h-6 w-6" strokeWidth={1.5} /> : <Menu className="h-6 w-6" strokeWidth={1.5} />}
-        </button>
-      </Container>
+      </div>
 
       <div
         id="mobile-menu"
         inert={!open}
         className={cn(
-          "grid overflow-hidden border-t border-[var(--hairline)] bg-[var(--canvas)] transition-all duration-300 lg:hidden",
-          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 border-t-0"
+          "island mx-auto mt-2 grid max-w-6xl overflow-hidden rounded-3xl transition-all duration-300 lg:hidden",
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         )}
       >
         <div className="overflow-hidden">
-          <Container className="flex flex-col py-3">
+          <nav className="flex flex-col p-3" aria-label="Mobile">
             {LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -101,21 +96,14 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={cn(
-                  "border-b border-[var(--hairline)] py-4 font-sans text-[13px] font-medium tracking-[0.12em] uppercase",
-                  isActive(link.href) ? "text-[var(--frat-gold-light)]" : "text-[var(--frat-cream)]/85"
+                  "rounded-2xl px-4 py-3 text-[16px] font-semibold",
+                  isActive(link.href) ? "bg-[var(--fg)]/8 text-[var(--fg)]" : "text-[var(--fg)]/80"
                 )}
               >
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/donate"
-              onClick={() => setOpen(false)}
-              className={cn(buttonVariants({ variant: "accent", size: "default" }), "mt-4 mb-2")}
-            >
-              Give Back
-            </Link>
-          </Container>
+          </nav>
         </div>
       </div>
     </header>

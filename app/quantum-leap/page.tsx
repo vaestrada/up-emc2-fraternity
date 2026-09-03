@@ -82,7 +82,7 @@ export default function QuantumLeapPage() {
                 <a
                   href="/quantum-leap/pickleball-2026-poster.png"
                   download
-                  className="label underline-offset-4 transition-colors hover:text-[var(--frat-gold-light)] hover:underline"
+                  className="label underline-offset-4 transition-colors hover:text-[var(--brand)] hover:underline"
                 >
                   Download the plate
                 </a>
@@ -91,7 +91,7 @@ export default function QuantumLeapPage() {
 
             <div>
               <Reveal>
-                <h2 className="font-display text-[clamp(1.9rem,3.4vw,2.9rem)] leading-[1.06] text-[var(--frat-cream)]">
+                <h2 className="font-display text-[clamp(1.9rem,3.4vw,2.9rem)] leading-[1.06] text-[var(--fg)]">
                   One sport.
                   <br />
                   One day.
@@ -100,7 +100,7 @@ export default function QuantumLeapPage() {
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="mt-6 max-w-md leading-relaxed text-[var(--frat-cream)]/65">
+                <p className="mt-6 max-w-md leading-relaxed text-[var(--fg)]/65">
                   A one-day pickleball clinic and social tournament for alumni,
                   their families, and invited guests. Pickleball leads the series
                   because it welcomes complete beginners and seasoned players onto
@@ -108,11 +108,11 @@ export default function QuantumLeapPage() {
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
-                <p className="mt-4 max-w-md leading-relaxed text-[var(--frat-cream)]/65">
+                <p className="mt-4 max-w-md leading-relaxed text-[var(--fg)]/65">
                   The next edition&rsquo;s sport, venue, and registration follow once each is
                   secured. Nothing is announced before it is certain. Were you on the court
                   on the 22nd?{" "}
-                  <Link href="/contribute" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+                  <Link href="/contribute" className="text-[var(--brand)] underline underline-offset-4">
                     Send the photos in
                   </Link>{" "}
                   and the first edition takes its place in the record.
@@ -130,7 +130,7 @@ export default function QuantumLeapPage() {
                         {f.k}
                       </dt>
                       <dd className="flex flex-wrap items-baseline gap-x-3">
-                        <span className="font-serif text-xl font-semibold text-[var(--frat-cream)]">
+                        <span className="font-sans text-[19px] font-bold text-[var(--fg)]">
                           {f.v}
                         </span>
                         <span className="caption">
@@ -165,12 +165,12 @@ export default function QuantumLeapPage() {
             </Reveal>
             <div>
               <Reveal>
-                <h2 className="font-display text-[clamp(1.8rem,3.2vw,2.7rem)] leading-[1.08] text-[var(--frat-cream)]">
+                <h2 className="font-display text-[clamp(1.8rem,3.2vw,2.7rem)] leading-[1.08] text-[var(--fg)]">
                   First serve, 22 August.
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="mt-6 max-w-md leading-relaxed text-[var(--frat-cream)]/65">
+                <p className="mt-6 max-w-md leading-relaxed text-[var(--fg)]/65">
                   Nineteen seconds, shot for the feed ahead of the first edition. Share it
                   with a brod who has not been back to a court in a while. The series
                   continues.
@@ -202,12 +202,12 @@ export default function QuantumLeapPage() {
             </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <h2 className="mt-6 max-w-2xl font-display text-[clamp(1.8rem,3.2vw,2.7rem)] leading-[1.08] text-[var(--frat-cream)]">
+            <h2 className="mt-6 max-w-2xl font-display text-[clamp(1.8rem,3.2vw,2.7rem)] leading-[1.08] text-[var(--fg)]">
               Pickleball is the first edition, not the whole programme.
             </h2>
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-6 max-w-xl leading-relaxed text-[var(--frat-cream)]/65">
+            <p className="mt-6 max-w-xl leading-relaxed text-[var(--fg)]/65">
               Quantum Leap is built to repeat. If the first edition runs well, the
               series continues into other sports, each one its own edition under the
               same banner.
@@ -228,8 +228,8 @@ export default function QuantumLeapPage() {
                     className={cn(
                       "font-display text-xl md:text-2xl",
                       e.n === "01"
-                        ? "text-[var(--frat-cream)]"
-                        : "text-[var(--frat-cream)]/35"
+                        ? "text-[var(--fg)]"
+                        : "text-[var(--fg)]/35"
                     )}
                   >
                     {e.sport}

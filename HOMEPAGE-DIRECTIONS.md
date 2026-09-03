@@ -69,6 +69,23 @@ Lenis smooth scrolling with GSAP ScrollTrigger pinning, the award-site standard.
 two dependencies to do what native scroll-driven animations and framer's `useScroll` already
 do here, and smoothed scrolling fights the browser on trackpads and with assistive technology.
 
+## G. The Modern Charter (built, evening of 3 September)
+
+The owner's final direction: adopt the layout system of phideltatheta.org and keep only our
+brand. A light paper page with pale green tinted sections; huge Cinzel headlines with a gold
+dash label; pill buttons; 24px corners on every photograph, card, and panel; a floating
+island navbar; a full-bleed hero under a green multiply tint with the metal seal centred and
+an angled bottom edge; a card slider; a dark rounded Portal panel with the mark as a
+watermark; a featured-plus-list notices section; tinted stat tiles with Cormorant numbers; a
+portrait grid; a closing dark panel; a four-column dark footer. The inner pages were swept
+onto the same tokens and shapes. `DESIGN.md` is rewritten for it; `GLOSSARY.md` section 12
+names each borrowed pattern.
+
+Why this won over A: the owner wants "familiar and modern" for an audience that will judge
+in one glance, and a recognisable, contemporary institutional layout does that more reliably
+than a bespoke editorial one. The Plate's best idea, the seal in metal, is kept as the hero's
+centre.
+
 ## What to try next, in order
 
 1. The Dossier once `viewTransition` leaves experimental.

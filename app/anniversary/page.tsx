@@ -99,14 +99,14 @@ export default function AnniversaryPage() {
             <dl className="grid border-t border-[var(--hairline)] sm:grid-cols-3">
               <div className="border-b border-[var(--hairline)] py-6 sm:border-r sm:pr-8">
                 <dt className="caption">When</dt>
-                <dd className="mt-2 font-serif text-2xl font-semibold text-[var(--frat-cream)]">{anniversary.month}</dd>
+                <dd className="mt-2 font-sans text-[22px] font-bold text-[var(--fg)]">{anniversary.month}</dd>
                 {anniversary.date ? null : (
                   <p className="caption mt-1">Exact day to be fixed by the committee.</p>
                 )}
               </div>
               <div className="border-b border-[var(--hairline)] py-6 sm:border-r sm:px-8">
                 <dt className="caption">Where</dt>
-                <dd className="mt-2 font-serif text-2xl font-semibold text-[var(--frat-cream)]">{anniversary.venue}</dd>
+                <dd className="mt-2 font-sans text-[22px] font-bold text-[var(--fg)]">{anniversary.venue}</dd>
                 <p className="caption mt-1">
                   {anniversary.venueDetail}, {anniversary.venueAddress}.
                   {anniversary.venueConfirmed ? "" : " Held, not yet contracted."}
@@ -114,7 +114,7 @@ export default function AnniversaryPage() {
               </div>
               <div className="border-b border-[var(--hairline)] py-6 sm:pl-8">
                 <dt className="caption">Who</dt>
-                <dd className="mt-2 font-serif text-2xl font-semibold text-[var(--frat-cream)]">Every brod, every batch</dd>
+                <dd className="mt-2 font-sans text-[22px] font-bold text-[var(--fg)]">Every brod, every batch</dd>
                 <p className="caption mt-1">{FOUNDING_YEAR} to the present, with families and invited guests.</p>
               </div>
             </dl>
@@ -123,11 +123,11 @@ export default function AnniversaryPage() {
       </section>
 
       {/* The programme, as a list with honest status lines. */}
-      <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
+      <section className="border-b border-[var(--hairline)] bg-[var(--tint)] py-20 md:py-28">
         <Container className="grid gap-12 md:grid-cols-[1fr_1.6fr] md:gap-20">
           <Reveal>
             <SectionLabel>The programme</SectionLabel>
-            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+            <h2 className="mt-7 display text-[2rem] md:text-[2.75rem]">
               What the committee is preparing.
             </h2>
             <p className="prose-archive mt-6 text-[15px] leading-relaxed">
@@ -139,10 +139,10 @@ export default function AnniversaryPage() {
             {PROGRAMME.map((item, i) => (
               <Reveal key={item.title} delay={i * 0.04}>
                 <div className="grid gap-2 border-b border-[var(--hairline)] py-6 md:grid-cols-[14rem_1fr] md:gap-8">
-                  <h3 className="font-serif text-2xl font-semibold leading-snug text-[var(--frat-cream)]">{item.title}</h3>
+                  <h3 className="font-sans text-[22px] font-bold leading-snug text-[var(--fg)]">{item.title}</h3>
                   <div>
-                    <p className="text-[15px] leading-relaxed text-[var(--frat-cream)]/70">{item.body}</p>
-                    <p className="mt-2 text-[13px] text-[var(--frat-gold-light)]/90">{item.status}</p>
+                    <p className="text-[15px] leading-relaxed text-[var(--fg)]/70">{item.body}</p>
+                    <p className="mt-2 text-[13px] text-[var(--brand)]/90">{item.status}</p>
                   </div>
                 </div>
               </Reveal>
@@ -156,7 +156,7 @@ export default function AnniversaryPage() {
         <Container>
           <Reveal>
             <SectionLabel>From the archive</SectionLabel>
-            <h2 className="mt-7 max-w-2xl font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+            <h2 className="mt-7 max-w-2xl display text-[2rem] md:text-[2.75rem]">
               The last time the brotherhood gathered.
             </h2>
             <p className="prose-archive mt-6 text-[15px] leading-relaxed">
@@ -176,7 +176,7 @@ export default function AnniversaryPage() {
           <div>
             <Reveal>
               <SectionLabel>Save the date</SectionLabel>
-              <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+              <h2 className="mt-7 display text-[2rem] md:text-[2.75rem]">
                 Put your name down.
               </h2>
             </Reveal>

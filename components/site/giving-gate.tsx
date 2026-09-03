@@ -4,7 +4,7 @@ import { useState } from "react";
 import { association } from "@/lib/content";
 
 const gateInput =
-  "w-full border border-[var(--border)] bg-white/5 px-4 py-3 text-[15px] text-[var(--frat-cream)] outline-none transition-colors placeholder:text-[var(--frat-cream)]/50 focus:border-[var(--frat-gold)]";
+  "w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-[15px] text-[var(--fg)] outline-none transition-colors placeholder:text-[var(--fg)]/50 focus:border-[var(--brand)]";
 
 /* A soft frame, not authentication. Give Back is meant for brods, alumni, and
    friends of the fraternity, so the giving details sit behind one light,
@@ -32,7 +32,7 @@ export function GivingGate({ children }: { children: React.ReactNode }) {
   return (
     <div className="max-w-xl">
       <p className="label">For the brotherhood</p>
-      <h2 className="mt-6 font-display text-3xl leading-tight text-[var(--frat-cream)]">
+      <h2 className="mt-6 display text-[2rem]">
         Give Back is for brods, alumni, and friends of the fraternity.
       </h2>
       <p className="prose-archive mt-5 text-[15px] leading-relaxed">
@@ -48,14 +48,14 @@ export function GivingGate({ children }: { children: React.ReactNode }) {
       >
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="gate-name" className="mb-1.5 block text-[14px] text-[var(--frat-cream)]/80">
-              Name <span className="text-[var(--frat-cream)]/45">(optional)</span>
+            <label htmlFor="gate-name" className="mb-1.5 block text-[14px] text-[var(--fg)]/80">
+              Name <span className="text-[var(--fg)]/45">(optional)</span>
             </label>
             <input id="gate-name" value={name} onChange={(e) => setName(e.target.value)} maxLength={120} placeholder="Juan dela Cruz" className={gateInput} />
           </div>
           <div>
-            <label htmlFor="gate-batch" className="mb-1.5 block text-[14px] text-[var(--frat-cream)]/80">
-              Batch <span className="text-[var(--frat-cream)]/45">(optional)</span>
+            <label htmlFor="gate-batch" className="mb-1.5 block text-[14px] text-[var(--fg)]/80">
+              Batch <span className="text-[var(--fg)]/45">(optional)</span>
             </label>
             <input id="gate-batch" value={batch} onChange={(e) => setBatch(e.target.value)} maxLength={40} placeholder="’84-F" className={gateInput} />
           </div>

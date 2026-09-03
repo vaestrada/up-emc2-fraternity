@@ -18,7 +18,7 @@ const TOPICS = [
 ];
 
 const inputClass =
-  "w-full border border-[var(--border)] bg-white/5 px-4 py-3 text-sm text-[var(--frat-cream)] outline-none transition-colors placeholder:text-[var(--frat-cream)]/60 focus:border-[var(--frat-gold)] focus:ring-2 focus:ring-[var(--frat-gold)]/30 [&>option]:bg-[var(--ink)]";
+  "w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition-colors placeholder:text-[var(--fg)]/60 focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--frat-gold)]/30 [&>option]:bg-[var(--tint)]";
 
 export function ContactForm() {
   const [state, formAction, pending] = useActionState(submitContact, INITIAL_FORM_STATE);
@@ -53,13 +53,13 @@ export function ContactForm() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
               Name
             </label>
             <input id="contact-name" name="name" required maxLength={120} placeholder="Juan dela Cruz" defaultValue={state.values?.name} className={inputClass} />
           </div>
           <div>
-            <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
               Email
             </label>
             <input
@@ -76,7 +76,7 @@ export function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="contact-topic" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+          <label htmlFor="contact-topic" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
             Topic
           </label>
           <select id="contact-topic" name="topic" className={inputClass} defaultValue={state.values?.topic ?? TOPICS[0]}>
@@ -89,7 +89,7 @@ export function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+          <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
             Message
           </label>
           <textarea

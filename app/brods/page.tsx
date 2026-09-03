@@ -35,10 +35,10 @@ export default function BrodsPage() {
           <Reveal className="mt-16">
             <div className="max-w-2xl border-l-2 border-[var(--frat-gold)]/50 pl-6">
               <p className="label">Nominations</p>
-              <p className="mt-3 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
+              <p className="mt-3 text-[15px] leading-relaxed text-[var(--fg)]/70">
                 This record is just beginning. If your batch has a brod who deserves a citation here,
                 in engineering, public service, business, or the arts,{" "}
-                <a href="/contribute" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+                <a href="/contribute" className="text-[var(--brand)] underline underline-offset-4">
                   submit a citation
                 </a>
                 .
@@ -49,11 +49,11 @@ export default function BrodsPage() {
       </section>
 
       {/* The register */}
-      <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
+      <section className="border-b border-[var(--hairline)] bg-[var(--tint)] py-20 md:py-28">
         <Container className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
           <Reveal>
             <SectionLabel>The register</SectionLabel>
-            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+            <h2 className="mt-7 display text-[2rem] md:text-[2.75rem]">
               Four hundred ninety, and counting.
             </h2>
           </Reveal>
@@ -75,7 +75,7 @@ export default function BrodsPage() {
         <Container className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
           <Reveal>
             <SectionLabel>The council</SectionLabel>
-            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+            <h2 className="mt-7 display text-[2rem] md:text-[2.75rem]">
               Those who steward the brotherhood today.
             </h2>
           </Reveal>
@@ -85,7 +85,7 @@ export default function BrodsPage() {
                 <Reveal key={`${officer.role}-${officer.name}`} delay={i * 0.04}>
                   <div className="grid grid-cols-[1fr_auto] items-baseline gap-6 border-b border-[var(--hairline)] py-5">
                     <div>
-                      <p className="font-serif text-xl font-semibold text-[var(--frat-cream)]">{officer.name}</p>
+                      <p className="font-sans text-[19px] font-bold text-[var(--fg)]">{officer.name}</p>
                       <p className="caption mt-1">{officer.role}</p>
                     </div>
                     {officer.batch ? <p className="caption">Batch {officer.batch}</p> : null}
@@ -97,7 +97,7 @@ export default function BrodsPage() {
             <Reveal delay={0.08}>
               <div className="border-l-2 border-[var(--frat-gold)]/50 pl-6">
                 <p className="label">Entry pending</p>
-                <p className="mt-3 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">
+                <p className="mt-3 text-[15px] leading-relaxed text-[var(--fg)]/70">
                   The roster of the brotherhood&rsquo;s current officers is being confirmed and will be
                   inscribed here.
                 </p>
@@ -108,11 +108,11 @@ export default function BrodsPage() {
       </section>
 
       {/* In memoriam */}
-      <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
+      <section className="border-b border-[var(--hairline)] bg-[var(--tint)] py-20 md:py-28">
         <Container className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
           <Reveal>
             <SectionLabel>In memoriam</SectionLabel>
-            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+            <h2 className="mt-7 display text-[2rem] md:text-[2.75rem]">
               Brods who have gone ahead.
             </h2>
           </Reveal>
@@ -121,18 +121,18 @@ export default function BrodsPage() {
               {inMemoriam.map((m) => (
                 <Reveal key={`${m.name}-${m.years ?? ""}`}>
                   <li className="border-b border-[var(--hairline)] py-5">
-                    <p className="font-serif text-2xl font-semibold text-[var(--frat-cream)]">{m.name}</p>
+                    <p className="font-sans text-[22px] font-bold text-[var(--fg)]">{m.name}</p>
                     <p className="caption mt-1">
                       {[m.batch ? `Batch ${m.batch}` : null, m.years].filter(Boolean).join(" · ")}
                     </p>
-                    {m.note ? <p className="mt-3 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">{m.note}</p> : null}
+                    {m.note ? <p className="mt-3 text-[15px] leading-relaxed text-[var(--fg)]/70">{m.note}</p> : null}
                   </li>
                 </Reveal>
               ))}
             </ul>
           ) : (
             <Reveal delay={0.08}>
-              <p className="lead text-[var(--frat-cream)]/75">
+              <p className="lead text-[var(--fg)]/75">
                 A place of remembrance is being prepared, so the brothers we have lost are never absent
                 from the record.
               </p>

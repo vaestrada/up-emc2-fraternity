@@ -1,90 +1,83 @@
 # Design
 
-## The Charter
+## The Modern Charter
 
-The site reads as the official record of a fifty-seven-year-old institution: a university
-charter, a hall of records, a society's annual report. One green field carries every page;
-cream is the reading colour; gold appears only where honour or action is meant. Real
-photographs of real brods, in colour, carry the feeling. Typography carries the rest. The
-surface is still.
+Reference: the layout system of phideltatheta.org as it stands in 2026, rebuilt on the EMC²
+brand. The reference is kept for its *structure*: a full-bleed photographic hero with a
+centred mark and one tagline, an angled edge into a light page, huge bold headlines with a
+short gold dash as the section label, pill buttons, photographs and cards with a 24px
+corner, a horizontal card slider with round arrow buttons, a dark rounded call-to-action
+panel with a watermark, tinted stat tiles with serif numbers, a four-up portrait grid, and a
+dark footer with four columns. What is *ours*: the colours, the faces, the seal, the
+photographs, and the words.
 
-This replaces "The Archive" theme of August 2026, which layered film grain, a blueprint
-grid, a rotating watermark, a light sweep, a breathing frame, Ken Burns drift, a marquee,
-monospace uppercase labels with `№ 01 —` numbering, duotone-filtered photographs, and
-AI-generated video. Each was defensible alone. Together they were the current AI-default
-"tech-luxury" kit, and the site read as generated. The rule now: **if an effect could be
-removed and the page would still be correct, remove it.**
+The two earlier systems of 3 September (the dark "Charter" and "The Plate") are recorded in
+`HOMEPAGE-DIRECTIONS.md`. The metal seal survives from them as the hero's centrepiece.
 
 ## Colour
 
-- `--ink: #04150a` deepest ground, alternating sections and the footer
-- `--canvas: #071e0c` page ground
-- `--surface: #0b2a12` cards and forms
-- `--frat-cream: #f2ecdc` text
-- `--frat-gold: #c38f0e` section labels, the short rule beneath them, the accent button
-- `--frat-gold-light: #e3b94a` links, honours, hover states
-- `--hairline: rgba(242,236,220,0.14)` every rule and border. Hairlines are cream, not gold.
+| Token | Value | Role |
+|---|---|---|
+| `--paper` | `#f7f4ec` | the page (their white) |
+| `--tint` | `#e6eee3` | alternating sections and stat tiles (their pale blue) |
+| `--card` | `#ffffff` | form fields and cards |
+| `--fg` | `#07200c` | text and headlines (their navy) |
+| `--fg-muted` | `rgba(7,32,12,.7)` | body copy |
+| `--brand` | `#0c3e06` | solid buttons, links |
+| `--frat-gold` | `#c38f0e` | the dash on section labels; the navbar's one gold pill |
+| `--ink` | `#04150a` | dark panels: the Portal panel, the closing panel, the footer |
+| `--hairline` | `rgba(7,32,12,.12)` | rules and borders |
 
-Gold is never a background, never body text, never a border on a box. At most one solid
-gold element per view, and it is a button.
+Gold is never body text on paper (2.45:1 fails). It is the dash and the navbar's action.
 
 ## Typography
 
 | Role | Face | Setting |
 |---|---|---|
-| Page and section titles | Cinzel (`font-display`), weight 400 | `h1` clamp(2.4rem, 5.2vw, 4.25rem); `h2` 1.875–2.25rem; never bold |
-| Item titles, lead lines, quotes | Cormorant (`font-serif`), weight 500–600, upright | `.lead` 1.375–1.5rem; item titles 1.5rem |
-| Body | Geist (`font-sans`) | 17px / 1.7 on the body; 15px in lists and captions |
-| Section label | Cinzel, 11px, uppercase, tracked 0.22em, gold | `.label`, with `.rule` beneath; one per section |
-| Captions and metadata | Geist, 13px, cream at 55% | `.caption`, sentence case |
-| Reference numbers, exports | Geist Mono | admin only |
-
-Italics are reserved for a quoted motto. No gradient text, no tracked monospace, no
-uppercase running text.
-
-## Photography
-
-Photographs are real, from the Association's own record, shown in colour with no filter.
-The three 55th Anniversary photographs were cropped out of their printed frames
-(`public/photos/anniv55-*.jpg`); portraits were cropped out of their social-card layouts
-(`public/photos/brod-*-portrait.jpg`). Every photograph is mounted with a hairline and a
-sentence-case caption that says what it is and when.
-
-AI-generated imagery does not appear on the public record. The labelled placeholders in
-`lib/content.ts` are off by default (`lib/demo.ts`) and exist only for walkthroughs.
+| Display headlines | Cinzel 700 (`.display`) | `clamp(2.25rem, 4.5vw, 3.5rem)` for section titles; up to `5.25rem` for "We are EMC²." |
+| Card and story titles | Geist 700 | 22–30px |
+| Section label | Geist 700, 13px, uppercase, tracked 0.12em, with a 48×3px gold dash (`.label`) | one per section |
+| Lead | Geist, 20–22px, muted (`.lead`) | under every headline |
+| Body | Geist 17px / 1.6 | |
+| Stat numbers | Cormorant 600, 56px (`.stat`) | tinted tiles only |
+| Quotes and the credo | Cormorant 500, 28–30px | `/history` |
 
 ## Components
 
-- **Page hero** (`page-hero.tsx`): label, title, lead; optionally a photograph beside them.
-  Left-aligned. The homepage hero is a full-bleed photograph with the same text bottom-left.
-- **Section label** (`section-label.tsx`): the one way a section announces itself.
-- **Rows, not cards**: lists of projects, milestones, programme items, facts, and officers
-  are hairline-separated rows in a two-column editorial grid (label column left, content
-  right). Boxes are used only for forms.
-- **Pending entries**: a left gold rule (`border-l-2`) with a label and a sentence. Never a
-  dashed box.
-- **Buttons** (`button.tsx`): rectangular, sans, 12px, tracked 0.14em, uppercase. Accent is
-  solid gold; outline is a cream hairline. Hover changes colour only. Nothing lifts.
-- **Photographs** (`archive-plates.tsx`, `brod-card.tsx`): hairline mount, caption below.
-- **Forms**: surface ground, hairline border, cream inputs on 5% white.
-- **Icons**: none in the public pages except the social marks in the footer. No icon circles.
+- **Island navbar** (`navbar.tsx`): a floating rounded bar over any ground, blurred paper,
+  the mark and name at left, the links, the one gold pill at right. Present on every page;
+  a rounded panel drops beneath it on phones.
+- **Pill buttons** (`button.tsx`): `default` brand fill, `gold`, `outline`, `white`,
+  `outline-light` for dark panels. Radius 9999px, 48px tall, bold 15px.
+- **Hero** (`app/page.tsx`): the 55th photograph under a green multiply tint, the metal
+  seal, the name in Cinzel capitals, the tagline tracked, two pills, an angled bottom edge
+  (`.angled-bottom`, a `clip-path` polygon).
+- **Page hero** (`page-hero.tsx`): tint ground, dash label, display title, lead, an optional
+  rounded photograph.
+- **Card slider** (`card-slider.tsx`): native scroll-snap, round arrow buttons, rounded
+  images, bold titles, a gold-underlined "Learn more".
+- **Dark panel**: `rounded-card bg-[var(--ink)]` with the mark as a large low-opacity
+  watermark and centred content; the `on-dark` class flips label colour.
+- **Stat tiles**: `rounded-card bg-[var(--tint)]` with a `.stat` number and a caption.
+- **Portrait grid** (`brod-card.tsx`): square rounded photograph, uppercase batch, bold
+  name, honour.
+- **Lists**: hairline-separated rows in a two-column grid, as before.
+- **Pending entries**: a left gold rule and a sentence.
+- **Forms**: white fields with a 12px radius in a rounded card.
 
 ## Layout
 
-- Container `max-w-6xl`, `px-6`.
-- Section rhythm `py-20 md:py-28`; the homepage patronage band `py-24 md:py-32`.
-- Sections alternate `--canvas` and `--ink`, each closed by a hairline.
-- Editorial two-column grid `md:grid-cols-[1fr_1.5fr]` for label + content sections.
+- Container `max-w-6xl`; sections `py-20 md:py-28`; sections alternate paper and tint.
+- Photographs and cards: `rounded-card` (24px). Small thumbnails: `rounded-2xl`.
+- Decorative motif: the mark's diamond, six of them in a 3×2 grid in gold, at a section
+  corner, the way the reference repeats its six stars.
 
 ## Motion
 
-Two movements exist. The page title rises 10px and fades over 0.7s in CSS on first paint.
-Everything below the fold rises 14px and fades over 0.6s once, when it enters the viewport.
-Hover states change colour. Nothing loops, drifts, sweeps, scrubs, breathes, or spins.
-`prefers-reduced-motion` collapses both movements to nothing.
+The seal turns in metal; the scroll cue breathes; sections rise once on entry; images grow
+2–3% on hover. Nothing else moves. `prefers-reduced-motion` collapses all of it.
 
 ## Voice
 
-Declarative sentences. No em-dash asides, no self-commentary about honesty, no wordplay in
-running copy. The motto is the motto; the rest is the record. See `PRODUCT.md` for the
-register and the anti-references.
+Declarative sentences. Headlines are short and end with a full stop, as the reference's do:
+"We are EMC²." "Get involved." "Give back."

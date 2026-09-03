@@ -1,48 +1,51 @@
 @import "tailwindcss";
 
-/* ── The Charter ──────────────────────────────────────────────────────────
-   One green field, cream for reading, gold only for honour and action.
-   No atmosphere effects: no grain, no grid, no watermark, no sweeps. The
-   surface is still; typography and photography carry it. See DESIGN.md. */
+/* ── The Modern Charter ───────────────────────────────────────────────────
+   Reference: the layout system of phideltatheta.org (2026), rebuilt on the
+   EMC² brand. Cream paper where they use white, a pale green tint where they
+   use pale blue, deep green where they use navy, gold only as the dash on a
+   section label. Pill buttons, 24px radii, generous space. See DESIGN.md. */
 
 :root {
-  --ink: #04150a;
-  --canvas: #071e0c;
-  --surface: #0b2a12;
-  --surface-raised: #10331a;
-
-  --background: var(--canvas);
-  --foreground: #f2ecdc;
-
-  --card: var(--surface);
-  --card-foreground: #f2ecdc;
-
-  --primary: #c38f0e;
-  --primary-foreground: #1a1305;
-
-  --secondary: var(--surface-raised);
-  --secondary-foreground: #f2ecdc;
-
-  --accent: #c38f0e;
-  --accent-foreground: #1a1305;
-
-  --muted: var(--surface);
-  --muted-foreground: #a8b39d;
-
-  --border: rgba(242, 236, 220, 0.14);
-  --ring: #c38f0e;
-
+  /* brand */
   --frat-green: #0c3e06;
   --frat-green-deep: #071e0c;
   --frat-green-dark: #082b04;
   --frat-gold: #c38f0e;
   --frat-gold-light: #e3b94a;
   --frat-cream: #f2ecdc;
-  --frat-paper: #f5f1e6;
+  --frat-paper: #f7f4ec;
 
-  /* Hairlines are cream, not gold: gold is reserved for the one short rule
-     under a section label and for the accent button. */
-  --hairline: rgba(242, 236, 220, 0.14);
+  /* page grounds */
+  --paper: #f7f4ec; /* the page */
+  --tint: #e6eee3; /* alternating sections */
+  --card: #ffffff;
+  --ink: #04150a; /* dark panels: the CTA panel, the footer */
+  --canvas: #071e0c;
+  --surface: #0b2a12;
+  --surface-raised: #10331a;
+
+  /* text */
+  --fg: #07200c;
+  --fg-muted: rgba(7, 32, 12, 0.7);
+  --brand: #0c3e06;
+  --hairline: rgba(7, 32, 12, 0.12);
+
+  --background: var(--paper);
+  --foreground: var(--fg);
+  --card-foreground: var(--fg);
+  --primary: var(--brand);
+  --primary-foreground: var(--frat-cream);
+  --secondary: var(--tint);
+  --secondary-foreground: var(--fg);
+  --accent: var(--frat-gold);
+  --accent-foreground: #1a1305;
+  --muted: var(--tint);
+  --muted-foreground: var(--fg-muted);
+  --border: var(--hairline);
+  --ring: var(--brand);
+
+  --radius: 1.5rem;
 }
 
 @theme inline {
@@ -80,73 +83,144 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 96px;
+  scroll-padding-top: 112px;
 }
 
 body {
-  background: var(--canvas);
-  color: var(--foreground);
-  /* 17px body for an audience largely in its fifties and older. */
+  background: var(--paper);
+  color: var(--fg);
   font-size: 1.0625rem;
-  line-height: 1.7;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
 /* ── Type roles ─────────────────────────────────────────────────────────── */
 
-/* Section label: the lockup's own Roman capitals, small and tracked. The
-   single label style on the site; it replaces the monospace eyebrow. */
+/* Section label: a short gold dash, then small bold capitals in the sans. */
 .label {
-  font-family: var(--font-display), Georgia, serif;
-  font-size: 0.6875rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--frat-gold);
-}
-
-/* Photo captions, dates, metadata: quiet sans, sentence case. */
-.caption {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.875rem;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: 0.8125rem;
-  line-height: 1.5;
-  color: rgba(242, 236, 220, 0.55);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.label::before {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--frat-gold);
+}
+.label--plain::before {
+  display: none;
+}
+.on-dark .label,
+.on-dark.label {
+  color: var(--frat-cream);
 }
 
-/* Lead paragraph: the classical serif, upright, a size up from body. */
+/* Display headline: the lockup's Roman capitals, heavy, tight. */
+.display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+/* Lead paragraph: the sans, a size up, muted. */
 .lead {
-  font-family: var(--font-serif), Georgia, serif;
-  font-weight: 500;
-  font-size: 1.375rem;
-  line-height: 1.55;
-  color: rgba(242, 236, 220, 0.88);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
 }
 @media (min-width: 768px) {
   .lead {
-    font-size: 1.5rem;
+    font-size: 1.375rem;
   }
 }
 
-/* Running text on a dark ground: slightly dimmed cream, generous measure. */
+.caption {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
 .prose-archive {
-  color: rgba(242, 236, 220, 0.74);
+  color: var(--fg-muted);
   max-width: 62ch;
 }
 .prose-archive p + p {
   margin-top: 1.25em;
 }
 
-/* The one short gold rule, set under a section label. */
+/* Stat numbers: the classical serif, large and light. */
+.stat {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 600;
+  font-size: 3.5rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+/* Kept for the few places that still use it. */
 .rule {
   display: block;
-  width: 2.5rem;
-  height: 1px;
+  width: 3rem;
+  height: 3px;
+  border-radius: 2px;
   background: var(--frat-gold);
-  opacity: 0.8;
+}
+
+/* ── Surfaces ───────────────────────────────────────────────────────────── */
+
+.rounded-card {
+  border-radius: var(--radius);
+}
+
+/* The angled bottom edge of the hero panel. */
+.angled-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4vw), 50% 100%, 0 calc(100% - 4vw));
+}
+
+/* Quiet island navigation over any ground. */
+.island {
+  background: rgba(247, 244, 236, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(7, 32, 12, 0.1), 0 1px 0 rgba(7, 32, 12, 0.06);
+}
+
+/* Horizontal card slider: scroll-snap, no library. */
+.slider {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+}
+.slider::-webkit-scrollbar {
+  display: none;
+}
+.slider > * {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
 }
 
 /* ── Motion ─────────────────────────────────────────────────────────────── */
 
-/* The page-title entrance, in CSS so it needs no JavaScript and paints on
-   the first frame. Stagger with --d. */
 @keyframes hero-rise {
   from {
     opacity: 0;
@@ -162,72 +236,23 @@ body {
   animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
 }
 
-h1,
-h2,
-h3 {
-  text-wrap: balance;
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.5;
+  }
+}
+.scroll-cue {
+  animation: scroll-cue 1.8s ease-in-out infinite;
 }
 
-/* ── The Plate (homepage hero) ──────────────────────────────────────────── */
-
-/* The photograph develops from a green-ink engraving into colour, the way a
-   print comes up in the tray. Three layers: the image (grayscale → colour),
-   an ink layer blended in colour mode that tints the grey green, and a hatch
-   of fine diagonal lines multiplied over it. The two overlays fade out as
-   the image resolves. Time-based, so every visitor sees the moment. */
-@keyframes plate-develop {
-  from {
-    filter: grayscale(1) contrast(1.25) brightness(0.8);
-  }
-  to {
-    filter: grayscale(0) contrast(1) brightness(1);
-  }
-}
-@keyframes plate-fade {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-.plate-image {
-  animation: plate-develop 2.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
-}
-.plate-ink {
-  background: var(--frat-green);
-  mix-blend-mode: color;
-  animation: plate-fade 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.9s both;
-}
-.plate-hatch {
-  background-image: repeating-linear-gradient(
-    135deg,
-    rgba(4, 21, 10, 0.55) 0 1px,
-    transparent 1px 4px
-  );
-  mix-blend-mode: multiply;
-  animation: plate-fade 2s cubic-bezier(0.22, 1, 0.36, 1) 1.1s both;
-}
-
-/* Parallax with native scroll-driven animation: the photograph moves at a
-   fraction of scroll speed while the hero leaves the viewport. Progressive
-   enhancement; browsers without animation-timeline simply do not move it. */
-@supports (animation-timeline: scroll()) {
-  @keyframes plate-drift {
-    to {
-      transform: translateY(14%);
-    }
-  }
-  .plate-drift {
-    animation: plate-drift linear both;
-    animation-timeline: scroll(root);
-    animation-range: 0 100vh;
-  }
-}
-
-/* Text set over the photograph keeps a whisper of shadow for legibility. */
 .on-plate {
-  text-shadow: 0 1px 2px rgba(4, 21, 10, 0.7), 0 0 24px rgba(4, 21, 10, 0.5);
+  text-shadow: 0 1px 2px rgba(4, 21, 10, 0.5), 0 0 24px rgba(4, 21, 10, 0.35);
 }
 
 ::selection {
@@ -244,8 +269,5 @@ h3 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-  .plate-drift {
-    animation: none !important;
   }
 }

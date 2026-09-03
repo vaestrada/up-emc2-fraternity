@@ -50,15 +50,15 @@ export default function ContributePage() {
                   <div className="grid grid-cols-[2.5rem_1fr] gap-5 border-b border-[var(--hairline)] py-6">
                     <span className="caption tabular-nums">{s.n}</span>
                     <div>
-                      <p className="font-serif text-2xl font-semibold leading-snug text-[var(--frat-cream)]">{s.title}</p>
-                      <p className="mt-2 text-[15px] leading-relaxed text-[var(--frat-cream)]/70">{s.body}</p>
+                      <p className="font-sans text-[22px] font-bold leading-snug text-[var(--fg)]">{s.title}</p>
+                      <p className="mt-2 text-[15px] leading-relaxed text-[var(--fg)]/70">{s.body}</p>
                     </div>
                   </div>
                 </Reveal>
               ))}
             </div>
             <Reveal delay={0.3}>
-              <p className="lead mt-10 text-[var(--frat-cream)]/80">
+              <p className="lead mt-10 text-[var(--fg)]/80">
                 Every generation holds a piece of the record. This is how it comes home.
               </p>
             </Reveal>

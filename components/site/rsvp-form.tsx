@@ -28,7 +28,7 @@ const INTERESTS = [
 ];
 
 const inputClass =
-  "w-full border border-[var(--border)] bg-white/5 px-4 py-3 text-sm text-[var(--frat-cream)] outline-none transition-colors placeholder:text-[var(--frat-cream)]/60 focus:border-[var(--frat-gold)] focus:ring-2 focus:ring-[var(--frat-gold)]/30 [&>option]:bg-[var(--ink)]";
+  "w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition-colors placeholder:text-[var(--fg)]/60 focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--frat-gold)]/30 [&>option]:bg-[var(--tint)]";
 
 export function RsvpForm() {
   const [state, formAction, pending] = useActionState(submitRsvp, INITIAL_FORM_STATE);
@@ -61,13 +61,13 @@ export function RsvpForm() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="rsvp-name" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            <label htmlFor="rsvp-name" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
               Name
             </label>
             <input id="rsvp-name" name="name" required maxLength={120} placeholder="Juan dela Cruz" defaultValue={state.values?.name} className={inputClass} />
           </div>
           <div>
-            <label htmlFor="rsvp-batch" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            <label htmlFor="rsvp-batch" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
               Batch <span className="font-normal text-muted-foreground">(e.g. &rsquo;84-F)</span>
             </label>
             <input id="rsvp-batch" name="batch" maxLength={40} placeholder="&rsquo;84-F" defaultValue={state.values?.batch} className={inputClass} />
@@ -75,7 +75,7 @@ export function RsvpForm() {
         </div>
 
         <div>
-          <label htmlFor="rsvp-email" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+          <label htmlFor="rsvp-email" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
             Email
           </label>
           <input
@@ -92,7 +92,7 @@ export function RsvpForm() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="rsvp-attending" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            <label htmlFor="rsvp-attending" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
               Are you coming?
             </label>
             <select
@@ -109,7 +109,7 @@ export function RsvpForm() {
             </select>
           </div>
           <div>
-            <label htmlFor="rsvp-guests" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            <label htmlFor="rsvp-guests" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
               Guests expected <span className="font-normal text-muted-foreground">(optional)</span>
             </label>
             <input
@@ -125,11 +125,11 @@ export function RsvpForm() {
         </div>
 
         <fieldset>
-          <legend className="mb-1 text-sm font-medium text-[var(--frat-cream)]/80">
+          <legend className="mb-1 text-sm font-medium text-[var(--fg)]/80">
             I&rsquo;d like to hear more about{" "}
             <span className="font-normal text-muted-foreground">(optional — tick any)</span>
           </legend>
-          <p className="mb-3 text-[13px] leading-relaxed text-[var(--frat-cream)]/50">
+          <p className="mb-3 text-[13px] leading-relaxed text-[var(--fg)]/50">
             Ticking a box commits you to nothing. It tells the committee whom to talk to first.
           </p>
           <div className="grid gap-2.5 sm:grid-cols-2">
@@ -137,7 +137,7 @@ export function RsvpForm() {
               <label
                 key={interest.value}
                 htmlFor={`rsvp-interest-${interest.value}`}
-                className="flex items-start gap-3 border border-[var(--hairline)] px-4 py-3 text-[13px] leading-relaxed text-[var(--frat-cream)]/75 transition-colors hover:border-[var(--frat-gold)]/40 hover:text-[var(--frat-cream)]"
+                className="flex items-start gap-3 border border-[var(--hairline)] px-4 py-3 text-[13px] leading-relaxed text-[var(--fg)]/75 transition-colors hover:border-[var(--frat-gold)]/40 hover:text-[var(--fg)]"
               >
                 <input
                   id={`rsvp-interest-${interest.value}`}
@@ -153,7 +153,7 @@ export function RsvpForm() {
         </fieldset>
 
         <div>
-          <label htmlFor="rsvp-message" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+          <label htmlFor="rsvp-message" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
             Message <span className="font-normal text-muted-foreground">(optional)</span>
           </label>
           <textarea
@@ -169,7 +169,7 @@ export function RsvpForm() {
 
         {/* PRIVACY.md rule 3, private by default: an RSVP is not consent to
             be mailed. Unchecked, this row is a headcount and nothing more. */}
-        <label htmlFor="rsvp-consent-updates" className="flex items-start gap-3 text-[13px] leading-relaxed text-[var(--frat-cream)]/70">
+        <label htmlFor="rsvp-consent-updates" className="flex items-start gap-3 text-[13px] leading-relaxed text-[var(--fg)]/70">
           <input
             id="rsvp-consent-updates"
             name="consent_updates"

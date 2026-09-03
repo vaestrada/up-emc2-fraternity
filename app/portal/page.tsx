@@ -52,7 +52,7 @@ export default async function PortalPage({
           {!user && error === "auth" ? (
             <div
               role="alert"
-              className="mb-8 border-l-2 border-[var(--frat-gold)]/50 pl-5 py-1 text-sm leading-relaxed text-[var(--frat-cream)]/80"
+              className="mb-8 border-l-2 border-[var(--frat-gold)]/50 pl-5 py-1 text-sm leading-relaxed text-[var(--fg)]/80"
             >
               That sign-in link did not work. It may have expired, been used already, or been
               opened on a different device from the one that requested it. Request a fresh link
@@ -80,8 +80,8 @@ export default async function PortalPage({
                   ].map(({ href, title, body }) => (
                     <div key={href} className="flex items-center justify-between gap-4 border-b border-[var(--hairline)] py-5">
                       <div>
-                        <p className="font-serif text-xl font-semibold text-[var(--frat-cream)]">{title}</p>
-                        <p className="text-[14px] text-[var(--frat-cream)]/60">{body}</p>
+                        <p className="font-sans text-[19px] font-bold text-[var(--fg)]">{title}</p>
+                        <p className="text-[14px] text-[var(--fg)]/60">{body}</p>
                       </div>
                       <Link href={href} className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
                         Open
@@ -100,15 +100,15 @@ export default async function PortalPage({
       </section>
 
       {!user ? (
-        <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-16">
+        <section className="border-t border-[var(--hairline)] bg-[var(--tint)] py-16">
           <Container className="flex max-w-2xl flex-col items-center gap-3 text-center">
-            <p className="lead text-[var(--frat-cream)]/85">
+            <p className="lead text-[var(--fg)]/85">
               A record kept is a brotherhood remembered.
             </p>
-            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-[var(--frat-cream)]/60">
+            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-[var(--fg)]/60">
               Not invited yet? A board member verifies each brod against the roster before
               sending an invite.{" "}
-              <Link href="/contact" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+              <Link href="/contact" className="text-[var(--brand)] underline underline-offset-4">
                 Ask the Alumni Association
               </Link>{" "}
               with your name and batch.

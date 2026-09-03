@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { getBrowserSupabase, SUPABASE_AUTH_CONFIGURED } from "@/lib/supabase/client";
 
 const inputClass =
-  "w-full border border-[var(--border)] bg-white/5 px-4 py-3 text-sm text-[var(--frat-cream)] outline-none transition-colors placeholder:text-[var(--frat-cream)]/60 focus:border-[var(--frat-gold)] focus:ring-2 focus:ring-[var(--frat-gold)]/30";
+  "w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition-colors placeholder:text-[var(--fg)]/60 focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--frat-gold)]/30";
 
 export function SignInForm() {
   const [email, setEmail] = useState("");
@@ -16,10 +16,10 @@ export function SignInForm() {
   if (!SUPABASE_AUTH_CONFIGURED) {
     return (
       <Card className="p-8 text-center">
-        <p className="text-sm text-[var(--frat-cream)]/70">
+        <p className="text-sm text-[var(--fg)]/70">
           The member portal isn&rsquo;t configured on this deployment yet — Supabase&rsquo;s public URL
           and anon key need to be set. Reach the Alumni Association through{" "}
-          <a href="/contact" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+          <a href="/contact" className="text-[var(--brand)] underline underline-offset-4">
             Contact
           </a>{" "}
           in the meantime.
@@ -67,9 +67,9 @@ export function SignInForm() {
   if (status === "sent") {
     return (
       <Card role="status" aria-live="polite" className="flex flex-col items-center p-12 text-center">
-        <p className="font-serif text-2xl font-semibold text-[var(--frat-cream)]">Check your inbox</p>
-        <p className="mt-3 max-w-sm text-sm text-[var(--frat-cream)]/70">
-          A sign-in link is on its way to <strong className="text-[var(--frat-cream)]">{email}</strong>.
+        <p className="font-sans text-[22px] font-bold text-[var(--fg)]">Check your inbox</p>
+        <p className="mt-3 max-w-sm text-sm text-[var(--fg)]/70">
+          A sign-in link is on its way to <strong className="text-[var(--fg)]">{email}</strong>.
           Open it on this device to enter the Portal — no password to remember.
         </p>
       </Card>
@@ -80,7 +80,7 @@ export function SignInForm() {
     <Card className="p-8">
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="portal-email" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+          <label htmlFor="portal-email" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
             Email
           </label>
           <input
@@ -94,7 +94,7 @@ export function SignInForm() {
             onChange={(e) => setEmail(e.target.value)}
             className={inputClass}
           />
-          <p className="mt-2 text-xs text-[var(--frat-cream)]/50">
+          <p className="mt-2 text-xs text-[var(--fg)]/50">
             We&rsquo;ll email you a one-time sign-in link. No password to set or lose.
           </p>
         </div>

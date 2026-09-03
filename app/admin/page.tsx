@@ -16,15 +16,15 @@ const fmt = (iso: string) => new Date(iso).toISOString().slice(0, 16).replace("T
 const badge = (status: string) => {
   const tone =
     status === "approved" || status === "acknowledged"
-      ? "text-[var(--frat-gold-light)] border-[var(--frat-gold)]/50"
+      ? "text-[var(--brand)] border-[var(--frat-gold)]/50"
       : status === "rejected"
       ? "text-red-300 border-red-500/40"
-      : "text-[var(--frat-cream)]/70 border-[var(--hairline)]";
+      : "text-[var(--fg)]/70 border-[var(--hairline)]";
   return `inline-block border px-2 py-0.5 font-mono text-[10px] tracking-[0.2em] uppercase ${tone}`;
 };
 
 const actionBtn =
-  "border border-[var(--frat-gold)]/50 px-3 py-1.5 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--frat-gold-light)] transition-colors hover:border-[var(--frat-gold-light)] hover:bg-[var(--frat-gold)]/10";
+  "border border-[var(--frat-gold)]/50 px-3 py-1.5 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--brand)] transition-colors hover:border-[var(--frat-gold-light)] hover:bg-[var(--frat-gold)]/10";
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
@@ -38,13 +38,13 @@ function Shell({ children }: { children: React.ReactNode }) {
 function SectionHead({ title, count, table }: { title: string; count: number; table?: string }) {
   return (
     <div className="mt-16 flex items-end justify-between gap-4 border-b border-[var(--hairline)] pb-3">
-      <h2 className="font-mono text-[11px] tracking-[0.3em] text-[var(--frat-gold-light)] uppercase">
+      <h2 className="font-mono text-[11px] tracking-[0.3em] text-[var(--brand)] uppercase">
         {title} ({count})
       </h2>
       {table && count > 0 ? (
         <a
           href={`/admin/export?table=${table}`}
-          className="font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase underline-offset-4 transition-colors hover:text-[var(--frat-gold-light)] hover:underline"
+          className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/60 uppercase underline-offset-4 transition-colors hover:text-[var(--brand)] hover:underline"
         >
           Download CSV &darr;
         </a>
@@ -84,11 +84,11 @@ export default async function AdminPage({
   if (!adminConfigured()) {
     return (
       <Shell>
-        <h1 className="font-display text-3xl text-[var(--frat-cream)]">Admin is not configured</h1>
-        <p className="mt-4 text-sm leading-relaxed text-[var(--frat-cream)]/70">
-          Set <code className="text-[var(--frat-gold-light)]">ADMIN_PASSWORD</code> in your
+        <h1 className="font-display text-3xl text-[var(--fg)]">Admin is not configured</h1>
+        <p className="mt-4 text-sm leading-relaxed text-[var(--fg)]/70">
+          Set <code className="text-[var(--brand)]">ADMIN_PASSWORD</code> in your
           environment (Vercel → Project Settings → Environment Variables, and{" "}
-          <code className="text-[var(--frat-gold-light)]">.env.local</code> for local dev) to unlock
+          <code className="text-[var(--brand)]">.env.local</code> for local dev) to unlock
           the moderation queue.
         </p>
       </Shell>
@@ -102,9 +102,9 @@ export default async function AdminPage({
         <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
           The Register — Keeper&rsquo;s Entrance
         </p>
-        <h1 className="mt-6 font-display text-4xl text-[var(--frat-cream)]">Admin</h1>
+        <h1 className="mt-6 font-display text-4xl text-[var(--fg)]">Admin</h1>
         <form action={login} className="mt-10 max-w-sm space-y-4">
-          <label htmlFor="password" className="block text-sm font-medium text-[var(--frat-cream)]/80">
+          <label htmlFor="password" className="block text-sm font-medium text-[var(--fg)]/80">
             Password
           </label>
           <input
@@ -112,7 +112,7 @@ export default async function AdminPage({
             name="password"
             type="password"
             autoFocus
-            className="w-full border border-[var(--border)] bg-white/5 px-4 py-3 text-sm text-[var(--frat-cream)] outline-none transition-colors focus:border-[var(--frat-gold)] focus:ring-2 focus:ring-[var(--frat-gold)]/30"
+            className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition-colors focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--frat-gold)]/30"
           />
           {error === "locked" ? (
             <p role="alert" className="text-sm text-red-400">
@@ -209,8 +209,8 @@ export default async function AdminPage({
           <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
             The Register — Moderation
           </p>
-          <h1 className="mt-4 font-display text-3xl text-[var(--frat-cream)] md:text-4xl">Review queue</h1>
-          <p className="mt-3 font-mono text-[11px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+          <h1 className="mt-4 display text-[2rem] md:text-[2.75rem]">Review queue</h1>
+          <p className="mt-3 font-mono text-[11px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
             {pendingContrib} contribution{pendingContrib === 1 ? "" : "s"} · {pendingPledge} pledge
             {pendingPledge === 1 ? "" : "s"} · {pendingDues} dues record{pendingDues === 1 ? "" : "s"} pending
             · {rsvps.length} on the 58th list
@@ -228,21 +228,21 @@ export default async function AdminPage({
           get it into a spreadsheet, without asking a developer. */}
       <SectionHead title="58th Anniversary — save-the-date list" count={rsvps.length} table="anniversary_rsvps" />
       {rsvps.length === 0 ? (
-        <p className="mt-6 text-sm text-[var(--frat-cream)]/60">No one on the list yet.</p>
+        <p className="mt-6 text-sm text-[var(--fg)]/60">No one on the list yet.</p>
       ) : (
         <>
           <dl className="mt-6 grid gap-px border border-[var(--hairline)] bg-[var(--hairline)] sm:grid-cols-3">
             {(["yes", "maybe", "cannot"] as const).map((a) => (
-              <div key={a} className="bg-[var(--ink)] p-5">
-                <dt className="font-mono text-[10px] tracking-[0.25em] text-[var(--frat-cream)]/60 uppercase">
+              <div key={a} className="bg-[var(--tint)] p-5">
+                <dt className="font-mono text-[10px] tracking-[0.25em] text-[var(--fg)]/60 uppercase">
                   {ATTENDING_LABEL[a]}
                 </dt>
-                <dd className="mt-2 font-display text-3xl text-[var(--frat-gold-light)]">{rsvpCount(a)}</dd>
+                <dd className="mt-2 font-display text-3xl text-[var(--brand)]">{rsvpCount(a)}</dd>
               </div>
             ))}
           </dl>
           {Object.keys(interestTally).length > 0 ? (
-            <p className="mt-4 font-mono text-[10px] leading-relaxed tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+            <p className="mt-4 font-mono text-[10px] leading-relaxed tracking-[0.2em] text-[var(--fg)]/60 uppercase">
               Interested in:{" "}
               {Object.entries(interestTally)
                 .sort((a, b) => b[1] - a[1])
@@ -252,7 +252,7 @@ export default async function AdminPage({
           ) : null}
           <div className="mt-6 overflow-x-auto border border-[var(--hairline)]">
             <table className="w-full text-left text-sm">
-              <thead className="bg-[var(--ink)] text-[var(--frat-cream)]/60">
+              <thead className="bg-[var(--tint)] text-[var(--fg)]/60">
                 <tr className="font-mono text-[10px] tracking-[0.2em] uppercase">
                   <th className="px-4 py-2 font-normal">Brod</th>
                   <th className="px-4 py-2 font-normal">Coming?</th>
@@ -264,17 +264,17 @@ export default async function AdminPage({
               </thead>
               <tbody className="divide-y divide-[var(--hairline)]">
                 {rsvps.map((r) => (
-                  <tr key={r.id} className="bg-[var(--canvas)] align-top">
+                  <tr key={r.id} className="bg-[var(--paper)] align-top">
                     <td className="px-4 py-2">
-                      <p className="text-[var(--frat-cream)]">{r.name}{r.batch ? <span className="ml-2 font-mono text-[10px] text-[var(--frat-cream)]/60">{r.batch}</span> : null}</p>
-                      <p className="text-xs text-[var(--frat-cream)]/60">{r.email}</p>
-                      {r.message ? <p className="mt-1 max-w-sm whitespace-pre-wrap text-xs text-[var(--frat-cream)]/70">{r.message}</p> : null}
+                      <p className="text-[var(--fg)]">{r.name}{r.batch ? <span className="ml-2 font-mono text-[10px] text-[var(--fg)]/60">{r.batch}</span> : null}</p>
+                      <p className="text-xs text-[var(--fg)]/60">{r.email}</p>
+                      {r.message ? <p className="mt-1 max-w-sm whitespace-pre-wrap text-xs text-[var(--fg)]/70">{r.message}</p> : null}
                     </td>
                     <td className="px-4 py-2"><span className={badge(r.attending === "yes" ? "approved" : r.attending)}>{ATTENDING_LABEL[r.attending]}</span></td>
-                    <td className="px-4 py-2 text-[var(--frat-cream)]/80">{r.guests || "—"}</td>
-                    <td className="px-4 py-2 font-mono text-[10px] tracking-[0.15em] text-[var(--frat-cream)]/70 uppercase">{r.interests?.length ? r.interests.join(", ") : "—"}</td>
-                    <td className="px-4 py-2 text-[var(--frat-cream)]/80">{r.consent_updates ? "Yes" : "No"}</td>
-                    <td className="px-4 py-2 font-mono text-xs text-[var(--frat-cream)]/60">{fmt(r.created_at)}</td>
+                    <td className="px-4 py-2 text-[var(--fg)]/80">{r.guests || "—"}</td>
+                    <td className="px-4 py-2 font-mono text-[10px] tracking-[0.15em] text-[var(--fg)]/70 uppercase">{r.interests?.length ? r.interests.join(", ") : "—"}</td>
+                    <td className="px-4 py-2 text-[var(--fg)]/80">{r.consent_updates ? "Yes" : "No"}</td>
+                    <td className="px-4 py-2 font-mono text-xs text-[var(--fg)]/60">{fmt(r.created_at)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -287,27 +287,27 @@ export default async function AdminPage({
       <SectionHead title="Contributions" count={contributions.length} table="contributions" />
       <div className="mt-6 space-y-6">
         {contributions.length === 0 ? (
-          <p className="text-sm text-[var(--frat-cream)]/60">No contributions yet.</p>
+          <p className="text-sm text-[var(--fg)]/60">No contributions yet.</p>
         ) : (
           contributions.map((c) => (
-            <article key={c.id} className="border border-[var(--hairline)] bg-[var(--ink)] p-6">
+            <article key={c.id} className="border border-[var(--hairline)] bg-[var(--tint)] p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className={badge(c.status)}>{c.status}</span>
-                <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+                <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
                   {fmt(c.created_at)}
                 </span>
               </div>
-              <p className="mt-4 font-display text-xl text-[var(--frat-cream)]">{c.title}</p>
-              <p className="mt-1 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+              <p className="mt-4 font-display text-xl text-[var(--fg)]">{c.title}</p>
+              <p className="mt-1 font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
                 {[c.name, c.batch, c.kind].filter(Boolean).join(" · ")} · {c.email}
               </p>
-              <p className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-[var(--frat-cream)]/80">
+              <p className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-[var(--fg)]/80">
                 {c.details}
               </p>
               {c.links ? (
-                <p className="mt-3 text-sm text-[var(--frat-cream)]/70">
+                <p className="mt-3 text-sm text-[var(--fg)]/70">
                   Link:{" "}
-                  <a href={c.links} target="_blank" rel="noreferrer" className="text-[var(--frat-gold-light)] underline underline-offset-4 break-all">
+                  <a href={c.links} target="_blank" rel="noreferrer" className="text-[var(--brand)] underline underline-offset-4 break-all">
                     {c.links}
                   </a>
                 </p>
@@ -338,37 +338,37 @@ export default async function AdminPage({
       <SectionHead title="Pledges" count={pledges.length} table="pledges" />
       <div className="mt-6 space-y-6">
         {pledges.length === 0 ? (
-          <p className="text-sm text-[var(--frat-cream)]/60">No pledges yet.</p>
+          <p className="text-sm text-[var(--fg)]/60">No pledges yet.</p>
         ) : (
           pledges.map((p) => (
-            <article key={p.id} className="border border-[var(--hairline)] bg-[var(--ink)] p-6">
+            <article key={p.id} className="border border-[var(--hairline)] bg-[var(--tint)] p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className={badge(p.status)}>{p.status}</span>
                   {p.consent_public ? (
-                    <span className="inline-block border border-[var(--frat-gold)]/50 px-2 py-0.5 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-gold-light)] uppercase">
+                    <span className="inline-block border border-[var(--frat-gold)]/50 px-2 py-0.5 font-mono text-[10px] tracking-[0.2em] text-[var(--brand)] uppercase">
                       Public OK
                     </span>
                   ) : (
-                    <span className="inline-block border border-[var(--hairline)] px-2 py-0.5 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+                    <span className="inline-block border border-[var(--hairline)] px-2 py-0.5 font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
                       Private
                     </span>
                   )}
                 </div>
-                <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+                <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
                   {fmt(p.created_at)}
                 </span>
               </div>
-              <p className="mt-4 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+              <p className="mt-4 font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
                 {[p.name, p.batch].filter(Boolean).join(" · ")} · {p.email}
               </p>
-              <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-[var(--frat-cream)]/80 sm:grid-cols-3">
-                <div><dt className="text-[var(--frat-cream)]/60">Cause</dt><dd>{p.cause || "—"}</dd></div>
-                <div><dt className="text-[var(--frat-cream)]/60">Amount</dt><dd>{p.amount ? `₱${p.amount}` : "—"}</dd></div>
-                <div><dt className="text-[var(--frat-cream)]/60">Reference</dt><dd className="break-all">{p.reference || "—"}</dd></div>
+              <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-[var(--fg)]/80 sm:grid-cols-3">
+                <div><dt className="text-[var(--fg)]/60">Cause</dt><dd>{p.cause || "—"}</dd></div>
+                <div><dt className="text-[var(--fg)]/60">Amount</dt><dd>{p.amount ? `₱${p.amount}` : "—"}</dd></div>
+                <div><dt className="text-[var(--fg)]/60">Reference</dt><dd className="break-all">{p.reference || "—"}</dd></div>
               </dl>
               {p.message ? (
-                <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-[var(--frat-cream)]/80">{p.message}</p>
+                <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-[var(--fg)]/80">{p.message}</p>
               ) : null}
               <div className="mt-5 flex flex-wrap gap-3">
                 {p.status !== "acknowledged" ? <StatusForm table="pledges" id={p.id} status="acknowledged" label="Mark acknowledged" /> : null}
@@ -385,27 +385,27 @@ export default async function AdminPage({
       <SectionHead title="Membership dues" count={dues.length} table="dues_payments" />
       <div className="mt-6 space-y-4">
         {dues.length === 0 ? (
-          <p className="text-sm text-[var(--frat-cream)]/60">No dues recorded yet.</p>
+          <p className="text-sm text-[var(--fg)]/60">No dues recorded yet.</p>
         ) : (
           dues.map((d) => (
-            <article key={d.id} className="border border-[var(--hairline)] bg-[var(--ink)] p-5">
+            <article key={d.id} className="border border-[var(--hairline)] bg-[var(--tint)] p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className={badge(d.status)}>{d.status}</span>
-                <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+                <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
                   {fmt(d.created_at)}
                 </span>
               </div>
-              <p className="mt-3 font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+              <p className="mt-3 font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
                 {[d.name, d.batch].filter(Boolean).join(" · ")} · {d.email}
               </p>
-              <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-[var(--frat-cream)]/80 sm:grid-cols-4">
-                <div><dt className="text-[var(--frat-cream)]/60">Period</dt><dd>{d.period}</dd></div>
-                <div><dt className="text-[var(--frat-cream)]/60">Amount</dt><dd>{d.amount ? `₱${d.amount}` : "—"}</dd></div>
-                <div><dt className="text-[var(--frat-cream)]/60">Method</dt><dd>{d.method || "—"}</dd></div>
-                <div><dt className="text-[var(--frat-cream)]/60">Reference</dt><dd className="break-all">{d.reference || "—"}</dd></div>
+              <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-[var(--fg)]/80 sm:grid-cols-4">
+                <div><dt className="text-[var(--fg)]/60">Period</dt><dd>{d.period}</dd></div>
+                <div><dt className="text-[var(--fg)]/60">Amount</dt><dd>{d.amount ? `₱${d.amount}` : "—"}</dd></div>
+                <div><dt className="text-[var(--fg)]/60">Method</dt><dd>{d.method || "—"}</dd></div>
+                <div><dt className="text-[var(--fg)]/60">Reference</dt><dd className="break-all">{d.reference || "—"}</dd></div>
               </dl>
               {d.message ? (
-                <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-[var(--frat-cream)]/80">{d.message}</p>
+                <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-[var(--fg)]/80">{d.message}</p>
               ) : null}
               <div className="mt-4 flex flex-wrap gap-3">
                 {d.status !== "acknowledged" ? <StatusForm table="dues_payments" id={d.id} status="acknowledged" label="Mark acknowledged" /> : null}
@@ -420,19 +420,19 @@ export default async function AdminPage({
       <SectionHead title="Messages" count={messages.length} table="messages" />
       <div className="mt-6 space-y-4">
         {messages.length === 0 ? (
-          <p className="text-sm text-[var(--frat-cream)]/60">No messages yet.</p>
+          <p className="text-sm text-[var(--fg)]/60">No messages yet.</p>
         ) : (
           messages.map((m) => (
             <article key={m.id} className="border border-[var(--hairline)] p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+                <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
                   {[m.name, m.topic].filter(Boolean).join(" · ")} · {m.email}
                 </p>
-                <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--frat-cream)]/60 uppercase">
+                <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
                   {fmt(m.created_at)}
                 </span>
               </div>
-              <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-[var(--frat-cream)]/80">{m.message}</p>
+              <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-[var(--fg)]/80">{m.message}</p>
             </article>
           ))
         )}
@@ -442,30 +442,30 @@ export default async function AdminPage({
           the roster held OFFLINE (never imported, per PRIVACY.md), then grants
           access. Only an HMAC hash + masked label + batch is stored. */}
       <SectionHead title="Portal access" count={allowlist.length} />
-      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--frat-cream)]/70">
+      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--fg)]/70">
         Granting a brod adds their email to the hash-only allowlist and sends them
-        an invite, so they can sign in at <code className="text-[var(--frat-gold-light)]">/portal</code>.
+        an invite, so they can sign in at <code className="text-[var(--brand)]">/portal</code>.
         Only a masked label and batch are stored here — never the raw roster data.
       </p>
       <form action={grantMember} className="mt-6 flex flex-wrap items-end gap-3">
         <div className="flex flex-col">
-          <label htmlFor="grant-email" className="mb-1 text-xs text-[var(--frat-cream)]/60">Email</label>
+          <label htmlFor="grant-email" className="mb-1 text-xs text-[var(--fg)]/60">Email</label>
           <input
             id="grant-email"
             name="email"
             type="email"
             required
             placeholder="brod@example.com"
-            className="w-72 border border-[var(--border)] bg-white/5 px-3 py-2 text-sm text-[var(--frat-cream)] outline-none transition-colors focus:border-[var(--frat-gold)]"
+            className="w-72 rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--fg)] outline-none transition-colors focus:border-[var(--brand)]"
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="grant-batch" className="mb-1 text-xs text-[var(--frat-cream)]/60">Batch</label>
+          <label htmlFor="grant-batch" className="mb-1 text-xs text-[var(--fg)]/60">Batch</label>
           <input
             id="grant-batch"
             name="batch"
             placeholder="&rsquo;84-F"
-            className="w-28 border border-[var(--border)] bg-white/5 px-3 py-2 text-sm text-[var(--frat-cream)] outline-none transition-colors focus:border-[var(--frat-gold)]"
+            className="w-28 rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--fg)] outline-none transition-colors focus:border-[var(--brand)]"
           />
         </div>
         <button type="submit" className={actionBtn}>Grant + invite</button>
@@ -473,7 +473,7 @@ export default async function AdminPage({
       {allowlist.length > 0 ? (
         <div className="mt-6 overflow-hidden border border-[var(--hairline)]">
           <table className="w-full text-left text-sm">
-            <thead className="bg-[var(--ink)] text-[var(--frat-cream)]/60">
+            <thead className="bg-[var(--tint)] text-[var(--fg)]/60">
               <tr className="font-mono text-[10px] tracking-[0.2em] uppercase">
                 <th className="px-4 py-2 font-normal">Member (masked)</th>
                 <th className="px-4 py-2 font-normal">Batch</th>
@@ -484,15 +484,15 @@ export default async function AdminPage({
             </thead>
             <tbody className="divide-y divide-[var(--hairline)]">
               {allowlist.map((row) => (
-                <tr key={row.email_hash} className="bg-[var(--canvas)]">
-                  <td className="px-4 py-2 font-mono text-xs text-[var(--frat-cream)]">
+                <tr key={row.email_hash} className="bg-[var(--paper)]">
+                  <td className="px-4 py-2 font-mono text-xs text-[var(--fg)]">
                     {row.label ?? `${row.email_hash.slice(0, 10)}…`}
                   </td>
                   <td className="px-4 py-2">{row.batch || "—"}</td>
                   <td className="px-4 py-2">
                     <span className={badge(row.status)}>{row.status}</span>
                   </td>
-                  <td className="px-4 py-2 font-mono text-xs text-[var(--frat-cream)]/60">
+                  <td className="px-4 py-2 font-mono text-xs text-[var(--fg)]/60">
                     {fmt(row.created_at)}
                   </td>
                   <td className="px-4 py-2 text-right">
@@ -507,7 +507,7 @@ export default async function AdminPage({
           </table>
         </div>
       ) : (
-        <p className="mt-6 text-sm text-[var(--frat-cream)]/60">
+        <p className="mt-6 text-sm text-[var(--fg)]/60">
           No brothers granted access yet.
         </p>
       )}

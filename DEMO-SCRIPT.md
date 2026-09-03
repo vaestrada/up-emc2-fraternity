@@ -22,18 +22,19 @@ playbook is the pitch. Everything below is rehearsable in twenty minutes the nig
 
 ## Minute by minute
 
-**0:00 — Land on the homepage and say nothing for five seconds.** The 55th photograph comes up
-from a green-ink engraving into colour, and the seal draws itself beside the name. Then:
-*"That is the brotherhood at Quezon Hall in February 2024. Everything you'll see is either
-from the Association's own record or clearly marked as a placeholder."*
+**0:00 — Land on the homepage and say nothing for five seconds.** The seal comes forward in
+metal over the 55th photograph, turns a few degrees, and follows the cursor. Move the mouse
+across it once. Then: *"That is our seal, cast from the 2023 vector, over the brotherhood at
+Quezon Hall in February 2024. Everything you'll see is either from the Association's own record
+or clearly marked as a placeholder."*
 
-**0:30 — Scroll slowly.** The timeline rail appears under the navigation: 1969 at the left, the
-58th at the right, and it fills as you read. *"Reading down the page is travelling through the
-fraternity's years."* The chapters pass with the year on the left: 1969, the Credo, 1983,
-the work, 2024, 2027. *"The same page tells the story to a freshman and to a founding brod."*
+**0:30 — Scroll slowly.** The angled edge, then "We are EMC²." with the gazebo photograph.
+*"Modern, light, fast, and unmistakably ours."* The Get Involved slider: click the round arrow
+once. *"Five ways in: the 58th, giving, the Portal, contributing, the sports series."*
 
-**1:30 — The Credo, at size.** Pause on the four lines. *"The design language is a charter, not
-a startup site. One label style, real photographs, gold only for honour and action."*
+**1:30 — The Portal panel and the notices.** Point at the panel. *"Private, by invitation,
+verified against the roster."* Then the featured 58th story and the list beside it. *"This is
+where the brotherhood's news lives; it is fed by residents, not by me."*
 
 **2:30 — The Citations.** Point at Engr. Ison and Brod Salanguit. *"Two real citations. The
 register is built batch by batch from the board's nominations. Placeholder entries exist for

@@ -73,7 +73,7 @@ export default function RoadmapPage() {
 
       {/* The index — three phases, jump links, counts. A reader lands knowing
           the shape of the whole before scrolling any of it. */}
-      <section className="border-b border-[var(--hairline)] bg-[var(--ink)]">
+      <section className="border-b border-[var(--hairline)] bg-[var(--tint)]">
         <Container className="grid md:grid-cols-3">
           {PHASES.map((phase, i) => {
             const count = roadmap.filter((r) => r.phase === phase.key).length;
@@ -90,11 +90,11 @@ export default function RoadmapPage() {
                   <span className="label block">
                     {phase.eyebrow}
                   </span>
-                  <span className="mt-2 block font-display text-2xl text-[var(--frat-cream)] transition-colors group-hover:text-[var(--frat-gold-light)]">
+                  <span className="mt-2 block font-display text-2xl text-[var(--fg)] transition-colors group-hover:text-[var(--brand)]">
                     {phase.title}
                   </span>
                 </span>
-                <span className="font-display text-4xl text-[var(--frat-gold-light)]/70">
+                <span className="font-display text-4xl text-[var(--brand)]/70">
                   {String(count).padStart(2, "0")}
                 </span>
               </a>
@@ -112,7 +112,7 @@ export default function RoadmapPage() {
             id={phase.key}
             className={cn(
               "scroll-mt-24 border-t border-[var(--hairline)] py-24",
-              phaseIndex % 2 === 1 ? "bg-[var(--ink)]" : ""
+              phaseIndex % 2 === 1 ? "bg-[var(--tint)]" : ""
             )}
           >
             <Container>
@@ -120,7 +120,7 @@ export default function RoadmapPage() {
                 <p className="label">
                   {phase.eyebrow}
                 </p>
-                <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+                <h2 className="mt-7 display text-[2rem] md:text-[2.75rem]">
                   {phase.title}
                 </h2>
                 <p className="prose-archive mt-6 text-[15px] leading-relaxed">
@@ -143,7 +143,7 @@ export default function RoadmapPage() {
                             Entry {phase.number}.{i + 1}
                           </p>
                           <div className="mt-4">
-                            <h3 className="font-serif text-3xl font-semibold leading-tight text-[var(--frat-cream)]">
+                            <h3 className="font-sans text-[28px] font-bold leading-tight text-[var(--fg)]">
                               {item.title}
                             </h3>
                           </div>
@@ -187,12 +187,12 @@ export default function RoadmapPage() {
       <section className="border-t border-[var(--hairline)] py-24">
         <Container className="max-w-3xl text-center">
           <Reveal>
-            <h2 className="mt-6 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
+            <h2 className="mt-6 display text-[2rem] md:text-[2.75rem]">
               None of this gets built alone.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-6 leading-relaxed text-[var(--frat-cream)]/70">
+            <p className="mt-6 leading-relaxed text-[var(--fg)]/70">
               This site, like the brotherhood itself, is built by whoever shows up. If you have a
               photograph from the archive, a citation worth adding, a correction, or the time and skill
               to help build what is above, the brotherhood needs it.

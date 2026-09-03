@@ -26,8 +26,8 @@ export type MemberProfile = {
 };
 
 const inputClass =
-  "w-full border border-[var(--border)] bg-white/5 px-4 py-3 text-sm text-[var(--frat-cream)] outline-none transition-colors placeholder:text-[var(--frat-cream)]/60 focus:border-[var(--frat-gold)] focus:ring-2 focus:ring-[var(--frat-gold)]/30 [&>option]:bg-[var(--ink)]";
-const labelClass = "mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80";
+  "w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition-colors placeholder:text-[var(--fg)]/60 focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--frat-gold)]/30 [&>option]:bg-[var(--tint)]";
+const labelClass = "mb-1.5 block text-sm font-medium text-[var(--fg)]/80";
 
 export function ProfileForm({ userId, profile }: { userId: string; profile: MemberProfile | null }) {
   const router = useRouter();
@@ -135,7 +135,7 @@ export function ProfileForm({ userId, profile }: { userId: string; profile: Memb
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="p-batch" className={labelClass}>
-              Batch <span className="font-normal text-[var(--frat-cream)]/50">(e.g. &rsquo;84-F)</span>
+              Batch <span className="font-normal text-[var(--fg)]/50">(e.g. &rsquo;84-F)</span>
             </label>
             <input
               id="p-batch"
@@ -191,7 +191,7 @@ export function ProfileForm({ userId, profile }: { userId: string; profile: Memb
 
         <div>
           <label htmlFor="p-city" className={labelClass}>
-            City / area <span className="font-normal text-[var(--frat-cream)]/50">(general — not a full address)</span>
+            City / area <span className="font-normal text-[var(--fg)]/50">(general — not a full address)</span>
           </label>
           <input
             id="p-city"
@@ -205,7 +205,7 @@ export function ProfileForm({ userId, profile }: { userId: string; profile: Memb
 
         <div>
           <label htmlFor="p-bio" className={labelClass}>
-            About <span className="font-normal text-[var(--frat-cream)]/50">(optional)</span>
+            About <span className="font-normal text-[var(--fg)]/50">(optional)</span>
           </label>
           <textarea
             id="p-bio"
@@ -222,7 +222,7 @@ export function ProfileForm({ userId, profile }: { userId: string; profile: Memb
           <p className="label">
             Portal-only contact
           </p>
-          <p className="mt-2 text-xs text-[var(--frat-cream)]/50">
+          <p className="mt-2 text-xs text-[var(--fg)]/50">
             Separate from your sign-in email. Shown to other members only if you turn on the toggle
             beside it — off by default.
           </p>
@@ -239,7 +239,7 @@ export function ProfileForm({ userId, profile }: { userId: string; profile: Memb
                 onChange={(e) => field("contact_email", e.target.value)}
                 className={inputClass}
               />
-              <label className="mt-2 flex items-center gap-2 text-xs text-[var(--frat-cream)]/70">
+              <label className="mt-2 flex items-center gap-2 text-xs text-[var(--fg)]/70">
                 <input
                   type="checkbox"
                   checked={form.show_email}
@@ -261,7 +261,7 @@ export function ProfileForm({ userId, profile }: { userId: string; profile: Memb
                 onChange={(e) => field("contact_phone", e.target.value)}
                 className={inputClass}
               />
-              <label className="mt-2 flex items-center gap-2 text-xs text-[var(--frat-cream)]/70">
+              <label className="mt-2 flex items-center gap-2 text-xs text-[var(--fg)]/70">
                 <input
                   type="checkbox"
                   checked={form.show_phone}
@@ -288,7 +288,7 @@ export function ProfileForm({ userId, profile }: { userId: string; profile: Memb
             <option value="brods">Brods only — visible to signed-in members</option>
             <option value="public">Public — also visible to visitors on the site</option>
           </select>
-          <p className="mt-2 text-xs text-[var(--frat-cream)]/50">
+          <p className="mt-2 text-xs text-[var(--fg)]/50">
             Default is private. Your portal-only contact details stay hidden either way unless you
             also turn on the toggles above.
           </p>
@@ -307,7 +307,7 @@ export function ProfileForm({ userId, profile }: { userId: string; profile: Memb
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-2 text-sm text-[var(--frat-gold-light)]"
+              className="flex items-center gap-2 text-sm text-[var(--brand)]"
             >
               <motion.span
                 initial={{ scale: 0.4 }}

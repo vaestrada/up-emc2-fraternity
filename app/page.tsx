@@ -1,21 +1,18 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowDown } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
 import { SectionLabel } from "@/components/site/section-label";
 import { BrodCard } from "@/components/site/brod-card";
 import { Seal } from "@/components/site/seal";
-import { YearScale } from "@/components/site/year-scale";
-import { Chronicle, type Chapter } from "@/components/site/chronicle";
+import { CardSlider, type SliderCard } from "@/components/site/card-slider";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { FOUNDING_YEAR, site, association, anniversary, projects, prominentBrods, bulletin } from "@/lib/content";
+import { FOUNDING_YEAR, site, anniversary, projects, prominentBrods } from "@/lib/content";
 import { withoutDemo } from "@/lib/demo";
 
-// The root layout omits og/twitter title+description so every page self-describes.
-// Declaring `openGraph` here REPLACES the layout's openGraph object (Next merges
-// it shallowly); the image comes from app/opengraph-image.tsx, which survives.
 export const metadata: Metadata = {
   openGraph: {
     description:
@@ -25,256 +22,352 @@ export const metadata: Metadata = {
 
 const delay = (seconds: number) => ({ "--d": `${seconds}s` }) as React.CSSProperties;
 
-const CREDO_LINES = [
-  "Equality is our way of life.",
-  "Loyalty and Obedience.",
-  "Service and Sacrifice.",
-  "Courage and Justice.",
+const INVOLVEMENT: SliderCard[] = [
+  {
+    href: "/anniversary",
+    image: "/photos/anniv55-stage.jpg",
+    alt: "Brods on stage at the 55th Anniversary Celebration",
+    title: "The 58th Anniversary",
+    body: `${anniversary.month} at ${anniversary.venue}, U.P. Diliman. Every batch in one room. Put your name on the save-the-date list and hear first about awards, sponsorships, and tickets.`,
+    cta: "Save the date",
+  },
+  {
+    href: "/donate",
+    image: "/photos/anniv55-outdoor.jpg",
+    alt: "Brods gathered before Quezon Hall",
+    title: "Give Back",
+    body: "Scholarships, the Thinking Space study lounge, and relief operations. Every project in the record began with a brod who gave.",
+    cta: "Make a gift",
+  },
+  {
+    href: "/portal",
+    image: "/roadmap/portal-sign-in.png",
+    alt: "The Member Portal sign-in",
+    title: "The Member Portal",
+    body: "By invitation. Keep your own record current and find brods who have opted into the directory. Private by default.",
+    cta: "Enter the Portal",
+  },
+  {
+    href: "/contribute",
+    image: "/photos/projects-campaigns-card.jpg",
+    alt: "A collage of the fraternity's projects and campaigns",
+    title: "Add to the Record",
+    body: "A memory, a photograph, a brod's news, a milestone we missed. The archive is written by the brotherhood; send us what you carry.",
+    cta: "Contribute",
+  },
+  {
+    href: "/quantum-leap",
+    image: "/quantum-leap/pickleball-2026-teaser-poster.jpg",
+    alt: "Quantum Leap Sports Series, pickleball",
+    title: "Quantum Leap Sports Series",
+    body: "One sport at a time, played well. Pickleball opened the series in August 2026; the next edition follows once it is certain.",
+    cta: "See the series",
+  },
 ];
 
-const FACTS = [
-  { term: "Founded", detail: `${FOUNDING_YEAR}, by ten scholars of the University` },
-  { term: "Home", detail: "3rd Floor Lobby, Melchor Hall, U.P. Diliman" },
-  { term: "Brods on record", detail: "490, batches 1967 to 2023" },
-  { term: "Alumni Association", detail: `${association.legalName}, SEC-registered` },
+const STATS = [
+  { value: String(FOUNDING_YEAR), label: "Founded by ten scholars of the University at the College of Engineering." },
+  { value: "490", label: "Brods on record, from the founding batch to the active brods of today." },
+  { value: String(projects.length), label: "Projects and campaigns in the ledger, from quiz bees to disaster relief." },
+  { value: anniversary.ordinal, label: `Anniversary, ${anniversary.month}, ${anniversary.venue}, U.P. Diliman.` },
 ];
 
-const body = "prose-archive text-[17px] leading-[1.7]";
+const STORIES = [
+  {
+    href: "/portal",
+    image: "/roadmap/portal-sign-in.png",
+    alt: "The Member Portal sign-in",
+    date: "September 2026",
+    title: "The Member Portal opens, by invitation",
+  },
+  {
+    href: "/quantum-leap",
+    image: "/quantum-leap/pickleball-2026-poster.png",
+    alt: "Quantum Leap Sports Series pickleball poster",
+    date: "22 August 2026",
+    title: "Quantum Leap opens with a day of pickleball",
+  },
+  {
+    href: "/history",
+    image: "/photos/anniv55-gazebo.jpg",
+    alt: "Brods at the gazebo, 55th Anniversary",
+    date: "24 February 2024",
+    title: "Fifty-five years, in one afternoon at U.P. Diliman",
+  },
+];
+
+/* The mark's diamond, repeated as a small decorative motif, the way the
+   reference repeats its stars. */
+function Diamonds({ className }: { className?: string }) {
+  return (
+    <div aria-hidden className={cn("grid grid-cols-3 gap-4", className)}>
+      {Array.from({ length: 6 }).map((_, i) => (
+        <span key={i} className="block h-3.5 w-3.5 rotate-45 rounded-[2px] bg-[var(--frat-gold)]" />
+      ))}
+    </div>
+  );
+}
 
 export default function Home() {
-  const brods = withoutDemo(prominentBrods).slice(0, 2);
-
-  /* The record as chapters, in the order the timeline rail runs. */
-  const chapters: Chapter[] = [
-    {
-      id: "founding",
-      figure: String(FOUNDING_YEAR),
-      kicker: "The founding",
-      title: "Ten scholars, one college.",
-      children: (
-        <>
-          <p className="lead">
-            Founded in {FOUNDING_YEAR} by ten scholars of the University, the EMC&sup2; Fraternity is
-            an exclusive Engineering and Physical Sciences brotherhood dedicated to excellence in
-            education and to service to the country.
-          </p>
-          <p className={cn(body, "mt-6")}>
-            Through its years as a fraternal organisation based in the College of Engineering, it
-            has distinguished itself through endeavours that uplift the welfare of the University
-            studentry and the wider community, and has become a moulding ground for student leaders
-            and young exemplars in Engineering and the Sciences.
-          </p>
-          <dl className="mt-10 border-t border-[var(--hairline)]">
-            {FACTS.map((f) => (
-              <div key={f.term} className="grid grid-cols-[9rem_1fr] gap-4 border-b border-[var(--hairline)] py-4 md:grid-cols-[11rem_1fr]">
-                <dt className="caption pt-0.5">{f.term}</dt>
-                <dd className="text-[15px] text-[var(--frat-cream)]/85">{f.detail}</dd>
-              </div>
-            ))}
-          </dl>
-        </>
-      ),
-    },
-    {
-      id: "credo",
-      figure: "Credo",
-      kicker: "The credo",
-      title: "Four lines every brod can say from memory.",
-      children: (
-        <div className="space-y-3">
-          {CREDO_LINES.map((line, i) => (
-            <p
-              key={line}
-              className={cn(
-                "font-serif text-[clamp(1.75rem,3.6vw,2.75rem)] leading-[1.2] text-[var(--frat-cream)]",
-                i === 0 ? "font-semibold" : "font-medium text-[var(--frat-cream)]/75"
-              )}
-            >
-              {line}
-            </p>
-          ))}
-          <p className="caption pt-6">{site.tagline}</p>
-        </div>
-      ),
-    },
-    {
-      id: "honour",
-      figure: "1983",
-      kicker: "The honour",
-      title: "Most Outstanding Student Organisation.",
-      children: (
-        <>
-          <p className="lead">
-            In the University&rsquo;s Diamond Jubilee year, the fraternity was adjudged one of the
-            Most Outstanding Student Organisations of the University of the Philippines.
-          </p>
-          <p className={cn(body, "mt-6")}>
-            Fourteen years after its founding, and still the standard the brotherhood measures
-            itself against.
-          </p>
-        </>
-      ),
-    },
-    {
-      id: "work",
-      figure: "Works",
-      kicker: "The work",
-      title: "Projects and campaigns in service.",
-      children: (
-        <>
-          <div className="border-t border-[var(--hairline)]">
-            {projects.slice(0, 5).map((project, i) => (
-              <Link
-                key={project.slug}
-                href={`/projects#${project.slug}`}
-                className="group grid grid-cols-[2.5rem_1fr] items-baseline gap-4 border-b border-[var(--hairline)] py-5 transition-colors hover:bg-[var(--frat-cream)]/[0.03]"
-              >
-                <span className="caption tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-                <span>
-                  <span className="block font-serif text-2xl font-semibold leading-snug text-[var(--frat-cream)] transition-colors group-hover:text-[var(--frat-gold-light)]">
-                    {project.title}
-                  </span>
-                  <span className="caption mt-1 block">{project.category}</span>
-                </span>
-              </Link>
-            ))}
-          </div>
-          <Link href="/projects" className={cn(buttonVariants({ variant: "outline", size: "sm" }), "mt-8")}>
-            All projects
-          </Link>
-        </>
-      ),
-    },
-    {
-      id: "fifty-fifth",
-      figure: "2024",
-      kicker: "The 55th",
-      title: "Fifty-five years, in one afternoon.",
-      children: (
-        <>
-          <p className="lead">
-            On 24 February 2024, brods across every generation gathered at Bahay ng Alumni, U.P.
-            Diliman, to mark fifty-five years of the brotherhood.
-          </p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {[
-              { src: "/photos/anniv55-stage.jpg", alt: "Brods of every batch on stage at the 55th Anniversary Celebration", caption: "On stage, Bahay ng Alumni." },
-              { src: "/photos/anniv55-gazebo.jpg", alt: "Brods gathered at the gazebo during the 55th Anniversary Celebration", caption: "The gazebo, U.P. Diliman." },
-            ].map((p) => (
-              <figure key={p.src}>
-                <div className="relative aspect-[3/2] overflow-hidden border border-[var(--hairline)] bg-[var(--ink)]">
-                  <Image src={p.src} alt={p.alt} fill sizes="(min-width: 768px) 30vw, 100vw" className="object-cover" />
-                </div>
-                <figcaption className="caption mt-2">{p.caption}</figcaption>
-              </figure>
-            ))}
-          </div>
-          <Link href="/history" className="mt-8 inline-block text-[15px] text-[var(--frat-gold-light)] underline underline-offset-[6px] decoration-[var(--frat-gold)]/40 transition-colors hover:text-[var(--frat-cream)]">
-            Read the history
-          </Link>
-        </>
-      ),
-    },
-    {
-      id: "fifty-eighth",
-      figure: String(anniversary.year),
-      kicker: `The ${anniversary.ordinal}`,
-      title: `${anniversary.month}, ${anniversary.venue}, U.P. Diliman.`,
-      children: (
-        <>
-          <p className="lead">Save the date. Every batch, in one room, fifty-eight years on.</p>
-          <p className={cn(body, "mt-6")}>
-            The awards, sponsorships, souvenir programme, and tickets open later in the year.
-            Everyone on the save-the-date list hears first.
-          </p>
-          <Link href="/anniversary" className={cn(buttonVariants({ variant: "accent" }), "mt-8")}>
-            Put your name down
-          </Link>
-        </>
-      ),
-    },
-  ];
+  const brods = withoutDemo(prominentBrods).slice(0, 4);
+  const years = new Date().getFullYear() - FOUNDING_YEAR;
 
   return (
     <>
-      {/* ── The Plate ─────────────────────────────────────────────────────
-          One photograph, developing from engraving to colour; the seal
-          drawing itself beside the name. */}
-      <section className="relative flex min-h-[100svh] items-end overflow-hidden">
-        <div className="plate-drift absolute inset-0">
-          <Image
-            src="/photos/anniv55-outdoor.jpg"
-            alt="Brods of every batch gathered before Quezon Hall at the 55th Anniversary Celebration, U.P. Diliman"
-            fill
-            priority
-            sizes="100vw"
-            className="plate-image object-cover object-[50%_38%]"
-          />
-          <div aria-hidden className="plate-ink absolute inset-0" />
-          <div aria-hidden className="plate-hatch absolute inset-0" />
-        </div>
-        <div aria-hidden className="absolute inset-0 bg-[var(--ink)]/25" />
-        <div aria-hidden className="absolute inset-x-0 bottom-0 h-[64%] bg-gradient-to-t from-[var(--ink)] via-[var(--ink)]/60 to-transparent" />
+      {/* ── Hero: the photograph under a green tint, the seal in metal, the
+             name, one tagline, two pills. Angled bottom edge. ───────────── */}
+      <section className="angled-bottom relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-[var(--ink)] pb-[10vw] text-center">
+        <Image src="/photos/anniv55-outdoor.jpg" alt="" fill priority sizes="100vw" className="object-cover object-[50%_40%]" />
+        <div aria-hidden className="absolute inset-0 bg-[var(--frat-green)]/78 mix-blend-multiply" />
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-[var(--ink)]/40 via-transparent to-[var(--ink)]/50" />
 
-        {/* The seal in metal: one instance, right half on wide screens, top-left
-            above the name on phones. One WebGL context, not two. */}
-        <Seal className="absolute top-24 left-4 h-52 w-52 md:top-[9vh] md:right-0 md:left-auto md:h-[74vh] md:w-[44vw]" />
-
-        <Container className="relative pt-44 pb-16 md:pb-24">
-          <p className="hero-reveal label on-plate" style={delay(0)}>
-            University of the Philippines · College of Engineering · Est. {FOUNDING_YEAR}
-          </p>
+        <Container className="relative flex flex-col items-center pt-32 md:pt-36">
+          <Seal className="h-[30vh] w-[30vh] max-h-[19rem] max-w-[19rem] md:h-[36vh] md:w-[36vh]" />
           <h1
-            className="hero-reveal on-plate mt-6 font-display text-[clamp(2.75rem,6vw,5.5rem)] leading-[1] text-[var(--frat-cream)]"
-            style={delay(0.08)}
+            className="hero-reveal on-plate mt-4 font-display text-[clamp(2.5rem,6.5vw,5.5rem)] font-bold leading-none tracking-tight text-[var(--frat-cream)] uppercase"
+            style={delay(0.1)}
           >
             EMC&sup2; Fraternity
           </h1>
-          <p className="hero-reveal lead on-plate mt-7 max-w-xl" style={delay(0.16)}>
-            An exclusive brotherhood of Engineering and the Physical Sciences. {site.motto}
+          <p
+            className="hero-reveal on-plate mt-4 font-sans text-[clamp(0.95rem,1.6vw,1.25rem)] font-semibold tracking-[0.2em] text-[var(--frat-cream)]/90 uppercase"
+            style={delay(0.18)}
+          >
+            Engineered for Service
           </p>
-          <div className="hero-reveal mt-10 flex flex-wrap items-center gap-6" style={delay(0.24)}>
-            <Link href="/donate" className={cn(buttonVariants({ variant: "accent", size: "lg" }))}>
+          <div className="hero-reveal mt-9 flex flex-wrap items-center justify-center gap-3" style={delay(0.26)}>
+            <Link href="/donate" className={cn(buttonVariants({ variant: "white", size: "lg" }))}>
               Give Back
             </Link>
-            <a
-              href="#founding"
-              className="text-[15px] text-[var(--frat-cream)]/80 underline underline-offset-[6px] decoration-[var(--frat-cream)]/30 transition-colors hover:text-[var(--frat-cream)] hover:decoration-[var(--frat-cream)]"
-            >
-              Read the record
-            </a>
+            <Link href="/portal" className={cn(buttonVariants({ variant: "outline-light", size: "lg" }))}>
+              Enter the Portal
+            </Link>
           </div>
-          <p className="caption hero-reveal mt-12 md:absolute md:right-6 md:bottom-10 md:mt-0 md:max-w-xs md:text-right lg:right-12" style={delay(0.3)}>
-            The 55th Anniversary Celebration, Quezon Hall, U.P. Diliman, 24 February 2024.
-          </p>
+        </Container>
+
+        <a
+          href="#we-are"
+          className="absolute bottom-[calc(4vw+1.25rem)] left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[12px] font-bold tracking-[0.2em] text-[var(--frat-cream)]/85 uppercase md:flex"
+        >
+          Scroll for the record
+          <ArrowDown className="scroll-cue h-5 w-5 text-[var(--frat-gold-light)]" strokeWidth={2} />
+        </a>
+      </section>
+
+      {/* ── We are EMC² ──────────────────────────────────────────────────── */}
+      <section id="we-are" className="scroll-mt-24 bg-[var(--tint)] py-20 md:py-28">
+        <Container className="relative grid items-center gap-12 md:grid-cols-[1fr_1.1fr] md:gap-16">
+          <Diamonds className="absolute -top-16 left-0 hidden md:grid" />
+          <Reveal>
+            <SectionLabel>Since {FOUNDING_YEAR}</SectionLabel>
+            <h2 className="display mt-6 text-[clamp(2.75rem,6vw,5.25rem)]">
+              We are
+              <br />
+              EMC&sup2;.
+            </h2>
+            <p className="lead mt-7 max-w-lg">
+              An exclusive brotherhood of Engineering and the Physical Sciences at the University of
+              the Philippines. Founded by ten scholars. {years} years of Equality, Service, and
+              Brotherhood.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link href="/history" className={cn(buttonVariants({ variant: "default" }))}>
+                About us
+              </Link>
+              <Link href="/contact" className={cn(buttonVariants({ variant: "outline" }))}>
+                Join the brotherhood
+              </Link>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-[var(--ink)]">
+              <Image
+                src="/photos/anniv55-gazebo.jpg"
+                alt="Brods of every batch at the gazebo, 55th Anniversary Celebration, U.P. Diliman"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+          <Diamonds className="absolute -bottom-16 right-0 hidden md:grid" />
         </Container>
       </section>
 
-      {/* ── The rail, then the record as chapters ──────────────────────── */}
-      <YearScale />
-      <div className="border-b border-[var(--hairline)] py-8 md:py-16">
-        <Chronicle chapters={chapters} />
-      </div>
+      {/* ── Get involved ────────────────────────────────────────────────── */}
+      <section className="py-20 md:py-28">
+        <Container>
+          <Reveal>
+            <h2 className="display text-[clamp(2.25rem,4.5vw,3.5rem)]">Get involved.</h2>
+            <p className="lead mt-5 max-w-xl">
+              There are many ways to stay close to the brotherhood, as a brod, an alumnus, or a
+              friend of the fraternity. Find yours.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-12">
+            <CardSlider cards={INVOLVEMENT} />
+          </Reveal>
+        </Container>
+      </section>
 
-      {/* ── Prominent brods ──────────────────────────────────────────────── */}
-      <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-20 md:py-28">
+      {/* ── The Portal panel ────────────────────────────────────────────── */}
+      <section className="pb-20 md:pb-28">
+        <Container>
+          <Reveal>
+            <div className="on-dark relative overflow-hidden rounded-card bg-[var(--ink)] px-6 py-16 text-center md:px-16 md:py-24">
+              <Image
+                src="/logo/emc2-mark.svg"
+                alt=""
+                width={114}
+                height={114}
+                unoptimized
+                aria-hidden
+                className="pointer-events-none absolute -right-24 -bottom-32 h-[28rem] w-[28rem] opacity-[0.07] md:h-[36rem] md:w-[36rem]"
+              />
+              <Image
+                src="/logo/emc2-mark.svg"
+                alt=""
+                width={114}
+                height={114}
+                unoptimized
+                aria-hidden
+                className="pointer-events-none absolute -top-24 -left-20 h-[20rem] w-[20rem] opacity-[0.06]"
+              />
+              <div className="relative">
+                <Image src="/logo/emc2-mark.svg" alt="" width={114} height={114} unoptimized className="mx-auto h-16 w-16" />
+                <h2 className="display mt-6 text-[clamp(2rem,4.5vw,3.25rem)] text-[var(--frat-cream)]">The Member Portal</h2>
+                <p className="mx-auto mt-5 max-w-2xl text-[17px] leading-relaxed text-[var(--frat-cream)]/80">
+                  A private space for verified brods: keep your record current, find one another in the
+                  directory, and record your dues. By invitation, verified against the roster.
+                </p>
+                <div className="mt-8 flex flex-wrap justify-center gap-3">
+                  <Link href="/portal" className={cn(buttonVariants({ variant: "outline-light" }))}>
+                    Enter the Portal
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className={cn(buttonVariants({ variant: "ghost" }), "text-[var(--frat-cream)]/80 hover:text-[var(--frat-cream)]")}
+                  >
+                    Request an invitation
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* ── Notices and stories ─────────────────────────────────────────── */}
+      <section className="bg-[var(--tint)] py-20 md:py-28">
         <Container>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <Reveal>
-              <SectionLabel>Prominent brods</SectionLabel>
-              <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
-                Excellence, on the record.
-              </h2>
+              <h2 className="display text-[clamp(2.25rem,4.5vw,3.5rem)]">Notices and stories.</h2>
+              <p className="lead mt-4 max-w-xl">What the Association has to say, and what the brotherhood has been doing.</p>
             </Reveal>
             <Reveal delay={0.1}>
-              <Link href="/brods" className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
-                All citations
+              <Link href="/history" className={cn(buttonVariants({ variant: "outline" }))}>
+                View the record
               </Link>
             </Reveal>
           </div>
-          <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-14">
+
+          <div className="mt-12 grid gap-12 md:grid-cols-[1fr_1fr] md:gap-16">
+            <Reveal>
+              <Link href="/anniversary" className="group block">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-[var(--ink)]">
+                  <Image
+                    src="/photos/anniv55-stage.jpg"
+                    alt="Brods on stage at the 55th Anniversary Celebration"
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+                  />
+                </div>
+                <p className="caption mt-6">{anniversary.month}</p>
+                <h3 className="mt-2 font-sans text-[30px] font-bold leading-tight text-[var(--fg)]">
+                  The 58th Anniversary: save the date
+                </h3>
+                <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[var(--fg-muted)]">
+                  {anniversary.venue}, {anniversary.venueDetail}. Put your name down now; the awards,
+                  sponsorships, souvenir programme, and tickets open later in the year, and everyone on
+                  the list hears first.
+                </p>
+              </Link>
+            </Reveal>
+            <div className="divide-y divide-[var(--hairline)] border-t border-[var(--hairline)]">
+              {STORIES.map((s, i) => (
+                <Reveal key={s.href} delay={0.05 * i}>
+                  <Link href={s.href} className="group grid grid-cols-[7rem_1fr] items-center gap-6 py-6 md:grid-cols-[11rem_1fr]">
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[var(--ink)]">
+                      <Image src={s.image} alt={s.alt} fill sizes="11rem" className="object-cover" />
+                    </div>
+                    <div>
+                      <p className="caption">{s.date}</p>
+                      <h3 className="mt-1 font-sans text-[20px] font-bold leading-snug text-[var(--fg)] transition-colors group-hover:text-[var(--brand)] md:text-[24px]">
+                        {s.title}
+                      </h3>
+                    </div>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Our impact ──────────────────────────────────────────────────── */}
+      <section className="py-20 md:py-28">
+        <Container className="grid gap-12 md:grid-cols-[0.9fr_1.4fr] md:gap-16">
+          <Reveal>
+            <SectionLabel>Our impact</SectionLabel>
+            <h2 className="display mt-6 text-[clamp(2.5rem,5vw,4rem)]">Give back.</h2>
+            <p className="lead mt-6 max-w-md">
+              Contributions from brods, alumni, and friends fund scholarships, campus projects, and
+              community outreach, received and acknowledged by the Alumni Association.
+            </p>
+            <div className="mt-8 flex flex-col items-start gap-3">
+              <Link href="/donate" className={cn(buttonVariants({ variant: "default" }))}>
+                Donate today
+              </Link>
+              <Link href="/projects" className={cn(buttonVariants({ variant: "outline" }))}>
+                See the projects
+              </Link>
+            </div>
+          </Reveal>
+          <div className="grid gap-5 sm:grid-cols-2">
+            {STATS.map((s, i) => (
+              <Reveal key={s.value + s.label} delay={0.06 * i}>
+                <div className="rounded-card bg-[var(--tint)] p-8 md:p-10">
+                  <p className="stat">{s.value}</p>
+                  <p className="mt-4 text-[15px] leading-relaxed text-[var(--fg-muted)]">{s.label}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Prominent brods ─────────────────────────────────────────────── */}
+      <section className="bg-[var(--tint)] py-20 md:py-28">
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <Reveal>
+              <h2 className="display text-[clamp(2.25rem,4.5vw,3.5rem)]">Prominent brods.</h2>
+              <p className="lead mt-4 max-w-xl">
+                Brothers who carry the credo into their professions, public service, and the
+                University&rsquo;s alumni community.
+              </p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <Link href="/brods" className={cn(buttonVariants({ variant: "outline" }))}>
+                View all
+              </Link>
+            </Reveal>
+          </div>
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {brods.map((brod, i) => (
-              <Reveal key={brod.slug} delay={i * 0.08}>
+              <Reveal key={brod.slug} delay={i * 0.06}>
                 <BrodCard brod={brod} />
               </Reveal>
             ))}
@@ -282,85 +375,23 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ── Notices ──────────────────────────────────────────────────────── */}
-      {bulletin.length > 0 ? (
-        <section id="bulletin" className="border-b border-[var(--hairline)] py-20 md:py-28">
-          <Container className="grid gap-10 md:grid-cols-[1fr_1.7fr] md:gap-20">
-            <Reveal>
-              <SectionLabel>Notices</SectionLabel>
-              <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
-                From the Association.
-              </h2>
-            </Reveal>
-            <div className="border-t border-[var(--hairline)]">
-              {bulletin.slice(0, 3).map((item, i) => {
-                const inner = (
-                  <>
-                    <p className="caption">{item.date}</p>
-                    <p className="mt-2 font-serif text-2xl font-semibold leading-snug text-[var(--frat-cream)] transition-colors group-hover:text-[var(--frat-gold-light)]">
-                      {item.title}
-                    </p>
-                    {item.body ? (
-                      <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-[var(--frat-cream)]/65">{item.body}</p>
-                    ) : null}
-                  </>
-                );
-                return (
-                  <Reveal key={`${item.date}-${item.title}`} delay={i * 0.05}>
-                    {item.href ? (
-                      <Link href={item.href} className="group block border-b border-[var(--hairline)] py-6">
-                        {inner}
-                      </Link>
-                    ) : (
-                      <div className="border-b border-[var(--hairline)] py-6">{inner}</div>
-                    )}
-                  </Reveal>
-                );
-              })}
+      {/* ── Explore ─────────────────────────────────────────────────────── */}
+      <section className="py-20 md:py-28">
+        <Container>
+          <Reveal>
+            <div className="on-dark relative overflow-hidden rounded-card bg-[var(--ink)] px-6 py-20 text-center md:px-16 md:py-28">
+              <Image src="/photos/anniv55-gazebo.jpg" alt="" fill sizes="100vw" className="object-cover opacity-30" />
+              <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-[var(--ink)]/70 to-[var(--ink)]/40" />
+              <div className="relative mx-auto max-w-3xl">
+                <h2 className="display text-[clamp(2rem,4.5vw,3.5rem)] text-[var(--frat-cream)]">
+                  Explore {years} years of Equality, Service, and Brotherhood.
+                </h2>
+                <p className="mx-auto mt-5 max-w-xl text-[17px] leading-relaxed text-[var(--frat-cream)]/80">{site.credo}</p>
+                <Link href="/history" className={cn(buttonVariants({ variant: "white", size: "lg" }), "mt-9")}>
+                  Read the history
+                </Link>
+              </div>
             </div>
-          </Container>
-        </section>
-      ) : null}
-
-      {/* ── Patronage ────────────────────────────────────────────────────── */}
-      <section className="border-b border-[var(--hairline)] bg-[var(--ink)] py-24 text-center md:py-32">
-        <Container className="flex max-w-2xl flex-col items-center">
-          <Reveal>
-            <SectionLabel className="items-center">Patronage</SectionLabel>
-            <h2 className="mt-7 font-display text-3xl leading-tight text-[var(--frat-cream)] md:text-4xl">
-              Give back to the brotherhood.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p className="lead mt-6">
-              Scholarships, the Thinking Space, relief operations. Every project in the record began
-              with a brod who gave.
-            </p>
-          </Reveal>
-          <Reveal delay={0.16}>
-            <Link href="/donate" className={cn(buttonVariants({ variant: "accent", size: "lg" }), "mt-9")}>
-              Give Back
-            </Link>
-          </Reveal>
-        </Container>
-      </section>
-
-      {/* ── What's next ──────────────────────────────────────────────────── */}
-      <section className="py-14">
-        <Container className="flex flex-wrap items-center justify-between gap-6">
-          <Reveal>
-            <p className="text-[15px] text-[var(--frat-cream)]/70">
-              The Member Portal is open by invitation. A companion app and an archive you can ask
-              questions of are the direction.
-            </p>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <Link
-              href="/roadmap"
-              className="text-[15px] text-[var(--frat-gold-light)] underline underline-offset-[6px] decoration-[var(--frat-gold)]/40 transition-colors hover:text-[var(--frat-cream)]"
-            >
-              See what&rsquo;s next
-            </Link>
           </Reveal>
         </Container>
       </section>

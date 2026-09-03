@@ -51,10 +51,10 @@ export default function PrivacyPage() {
             </Reveal>
           ))}
           <Reveal delay={0.4}>
-            <p className="border-t border-[var(--hairline)] pt-8 text-sm leading-relaxed text-[var(--frat-cream)]/60">
+            <p className="border-t border-[var(--hairline)] pt-8 text-sm leading-relaxed text-[var(--fg)]/60">
               This is the Association&rsquo;s current, good-faith commitment. A fuller written policy will be
               published as the Association formalises it. Questions?{" "}
-              <a href="/contact" className="font-semibold text-[var(--frat-gold-light)] underline underline-offset-4">
+              <a href="/contact" className="font-semibold text-[var(--brand)] underline underline-offset-4">
                 Contact us
               </a>
               .

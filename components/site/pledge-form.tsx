@@ -17,7 +17,7 @@ const CAUSES = [
 ];
 
 const inputClass =
-  "w-full border border-[var(--border)] bg-white/5 px-4 py-3 text-sm text-[var(--frat-cream)] outline-none transition-colors placeholder:text-[var(--frat-cream)]/60 focus:border-[var(--frat-gold)] focus:ring-2 focus:ring-[var(--frat-gold)]/30 [&>option]:bg-[var(--ink)]";
+  "w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition-colors placeholder:text-[var(--fg)]/60 focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--frat-gold)]/30 [&>option]:bg-[var(--tint)]";
 
 export function PledgeForm() {
   const [state, formAction, pending] = useActionState(submitPledge, INITIAL_FORM_STATE);
@@ -52,13 +52,13 @@ export function PledgeForm() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="pledge-name" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            <label htmlFor="pledge-name" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
               Name
             </label>
             <input id="pledge-name" name="name" required maxLength={120} placeholder="Juan dela Cruz" defaultValue={state.values?.name} className={inputClass} />
           </div>
           <div>
-            <label htmlFor="pledge-batch" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            <label htmlFor="pledge-batch" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
               Batch <span className="font-normal text-muted-foreground">(e.g. ’84-F)</span>
             </label>
             <input id="pledge-batch" name="batch" maxLength={40} placeholder="’84-F" defaultValue={state.values?.batch} className={inputClass} />
@@ -66,7 +66,7 @@ export function PledgeForm() {
         </div>
 
         <div>
-          <label htmlFor="pledge-email" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+          <label htmlFor="pledge-email" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
             Email
           </label>
           <input
@@ -82,7 +82,7 @@ export function PledgeForm() {
         </div>
 
         <div>
-          <label htmlFor="pledge-cause" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+          <label htmlFor="pledge-cause" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
             I want to support
           </label>
           <select id="pledge-cause" name="cause" className={inputClass} defaultValue={state.values?.cause ?? CAUSES[0]}>
@@ -96,7 +96,7 @@ export function PledgeForm() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="pledge-amount" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            <label htmlFor="pledge-amount" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
               Amount <span className="font-normal text-muted-foreground">(₱, optional)</span>
             </label>
             <input
@@ -110,7 +110,7 @@ export function PledgeForm() {
             />
           </div>
           <div>
-            <label htmlFor="pledge-reference" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+            <label htmlFor="pledge-reference" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
               Transfer reference no. <span className="font-normal text-muted-foreground">(optional)</span>
             </label>
             <input
@@ -125,7 +125,7 @@ export function PledgeForm() {
         </div>
 
         <div>
-          <label htmlFor="pledge-message" className="mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80">
+          <label htmlFor="pledge-message" className="mb-1.5 block text-sm font-medium text-[var(--fg)]/80">
             Message <span className="font-normal text-muted-foreground">(optional)</span>
           </label>
           <textarea
@@ -139,7 +139,7 @@ export function PledgeForm() {
           />
         </div>
 
-        <label htmlFor="pledge-consent-public" className="flex items-start gap-3 text-[13px] leading-relaxed text-[var(--frat-cream)]/70">
+        <label htmlFor="pledge-consent-public" className="flex items-start gap-3 text-[13px] leading-relaxed text-[var(--fg)]/70">
           <input
             id="pledge-consent-public"
             name="consent_public"
@@ -147,7 +147,7 @@ export function PledgeForm() {
             className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--frat-gold)]"
           />
           <span>
-            You may list my <strong className="text-[var(--frat-cream)]">name</strong> (never the amount) in the
+            You may list my <strong className="text-[var(--fg)]">name</strong> (never the amount) in the
             fraternity&rsquo;s public Roll of Patrons. Leave unchecked to give privately.
           </span>
         </label>

@@ -20,8 +20,8 @@ function currentPeriodOptions(): string[] {
 }
 
 const inputClass =
-  "w-full border border-[var(--border)] bg-white/5 px-4 py-3 text-sm text-[var(--frat-cream)] outline-none transition-colors placeholder:text-[var(--frat-cream)]/60 focus:border-[var(--frat-gold)] focus:ring-2 focus:ring-[var(--frat-gold)]/30 [&>option]:bg-[var(--ink)]";
-const labelClass = "mb-1.5 block text-sm font-medium text-[var(--frat-cream)]/80";
+  "w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition-colors placeholder:text-[var(--fg)]/60 focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--frat-gold)]/30 [&>option]:bg-[var(--tint)]";
+const labelClass = "mb-1.5 block text-sm font-medium text-[var(--fg)]/80";
 
 export function DuesForm({
   memberId,
@@ -131,7 +131,7 @@ export function DuesForm({
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="dues-amount" className={labelClass}>
-              Amount <span className="font-normal text-[var(--frat-cream)]/50">(₱, optional)</span>
+              Amount <span className="font-normal text-[var(--fg)]/50">(₱, optional)</span>
             </label>
             <input
               id="dues-amount"
@@ -144,7 +144,7 @@ export function DuesForm({
           </div>
           <div>
             <label htmlFor="dues-reference" className={labelClass}>
-              Transfer reference no. <span className="font-normal text-[var(--frat-cream)]/50">(optional)</span>
+              Transfer reference no. <span className="font-normal text-[var(--fg)]/50">(optional)</span>
             </label>
             <input
               id="dues-reference"
@@ -159,7 +159,7 @@ export function DuesForm({
 
         <div>
           <label htmlFor="dues-message" className={labelClass}>
-            Message <span className="font-normal text-[var(--frat-cream)]/50">(optional)</span>
+            Message <span className="font-normal text-[var(--fg)]/50">(optional)</span>
           </label>
           <textarea
             id="dues-message"

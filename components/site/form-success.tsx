@@ -22,13 +22,13 @@ export function FormSuccess({ title, body }: { title: string; body: string }) {
         transition={{ type: "spring", stiffness: 260, damping: 20, mass: 0.7 }}
         className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--frat-gold)]/15"
       >
-        <CheckCircle2 className="h-7 w-7 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
+        <CheckCircle2 className="h-7 w-7 text-[var(--brand)]" strokeWidth={1.5} />
       </motion.div>
       <motion.p
         initial={reduceMotion ? false : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.15, ease: EASE }}
-        className="mt-5 font-serif text-2xl font-semibold text-[var(--frat-cream)]"
+        className="mt-5 font-sans text-[22px] font-bold text-[var(--fg)]"
       >
         {title}
       </motion.p>
@@ -36,7 +36,7 @@ export function FormSuccess({ title, body }: { title: string; body: string }) {
         initial={reduceMotion ? false : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.28, ease: EASE }}
-        className="mt-3 max-w-sm text-sm text-[var(--frat-cream)]/70"
+        className="mt-3 max-w-sm text-sm text-[var(--fg)]/70"
       >
         {body}
       </motion.p>

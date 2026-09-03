@@ -63,7 +63,7 @@ export function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
           role="dialog"
           aria-modal="true"
           aria-label={photos[openIndex].caption}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--ink)]/95 p-6 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--tint)]/95 p-6 backdrop-blur-sm"
           onClick={(e) => {
             if (e.target === e.currentTarget) close();
           }}
@@ -73,7 +73,7 @@ export function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
             type="button"
             onClick={close}
             aria-label="Close"
-            className="absolute top-6 right-6 text-[var(--frat-cream)]/70 transition-colors hover:text-[var(--frat-gold-light)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)]"
+            className="absolute top-6 right-6 text-[var(--fg)]/70 transition-colors hover:text-[var(--brand)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)]"
           >
             <X className="h-7 w-7" strokeWidth={1.5} />
           </button>
@@ -82,7 +82,7 @@ export function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
             type="button"
             onClick={() => setOpenIndex((i) => (i === null ? i : (i - 1 + photos.length) % photos.length))}
             aria-label="Previous photo"
-            className="absolute left-4 text-[var(--frat-cream)]/70 transition-colors hover:text-[var(--frat-gold-light)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)] md:left-8"
+            className="absolute left-4 text-[var(--fg)]/70 transition-colors hover:text-[var(--brand)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)] md:left-8"
           >
             <ChevronLeft className="h-9 w-9" strokeWidth={1.25} />
           </button>
@@ -90,7 +90,7 @@ export function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
             type="button"
             onClick={() => setOpenIndex((i) => (i === null ? i : (i + 1) % photos.length))}
             aria-label="Next photo"
-            className="absolute right-4 text-[var(--frat-cream)]/70 transition-colors hover:text-[var(--frat-gold-light)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)] md:right-8"
+            className="absolute right-4 text-[var(--fg)]/70 transition-colors hover:text-[var(--brand)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--frat-gold-light)] md:right-8"
           >
             <ChevronRight className="h-9 w-9" strokeWidth={1.25} />
           </button>

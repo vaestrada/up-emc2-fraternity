@@ -269,3 +269,28 @@ an engineer will recognise; see `HOMEPAGE-DIRECTIONS.md` for why each was chosen
 | **Context loss** | The GPU can drop a WebGL context under pressure. A page must expect it: ours hands the seal back to the flat mark. | `webglcontextlost` listener |
 | **Code splitting / `next/dynamic`** | Loading a heavy module only when needed, only in the browser, so the rest of the page does not pay for it. | `dynamic(() => import("./seal-3d"), { ssr: false })` |
 | **Progressive enhancement (again)** | The flat vector mark paints first and stays if WebGL is unavailable; the metal seal is added on top when it can be. | `components/site/seal.tsx` |
+
+## 12. The Modern Charter: reading a reference site
+
+Added the evening of 3 September 2026, when the site was rebuilt on the layout system of
+phideltatheta.org with our own brand. These are the words for what was borrowed.
+
+| Term | What it means | Where it lives here |
+|---|---|---|
+| **Design system vs. brand** | The system is the structure and behaviour (spacing, radii, button shapes, section patterns); the brand is colour, type, mark, photographs, and voice. You can adopt one without the other, which is exactly what this rebuild does. | `DESIGN.md` |
+| **Reference study** | Capturing a site at several scroll depths and reading its markup for its recurring patterns before borrowing any. | The `pdt-*.png` captures; the saved page's class names |
+| **Light theme / paper ground** | A pale page with dark text, the opposite of the earlier dark site. Easier on older eyes; photographs read as photographs. | `--paper`, `--tint` |
+| **Tinted section** | A section on a slightly coloured ground to separate it from its neighbours without a rule. | `bg-[var(--tint)]` |
+| **Pill button** | A button with fully rounded ends (`border-radius: 9999px`). | `components/ui/button.tsx` |
+| **Island navigation** | A floating navigation bar with its own rounded shape and shadow, not a full-width strip. | `components/site/navbar.tsx`, `.island` |
+| **Backdrop blur (returned)** | Frosted glass behind the island so it reads over photographs and text alike. | `.island` |
+| **Angled edge / `clip-path`** | Cutting a section's bottom into a chevron with a polygon clip so it leads the eye down. | `.angled-bottom` |
+| **Multiply tint** | A colour layer in `mix-blend-mode: multiply` over a photograph, so the photo takes the brand colour without going flat. | The hero |
+| **Watermark** | The mark at very low opacity, oversized and cropped, behind a panel's content. | The Portal panel |
+| **Card slider / carousel (native)** | A row of cards that scrolls sideways with `scroll-snap`, driven by the browser, with buttons that call `scrollBy`. No library. | `components/site/card-slider.tsx`, `.slider` |
+| **Stat tile** | A rounded tinted block with one large number and one line of context. | "Our impact" |
+| **Featured + list** | A news layout: one large story with a photograph, beside a list of smaller ones with thumbnails and dates. | "Notices and stories" |
+| **Portrait grid** | Four square photographs in a row, each with kicker, name, and role. | "Prominent brods" |
+| **Radius scale** | One large corner (24px) for photographs, cards, and panels; a smaller one (16px) for thumbnails; pills for buttons. Consistency of radius is what makes a page feel like one product. | `--radius`, `.rounded-card` |
+| **Scroll cue** | The small "scroll" prompt with an arrow at the bottom of a full-screen hero. | `.scroll-cue` |
+| **Decorative motif** | A small repeated brand element (their six stars; our six diamonds from the mark) placed at a section corner. | `Diamonds()` in `app/page.tsx` |
