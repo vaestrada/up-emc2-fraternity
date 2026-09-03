@@ -22,29 +22,29 @@ playbook is the pitch. Everything below is rehearsable in twenty minutes the nig
 
 ## Minute by minute
 
-**0:00 — Land on the homepage and say nothing for five seconds.** Let the wordmark engrave,
-the rule draw, the light pass. Then: *"This is the fraternity's first official home online.
-Everything you'll see is either from the Association's own record or clearly marked as a
-preview."*
+**0:00 — Land on the homepage and say nothing for five seconds.** The 55th photograph comes up
+from a green-ink engraving into colour, and the seal draws itself beside the name. Then:
+*"That is the brotherhood at Quezon Hall in February 2024. Everything you'll see is either
+from the Association's own record or clearly marked as a placeholder."*
 
-**0:30 — Scroll slowly.** The marquee ("Quantum Leaps Since 1969"), the stat band (57 years,
-490 brods on record), the Credo at full size. *"The design language is an archive — a hall
-of records. Numbered entries, figure captions, gold used only for honour and action."*
+**0:30 — Scroll slowly.** The timeline rail appears under the navigation: 1969 at the left, the
+58th at the right, and it fills as you read. *"Reading down the page is travelling through the
+fraternity's years."* The chapters pass with the year on the left: 1969, the Credo, 1983,
+the work, 2024, 2027. *"The same page tells the story to a freshman and to a founding brod."*
 
-**1:30 — The campus sequence.** Scroll through the pinned video. *"Rendered from real
-photographs of Diliman, so the campus is the actual campus. The technique is scroll-scrubbing:
-your scroll is the timeline."*
+**1:30 — The Credo, at size.** Pause on the four lines. *"The design language is a charter, not
+a startup site. One label style, real photographs, gold only for honour and action."*
 
-**2:30 — The Ledger and the Citations.** Point at Engr. Ison and Brod Salanguit (real), then at
-the "Demo — AI-generated" badge on the others. *"Two real citations. The other four are
-placeholders so you can see what a full register looks like. They come down with one switch
-the day we launch publicly; what replaces them is the board's nominations."*
+**2:30 — The Citations.** Point at Engr. Ison and Brod Salanguit. *"Two real citations. The
+register is built batch by batch from the board's nominations. Placeholder entries exist for
+a walkthrough but are switched off on the public record."*
 
-**3:30 — The Bulletin.** *"Two notices: the 58th, and the Portal opening. This is where the
+**3:30 — The Notices.** *"Two notices: the 58th, and the Portal opening. This is where the
 brotherhood's news lives; it is fed by residents, not by me."*
 
-**4:00 — `/anniversary`.** Let the showcase turn through two slides. The plate (When / Where /
-Who), the three 55th photographs, the RSVP. Submit nothing; point at the interest checkboxes.
+**4:00 — `/anniversary`.** The 55th on stage beside the title, the plate (When / Where / Who)
+with the seal, the programme as a list with an honest status line on every item, the three
+photographs, the RSVP. Submit nothing; point at the interest checkboxes.
 *"This page exists six months early for one reason: the list. Someone who ticks
 'sponsorship' in September is a warm call in October."*
 

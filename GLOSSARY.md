@@ -221,3 +221,30 @@ most), count the effects that move without you (should be zero after the page se
 any text set in uppercase that is not a label or a button, and look for any photograph that is
 not real. If a section would still be correct without a device, the device is decoration, and
 decoration is where the generated look lives.
+
+## 10. The Plate: the techniques on the homepage
+
+Added 3 September 2026 with the new homepage. Each is a platform feature or a named pattern
+an engineer will recognise; see `HOMEPAGE-DIRECTIONS.md` for why each was chosen.
+
+| Term | What it means | Where it lives here |
+|---|---|---|
+| **Scroll-driven animation** | A CSS animation whose progress is tied to scroll position instead of time: `animation-timeline: scroll()` or `view()`. Native, no JavaScript, runs off the main thread. | `.plate-drift` in `globals.css` |
+| **`animation-range`** | Which part of the scroll the animation maps onto, e.g. `0 100vh` means "from the top of the page to one viewport down". | Same |
+| **Progressive enhancement** | Build the working version first, then add an effect only where the browser supports it, with `@supports (…)`. Nothing breaks elsewhere. | `@supports (animation-timeline: scroll())` |
+| **Parallax** | Background moves slower than foreground, giving depth. Ours is 14% over one viewport. | The hero photograph |
+| **Blend mode** | How a layer's colours combine with what is beneath: `color` keeps the underlying luminosity and applies the layer's hue; `multiply` darkens. | `.plate-ink`, `.plate-hatch` |
+| **Engraving / hatch** | Fine parallel lines that read as an etched plate; here a `repeating-linear-gradient` of 1px lines, multiplied over the photograph. | `.plate-hatch` |
+| **`pathLength`** | An SVG attribute that tells the browser to treat a path as if it were exactly that long, so `stroke-dasharray: 1` and `stroke-dashoffset: 1 → 0` draw any path, whatever its real length. | `components/site/seal-drawing.tsx` |
+| **Draw-on / line-drawing animation** | Animating dash offset so a stroke appears to be drawn by hand. | `.seal-stroke` |
+| **Construction lines** | In draughting, the faint circles and centre lines drawn before the object. Ours draw first at half weight. | `.seal-construction` |
+| **Scrollytelling** | Long-form pages where scrolling advances a narrative with a fixed element that updates. | `components/site/chronicle.tsx` |
+| **Sticky column** | `position: sticky` on one grid column so it holds while the other scrolls. | Same, `sticky top-44` |
+| **`IntersectionObserver`** | A browser API that reports when an element enters or leaves a region of the viewport, without listening to scroll events. | Same |
+| **`rootMargin`** | Shrinks or grows the observed region. `-45% 0 -50% 0` leaves a thin band through the middle of the screen. | Same |
+| **Crossfade with `AnimatePresence`** | Framer's way of animating an element out while its replacement animates in, keyed by `key`. | The sticky year |
+| **`useScroll` / `useSpring`** | Framer hooks: page scroll progress as a motion value from 0 to 1, and a spring that smooths it. | `components/site/year-scale.tsx` |
+| **Timeline rail / scale** | A ruler of years with a progress fill; here the fraternity's own chronology as the page's progress bar. | Same |
+| **`text-wrap: balance`** | Lets the browser even out the line lengths of a heading so no single word is orphaned on the last line. | `globals.css` |
+| **View Transitions API** | Browser-native morph between two page states, including shared elements across navigations. Deferred here; see directions E. | `HOMEPAGE-DIRECTIONS.md` |
+| **Variable font axes** | A font with continuous weight, width, or optical-size axes set through `font-variation-settings`. Not used; see directions D. | Same |

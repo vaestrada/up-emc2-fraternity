@@ -34,7 +34,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--hairline)] bg-[var(--canvas)]/95">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--hairline)] bg-[var(--canvas)]">
       <Container className="flex h-[4.5rem] items-center justify-between md:h-20">
         <Link href="/" onClick={() => setOpen(false)} aria-label="EMC² Fraternity, home">
           {/* Official lockup as issued; the mark is never re-typeset. */}

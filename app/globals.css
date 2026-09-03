@@ -162,6 +162,100 @@ body {
   animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
 }
 
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* ── The Plate (homepage hero) ──────────────────────────────────────────── */
+
+/* The photograph develops from a green-ink engraving into colour, the way a
+   print comes up in the tray. Three layers: the image (grayscale → colour),
+   an ink layer blended in colour mode that tints the grey green, and a hatch
+   of fine diagonal lines multiplied over it. The two overlays fade out as
+   the image resolves. Time-based, so every visitor sees the moment. */
+@keyframes plate-develop {
+  from {
+    filter: grayscale(1) contrast(1.25) brightness(0.8);
+  }
+  to {
+    filter: grayscale(0) contrast(1) brightness(1);
+  }
+}
+@keyframes plate-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.plate-image {
+  animation: plate-develop 2.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+}
+.plate-ink {
+  background: var(--frat-green);
+  mix-blend-mode: color;
+  animation: plate-fade 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.9s both;
+}
+.plate-hatch {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(4, 21, 10, 0.55) 0 1px,
+    transparent 1px 4px
+  );
+  mix-blend-mode: multiply;
+  animation: plate-fade 2s cubic-bezier(0.22, 1, 0.36, 1) 1.1s both;
+}
+
+/* Parallax with native scroll-driven animation: the photograph moves at a
+   fraction of scroll speed while the hero leaves the viewport. Progressive
+   enhancement; browsers without animation-timeline simply do not move it. */
+@supports (animation-timeline: scroll()) {
+  @keyframes plate-drift {
+    to {
+      transform: translateY(14%);
+    }
+  }
+  .plate-drift {
+    animation: plate-drift linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 100vh;
+  }
+}
+
+/* Text set over the photograph keeps a whisper of shadow for legibility. */
+.on-plate {
+  text-shadow: 0 1px 2px rgba(4, 21, 10, 0.7), 0 0 24px rgba(4, 21, 10, 0.5);
+}
+
+/* The seal drawing itself: every stroke has pathLength="1". */
+@keyframes seal-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes seal-appear {
+  to {
+    opacity: 1;
+  }
+}
+.seal-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: seal-draw 1.6s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) forwards;
+}
+.seal-construction {
+  stroke-width: 0.5;
+  opacity: 0.45;
+}
+.seal-fill,
+.seal-text {
+  opacity: 0;
+  animation: seal-appear 1s ease-out 2.4s forwards;
+}
+
 ::selection {
   background: var(--frat-gold);
   color: var(--ink);
@@ -172,8 +266,12 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .plate-drift {
+    animation: none !important;
   }
 }
