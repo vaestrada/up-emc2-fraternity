@@ -329,13 +329,19 @@ export const roadmap: RoadmapItem[] = [
     phase: "now",
     title: "The Member Portal",
     body:
-      "Sign in with a magic link, keep your own record current, and find brods who've opted into the directory. Private by default — you choose what's shown and to whom.",
+      "By invitation: a board member verifies you against the roster, an invite arrives, and you sign in with a one-time link. Keep your own record current and find brods who've opted into the directory. Private by default — you choose what's shown and to whom.",
   },
   {
     phase: "now",
     title: "Dues, Recorded Honestly",
     body:
       "No checkout yet, so no pretending there is one. Send your dues, record the reference number, and the Association matches and acknowledges it — the same trust the brotherhood has always run on, now with a paper trail.",
+  },
+  {
+    phase: "now",
+    title: "The Board's Queue",
+    body:
+      "One private page where the Association sees the 58th Anniversary list, contributions awaiting review, pledges, dues, and messages — and downloads any of them to Google Sheets in a click. The committees work in the tools they already know.",
   },
   {
     phase: "next",
@@ -350,6 +356,12 @@ export const roadmap: RoadmapItem[] = [
       "A periodic dispatch to every brod on record: new citations, upcoming gatherings, the state of ongoing projects. Built on the same Portal record, so it reaches people who actually asked to hear from us.",
   },
   {
+    phase: "next",
+    title: "Publishing from Google Drive",
+    body:
+      "Residents write in Google Docs and log each piece in one shared sheet. A weekly publishing run carries approved pieces into the archive with consent and privacy checked. The first contributors are being named now.",
+  },
+  {
     phase: "future",
     title: "A Companion App",
     body:
@@ -360,5 +372,11 @@ export const roadmap: RoadmapItem[] = [
     title: "An AI-Native Archive",
     body:
       "Ask it who was in a given batch, surface a citation you half-remember, or draft your own update to the brotherhood from a few notes. A copilot over the archive, not a replacement for the brods who keep it.",
+  },
+  {
+    phase: "future",
+    title: "The Assistance Fund, Endowed",
+    body:
+      "A standing fund for brods and their families facing hospitalisation, accident, or loss, with a published ledger — raised, disbursed, balance, brods helped — and never a name on either side. Being established with the Alumni Association.",
   },
 ];

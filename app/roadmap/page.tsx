@@ -10,10 +10,13 @@ import { roadmap, type RoadmapPhase } from "@/lib/content";
 import {
   PortalScreenshot,
   DuesMockup,
+  AdminQueueMockup,
   CheckoutMockup,
   NewsletterMockup,
+  PipelineMockup,
   CompanionAppMockup,
   AiArchiveMockup,
+  LedgerMockup,
 } from "@/components/site/roadmap-mockups";
 
 export const metadata: Metadata = {
@@ -22,37 +25,42 @@ export const metadata: Metadata = {
     "Where the fraternity's digital home is headed — what's live, what's committed, and what's still a direction rather than a promise.",
 };
 
-const PHASES: { key: RoadmapPhase; eyebrow: string; title: string; note: string }[] = [
+const PHASES: { key: RoadmapPhase; number: string; eyebrow: string; title: string; note: string }[] = [
   {
     key: "now",
+    number: "09.1",
     eyebrow: "Shipped",
     title: "Live Today",
-    note: "Built, deployed, and in use.",
+    note: "Built, deployed, and in use. What you see on the left is the real thing.",
   },
   {
     key: "next",
+    number: "09.2",
     eyebrow: "Committed",
     title: "Next",
-    note: "Underway — timing depends on an outside approval, not on effort.",
+    note: "Underway — timing depends on an outside approval or a named volunteer, not on effort.",
   },
   {
     key: "future",
+    number: "09.3",
     eyebrow: "Direction",
     title: "Future",
-    note: "Where this is built to grow, once the fundamentals earn it. Not a promise, not a live product.",
+    note: "Where this is built to grow once the fundamentals earn it. Not a promise, not a live product.",
   },
 ];
 
-// Each roadmap item gets a visual — a real screenshot for what's shipped, a
-// concept mockup for what isn't built yet. Keyed by title so lib/content.ts
-// stays UI-free.
+/* Each roadmap item gets a visual — a real capture for what's shipped, a
+   concept for what isn't. Keyed by title so lib/content.ts stays UI-free. */
 const VISUALS: Record<string, React.ReactNode> = {
   "The Member Portal": <PortalScreenshot />,
   "Dues, Recorded Honestly": <DuesMockup />,
+  "The Board's Queue": <AdminQueueMockup />,
   "Checkout, Once KYB Clears": <CheckoutMockup />,
   "The Newsletter": <NewsletterMockup />,
+  "Publishing from Google Drive": <PipelineMockup />,
   "A Companion App": <CompanionAppMockup />,
   "An AI-Native Archive": <AiArchiveMockup />,
+  "The Assistance Fund, Endowed": <LedgerMockup />,
 };
 
 export default function RoadmapPage() {
@@ -64,40 +72,35 @@ export default function RoadmapPage() {
         description="This site is a beginning, not a finished monument. Here's what's already live, what's committed, and what's still just a direction — said plainly, so nothing here reads as a promise it isn't."
       />
 
-      {/* Watch it move — a portable capture of the two flagship concepts below,
-          for a deck or a meeting where the live site isn't in front of you. */}
-      <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-20">
-        <Container className="max-w-3xl text-center">
-          <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-              № 09.1 — Watch It Move
-            </p>
-            <h2 className="mt-4 font-display text-3xl text-[var(--frat-cream)] md:text-4xl">
-              The Companion App and AI Archive, in Motion
-            </h2>
-            <p className="mt-3 leading-relaxed text-[var(--frat-cream)]/70">
-              A 24-second capture of the two concepts below, running exactly as they do on this page.
-              Concepts only — nothing here is built yet.
-            </p>
-          </Reveal>
-          <Reveal delay={0.1} className="mt-10">
-            <video
-              className="w-full border border-[var(--hairline)]"
-              src="/quantum-leap/demo-mockup-reel.mp4"
-              poster="/quantum-leap/demo-mockup-reel-poster.jpg"
-              controls
-              muted
-              playsInline
-              preload="metadata"
-            />
-            <a
-              href="/quantum-leap/demo-mockup-reel.mp4"
-              download
-              className="mt-4 inline-block font-mono text-[10px] tracking-[0.25em] text-[var(--frat-gold-light)] uppercase underline underline-offset-4"
-            >
-              Download for your deck &darr;
-            </a>
-          </Reveal>
+      {/* The index — three phases, jump links, counts. A reader lands knowing
+          the shape of the whole before scrolling any of it. */}
+      <section className="border-b border-[var(--hairline)] bg-[var(--ink)]">
+        <Container className="grid md:grid-cols-3">
+          {PHASES.map((phase, i) => {
+            const count = roadmap.filter((r) => r.phase === phase.key).length;
+            return (
+              <a
+                key={phase.key}
+                href={`#${phase.key}`}
+                className={cn(
+                  "group flex items-baseline justify-between gap-6 px-6 py-7 transition-colors hover:bg-[var(--frat-gold)]/5 md:px-8",
+                  i > 0 && "border-t border-[var(--hairline)] md:border-t-0 md:border-l"
+                )}
+              >
+                <span>
+                  <span className="block font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)] uppercase">
+                    № {phase.number} — {phase.eyebrow}
+                  </span>
+                  <span className="mt-2 block font-display text-2xl text-[var(--frat-cream)] transition-colors group-hover:text-[var(--frat-gold-light)]">
+                    {phase.title}
+                  </span>
+                </span>
+                <span className="font-display text-4xl text-[var(--frat-gold-light)]/70">
+                  {String(count).padStart(2, "0")}
+                </span>
+              </a>
+            );
+          })}
         </Container>
       </section>
 
@@ -107,45 +110,81 @@ export default function RoadmapPage() {
         return (
           <section
             key={phase.key}
+            id={phase.key}
             className={cn(
-              "border-t border-[var(--hairline)] py-20",
-              phaseIndex % 2 === 1 ? "bg-[var(--ink)]" : ""
+              "scroll-mt-24 border-t border-[var(--hairline)] py-24",
+              phaseIndex % 2 === 1 ? "bg-[var(--ink)]" : "blueprint"
             )}
           >
             <Container>
               <Reveal>
                 <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-                  {phase.eyebrow}
+                  № {phase.number} — {phase.eyebrow}
                 </p>
-                <h2 className="mt-4 font-display text-3xl text-[var(--frat-cream)] md:text-4xl">
+                <h2 className="mt-4 font-display text-3xl text-[var(--frat-cream)] md:text-5xl">
                   {phase.title}
                 </h2>
-                <p className="mt-3 max-w-xl text-sm leading-relaxed text-[var(--frat-cream)]/60">
+                <p className="mt-4 max-w-xl leading-relaxed text-[var(--frat-cream)]/60">
                   {phase.note}
                 </p>
               </Reveal>
 
-              <div className="mt-12 grid gap-8 md:grid-cols-2">
-                {items.map((item, i) => (
-                  <Reveal key={item.title} delay={(i % 2) * 0.08} className="h-full">
-                    <div className="flex h-full flex-col border border-[var(--hairline)] bg-[var(--canvas)]">
-                      {VISUALS[item.title] ?? null}
-                      <div className="flex flex-1 flex-col gap-3 p-8">
-                        <div className="flex items-center gap-3">
-                          {phase.key === "now" ? (
-                            <CheckCircle2 className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
-                          ) : phase.key === "future" ? (
-                            <Sparkles className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
-                          ) : (
-                            <ArrowRight className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
-                          )}
-                          <h3 className="font-display text-xl text-[var(--frat-cream)]">{item.title}</h3>
+              {/* Editorial rows, not a card grid: the visual gets half the
+                  width and enough height to be looked at, the text sits
+                  beside it, and sides alternate so the eye travels. */}
+              <div className="mt-16 space-y-20 md:space-y-24">
+                {items.map((item, i) => {
+                  const flip = i % 2 === 1;
+                  return (
+                    <Reveal key={item.title} delay={0.05}>
+                      <article className="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+                        <div className={cn("h-full", flip && "md:order-2")}>{VISUALS[item.title] ?? null}</div>
+                        <div className={cn(flip && "md:order-1")}>
+                          <p className="font-mono text-[10px] tracking-[0.3em] text-[var(--frat-gold)] uppercase">
+                            Entry {phase.number}.{i + 1}
+                          </p>
+                          <div className="mt-4 flex items-center gap-3">
+                            {phase.key === "now" ? (
+                              <CheckCircle2 className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
+                            ) : phase.key === "future" ? (
+                              <Sparkles className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
+                            ) : (
+                              <ArrowRight className="h-5 w-5 shrink-0 text-[var(--frat-gold-light)]" strokeWidth={1.5} />
+                            )}
+                            <h3 className="font-display text-2xl leading-tight text-[var(--frat-cream)] md:text-3xl">
+                              {item.title}
+                            </h3>
+                          </div>
+                          <p className="mt-5 max-w-lg leading-relaxed text-[var(--frat-cream)]/70">
+                            {item.body}
+                          </p>
+                          {item.title === "The Member Portal" ? (
+                            <Link
+                              href="/portal"
+                              className={cn(buttonVariants({ variant: "outline", size: "sm" }), "mt-7")}
+                            >
+                              Enter the Portal
+                            </Link>
+                          ) : item.title === "Dues, Recorded Honestly" ? (
+                            <Link
+                              href="/portal/dues"
+                              className={cn(buttonVariants({ variant: "outline", size: "sm" }), "mt-7")}
+                            >
+                              Record your dues
+                            </Link>
+                          ) : item.title === "The Assistance Fund, Endowed" ? (
+                            <Link
+                              href="/anniversary"
+                              className={cn(buttonVariants({ variant: "outline", size: "sm" }), "mt-7")}
+                            >
+                              Read about the fund
+                            </Link>
+                          ) : null}
                         </div>
-                        <p className="text-sm leading-relaxed text-[var(--frat-cream)]/70">{item.body}</p>
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
+                      </article>
+                    </Reveal>
+                  );
+                })}
               </div>
             </Container>
           </section>
