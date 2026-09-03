@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Container } from "@/components/site/container";
 import { cn } from "@/lib/utils";
-import { Reveal } from "@/components/motion/reveal";
+
+/* CSS entrance, same reasoning as page-hero.tsx: text over a hero must not
+   wait for hydration. */
+const delay = (seconds: number) => ({ "--d": `${seconds}s` }) as React.CSSProperties;
 
 /**
  * Full-bleed video hero. The video is ambient — muted, looping, decorative —
@@ -111,22 +114,19 @@ export function CinematicHero({
       />
 
       <Container className="relative w-full pb-20 pt-44">
-        <Reveal>
-          <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold-light)] uppercase">
-            {eyebrow}
-          </p>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading className="mt-6 max-w-3xl font-display text-[clamp(2.8rem,7vw,5.5rem)] font-semibold leading-[1.02] tracking-tight text-[var(--frat-cream)]">
-            {title}
-          </Heading>
-        </Reveal>
+        <p className="hero-reveal font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold-light)] uppercase" style={delay(0)}>
+          {eyebrow}
+        </p>
+        <Heading
+          className="hero-reveal-engrave mt-6 max-w-3xl font-display text-[clamp(2.8rem,7vw,5.5rem)] font-semibold leading-[1.02] tracking-tight text-[var(--frat-cream)]"
+          style={delay(0.1)}
+        >
+          {title}
+        </Heading>
         {description ? (
-          <Reveal delay={0.2}>
-            <p className="mt-6 max-w-xl leading-relaxed text-[var(--frat-cream)]/75">
-              {description}
-            </p>
-          </Reveal>
+          <p className="hero-reveal mt-6 max-w-xl leading-relaxed text-[var(--frat-cream)]/75" style={delay(0.2)}>
+            {description}
+          </p>
         ) : null}
       </Container>
     </section>

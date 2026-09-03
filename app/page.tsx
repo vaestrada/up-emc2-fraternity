@@ -11,6 +11,7 @@ import { ScrollCinematic } from "@/components/site/scroll-cinematic";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FOUNDING_YEAR, site, projects, prominentBrods, bulletin } from "@/lib/content";
+import { withoutDemo } from "@/lib/demo";
 
 // The root layout omits og/twitter title+description so every page self-describes;
 // give the homepage card its own timeless blurb (title falls back to the default).
@@ -37,8 +38,12 @@ const CREDO_LINES = [
   "Courage and Justice.",
 ];
 
+/* Stagger for the CSS hero entrance (see .hero-reveal in globals.css). */
+const delay = (seconds: number) => ({ "--d": `${seconds}s` }) as React.CSSProperties;
+
 export default function Home() {
   const YEARS = new Date().getFullYear() - FOUNDING_YEAR;
+  const brods = withoutDemo(prominentBrods);
   return (
     <>
       {/* ── Hero — the engraved monument ─────────────────────── */}
@@ -81,7 +86,7 @@ export default function Home() {
             alt=""
             fill
             priority
-            className="duotone animate-kenburns object-cover opacity-25"
+            className="duotone animate-kenburns object-cover opacity-35"
           />
         </div>
 
@@ -91,14 +96,16 @@ export default function Home() {
         </div>
 
         <Container className="relative z-10 flex flex-col items-center pt-[clamp(5rem,13vh,8rem)] pb-[clamp(7rem,20vh,12rem)] text-center">
-          <Reveal delay={0.1}>
+          {/* CSS entrance, not <Reveal>: the hero is the LCP and must not wait
+              for hydration. Everything below the fold still uses Reveal. */}
+          <div className="hero-reveal" style={delay(0.1)}>
             <p className="font-mono text-[11px] tracking-[0.45em] text-[var(--frat-gold-light)] uppercase">
               Est. {FOUNDING_YEAR} · U.P. College of Engineering
             </p>
-          </Reveal>
+          </div>
 
           {/* The wordmark rendered as live text in the lockup's Trajan-style capitals (Cinzel). */}
-          <Reveal delay={0.25} effect="engrave">
+          <div className="hero-reveal-engrave" style={delay(0.25)}>
             <h1 className="mt-[clamp(1.5rem,4vh,3rem)] inline-block font-display leading-none text-[var(--frat-cream)]">
               <span className="block whitespace-nowrap text-[clamp(2.1rem,min(6.6vw,9vh),5.2rem)] font-semibold">
                 EMC&sup2; FRATERNITY
@@ -111,16 +118,16 @@ export default function Home() {
                 UNIVERSITY OF THE PHILIPPINES
               </span>
             </h1>
-          </Reveal>
+          </div>
 
           {/* engraved divider */}
-          <Reveal delay={0.32} className="mt-[clamp(1.25rem,3vh,2.25rem)] flex items-center gap-4">
+          <div className="hero-reveal mt-[clamp(1.25rem,3vh,2.25rem)] flex items-center gap-4" style={delay(0.32)}>
             <span className="h-px w-16 bg-gradient-to-r from-transparent to-[var(--frat-gold)]/60 md:w-24" />
             <span className="text-[var(--frat-gold)]">✦</span>
             <span className="h-px w-16 bg-gradient-to-l from-transparent to-[var(--frat-gold)]/60 md:w-24" />
-          </Reveal>
+          </div>
 
-          <Reveal delay={0.4} className="mt-[clamp(1.25rem,3vh,2rem)] max-w-xl">
+          <div className="hero-reveal mt-[clamp(1.25rem,3vh,2rem)] max-w-xl" style={delay(0.4)}>
             <p className="font-serif text-2xl italic text-[var(--frat-cream)]/90 md:text-3xl">
               {site.motto}
             </p>
@@ -128,16 +135,16 @@ export default function Home() {
               An exclusive brotherhood of Engineering and the Physical Sciences.
               Every generation a quantum leap.
             </p>
-          </Reveal>
+          </div>
 
-          <Reveal delay={0.52} className="mt-[clamp(1.5rem,3.5vh,2.75rem)] flex flex-wrap items-center justify-center gap-4">
+          <div className="hero-reveal mt-[clamp(1.5rem,3.5vh,2.75rem)] flex flex-wrap items-center justify-center gap-4" style={delay(0.52)}>
             <Link href="/history" className={cn(buttonVariants({ variant: "accent", size: "lg" }))}>
               Enter the Archive <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/donate" className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
               Give Back
             </Link>
-          </Reveal>
+          </div>
         </Container>
 
         {/* schematic corner annotations */}
@@ -362,7 +369,7 @@ export default function Home() {
           </div>
 
           <div className="mt-14 grid gap-10 md:grid-cols-2">
-            {prominentBrods.map((brod, i) => (
+            {brods.map((brod, i) => (
               <Reveal key={brod.slug} delay={i * 0.12}>
                 <BrodCard brod={brod} index={i} />
               </Reveal>
@@ -371,13 +378,16 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ── Bulletin (dated notices) — rendered only when there are entries ── */}
+      {/* ── Bulletin (dated notices) — rendered only when there are entries.
+          Unnumbered on purpose: the numbered eyebrows are index entries into
+          the archive (each matches its destination page), and notices are
+          transient, not entries. ── */}
       {bulletin.length > 0 ? (
-        <section className="border-y border-[var(--hairline)] bg-[var(--ink)] py-24">
+        <section id="bulletin" className="border-b border-[var(--hairline)] py-24">
           <Container>
             <Reveal>
               <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-                № 04½ — The Bulletin
+                Notices — The Bulletin
               </p>
             </Reveal>
             <div className="mt-12 border-t border-[var(--hairline)]">
@@ -418,38 +428,8 @@ export default function Home() {
         </section>
       ) : null}
 
-      {/* ── What's Next teaser ──────────────────────────────────
-          Sits ahead of the closing Patronage CTA on purpose, so the page's
-          last high-emotion moment stays the give-back ask — this is the
-          quieter "here's where we're headed, and we need hands" note. */}
-      <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-20">
-        <Container className="flex flex-col items-center gap-5 text-center">
-          <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
-              № 06 — The Next Quantum Leap
-            </p>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <h2 className="max-w-2xl font-display text-2xl leading-tight text-[var(--frat-cream)] md:text-3xl">
-              A Member Portal, live today. A companion app and an AI-native archive, on the horizon.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.18}>
-            <p className="max-w-xl text-sm leading-relaxed text-[var(--frat-cream)]/60">
-              This site is a beginning. See what&rsquo;s shipped, what&rsquo;s committed, and what&rsquo;s
-              still just a direction — and how to help build it.
-            </p>
-          </Reveal>
-          <Reveal delay={0.26}>
-            <Link href="/roadmap" className={cn(buttonVariants({ variant: "outline", size: "default" }), "mt-2")}>
-              See What&rsquo;s Next <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Reveal>
-        </Container>
-      </section>
-
       {/* ── Patronage (donate) ───────────────────────────────── */}
-      <section className="blueprint relative overflow-hidden py-32 text-center md:py-44">
+      <section className="blueprint relative overflow-hidden border-b border-[var(--hairline)] py-32 text-center md:py-44">
         <Container className="relative flex flex-col items-center">
           <Reveal>
             <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
@@ -473,6 +453,38 @@ export default function Home() {
               className={cn(buttonVariants({ variant: "accent", size: "lg" }), "mt-10")}
             >
               Give Back <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* ── What's Next — the quiet closing note ────────────────
+          Numbered 09 to match /roadmap's own eyebrow: the homepage numbers
+          are index entries, so 05 (Patronage) now precedes 09 as it should.
+          Closing on "where this is headed, and we need hands" sends the
+          reader off with the vision rather than the ask — the ask has just
+          been made, at full size, above. */}
+      <section className="bg-[var(--ink)] py-20">
+        <Container className="flex flex-col items-center gap-5 text-center">
+          <Reveal>
+            <p className="font-mono text-[11px] tracking-[0.4em] text-[var(--frat-gold)] uppercase">
+              № 09 — The Next Quantum Leap
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="max-w-2xl font-display text-2xl leading-tight text-[var(--frat-cream)] md:text-3xl">
+              A Member Portal, live today. A companion app and an AI-native archive, on the horizon.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.18}>
+            <p className="max-w-xl text-sm leading-relaxed text-[var(--frat-cream)]/60">
+              This site is a beginning. See what&rsquo;s shipped, what&rsquo;s committed, and what&rsquo;s
+              still just a direction — and how to help build it.
+            </p>
+          </Reveal>
+          <Reveal delay={0.26}>
+            <Link href="/roadmap" className={cn(buttonVariants({ variant: "outline", size: "default" }), "mt-2")}>
+              See What&rsquo;s Next <ArrowRight className="h-4 w-4" />
             </Link>
           </Reveal>
         </Container>

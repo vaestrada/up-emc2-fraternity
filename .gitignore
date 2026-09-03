@@ -54,3 +54,9 @@ next-env.d.ts
 # .agents/, which would break on any other machine.
 /.agents/
 /.claude/skills/
+
+# Project skills that ARE committed (the rule above ignores the symlinked ones
+# installed by `npx skills add`; these are written by hand for this repo).
+!/.claude/skills/
+/.claude/skills/*
+!/.claude/skills/emc2-publish/

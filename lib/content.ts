@@ -57,13 +57,30 @@ export type Founder = { name: string; note?: string };
 export const founders: Founder[] = [];
 
 // Dated notices (anniversary dinners, elections, calls). Rendered only when
-// non-empty — an empty bulletin is worse than none. date is ISO (YYYY-MM-DD).
+// non-empty — an empty bulletin is worse than none. `date` is the label the
+// reader sees ("February 2027", "12 Oct 2026"); keep it as precise as the
+// committee has actually decided, no more.
 export type Bulletin = { date: string; title: string; body?: string; href?: string };
-export const bulletin: Bulletin[] = [];
+export const bulletin: Bulletin[] = [
+  {
+    date: "February 2027",
+    title: "The 58th Anniversary — save the date",
+    body:
+      "Gimenez Gallery, College of Fine Arts, U.P. Diliman. Put your name down now; the awards, sponsorships, souvenir programme, and tickets open later in the year, and everyone on the list hears first.",
+    href: "/anniversary",
+  },
+  {
+    date: "September 2026",
+    title: "The Member Portal opens, by invitation",
+    body:
+      "Keep your own record current and find brods who have opted into the directory. A board member verifies each brod against the roster before an invite goes out — ask the Alumni Association for yours.",
+    href: "/portal",
+  },
+];
 
 // "Why I give" — real donor/alumni quotes. Rendered only when non-empty; do
 // not invent quotes. quote is the words; by is the attribution (name · batch).
-export type DonorVoice = { quote: string; by: string };
+export type DonorVoice = { quote: string; by: string; synthetic?: boolean };
 export const donorVoices: DonorVoice[] = [
   // --- SYNTHETIC DEMO CONTENT — remove before public launch -------------------
   // AI-drafted placeholder quotes for a board walkthrough (fictional attributions).
@@ -72,11 +89,13 @@ export const donorVoices: DonorVoice[] = [
     quote:
       "I give because Thinking Space was there for me at 2am before a board exam. It's someone else's turn now.",
     by: "Demo quote — “J. Ramirez” · Batch ’14",
+    synthetic: true,
   },
   {
     quote:
       "The brotherhood carried me through my first year in Diliman. This is just interest on that debt.",
     by: "Demo quote — “A. Fernandez” · Batch ’08",
+    synthetic: true,
   },
   // --- END SYNTHETIC DEMO CONTENT ----------------------------------------------
 ];

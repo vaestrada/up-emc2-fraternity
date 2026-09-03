@@ -40,7 +40,10 @@ Colors sampled from the official crest:
 - Gold `#C38F0E` (`--frat-gold`)
 - Cream `#FAF8F3` (background)
 
-Fonts: Playfair Display (display) + Geist (body).
+Fonts: Cinzel (display — the Trajan-style capitals of the lockup), Cormorant (serif italics for
+mottos and credo lines), Geist (body), Geist Mono (eyebrows, captions, annotations). The full
+visual system is in [DESIGN.md](./DESIGN.md); the vocabulary behind it is in
+[GLOSSARY.md](./GLOSSARY.md).
 
 ## Member Portal (Phase 2)
 
@@ -59,6 +62,13 @@ that 490-row roster (birthdates, home addresses, emergency contacts) never goes 
 an AI coding session and never becomes a bulk `INSERT`. A brod's Portal record only ever
 holds what they typed into their own profile after signing in with their own email.
 
+**Membership is invite-gated.** Since the roster is never imported, the portal can't
+self-verify membership, so a board member verifies each brod against the roster held
+offline and then grants access from `/admin` (adds the email to a hash-only allowlist and
+sends an invite). Only those invited members can sign in — `signInWithOtp` now sends
+`shouldCreateUser: false`, so a stranger's email yields no account. This closes the earlier
+hole where any email could self-create a member row and appear in the private directory.
+
 **One-time setup before this works in production:**
 
 1. In Vercel → Project Settings → Environment Variables, confirm
@@ -68,12 +78,49 @@ holds what they typed into their own profile after signing in with their own ema
    by `members` table Row Level Security, not by keeping this key secret).
 2. In Supabase Dashboard → Authentication → URL Configuration → Redirect URLs, add
    `<production domain>/auth/callback` — magic links redirect nowhere useful without it.
+3. Apply the gate migration, then provision the allowlist secret in the config table
+   (run in the Supabase SQL Editor — Supabase restricts `alter database set` on custom
+   `app.*` params, so it lives in a table instead):
+   `insert into public.portal_config (id, app_secret) values (1, '<strong random>') on conflict (id) do update set app_secret = excluded.app_secret, updated_at = now();`
+   — if unset, the hooks fail closed. Use the same value in any offline seeding tool.
+4. In Supabase Dashboard → Authentication → Providers, disable self-service sign-up so the
+   only way to create an account is a board-issued invite.
+5. In Supabase Dashboard → Authentication → Hooks, register as SQL: **Before User Created →
+   `public.before_user_created_hook`** and **Custom Access Token → `public.custom_access_token_hook`**.
+6. Grant a first cohort from `/admin` (adds the email hash + batch and sends the invite).
 
 Until both are done, `/portal` degrades gracefully to a "not configured yet, use Contact"
 message rather than a broken sign-in form — it will not error for visitors either way.
 
 Dues checkout is manual-reconciliation for the same reason `/donate`'s pledge form is:
 see `dues_payments` in `supabase/migrations/0003_member_portal.sql`.
+
+## The board's tools — `/admin`
+
+Password-gated (`ADMIN_PASSWORD`), board only. It shows the 58th Anniversary save-the-date
+list with headcount and interest tallies, the contributions queue (approve → `/history`),
+pledges (acknowledge → Roll of Patrons if consented), dues records (acknowledge after matching
+the reference), contact messages, and Portal access (grant + invite, revoke). Every list has a
+**Download CSV** link (`/admin/export?table=…`) — the one-click bridge into Google Sheets for
+the committees, who never need an account here. The exports contain names and emails, so they
+fall under [PRIVACY.md](./PRIVACY.md) rule 2.
+
+## Demo content switch
+
+`lib/content.ts` carries four AI-generated "prominent brods", two demo donor quotes, a demo
+gallery on `/history`, and a demo register video on `/brods`, all labelled in the UI. They are
+gated by `NEXT_PUBLIC_DEMO_CONTENT` (see `lib/demo.ts`): shown by default for walkthroughs,
+and **set it to `off` in Vercel for the public launch** so every synthetic item disappears and
+the pages fall back to their honest "entry pending" states.
+
+## Publishing content from Google Drive
+
+The brotherhood writes in Google Docs and logs each piece in the **EMC² Content Log** sheet.
+The `emc2-publish` skill in `.claude/skills/` turns an `Approved` row into a change here, with
+the consent and privacy gates applied. The whole operating model — roles, cadence, revenue
+lines, the transparency ledger, continuity — is in
+[OPERATING-PLAYBOOK.md](./OPERATING-PLAYBOOK.md); the board walkthrough is in
+[DEMO-SCRIPT.md](./DEMO-SCRIPT.md).
 
 ## Content still pending from the BOT
 
@@ -108,15 +155,24 @@ with the Supabase URL and secret key in `.env.local`:
 
 ```bash
 set -a && . ./.env.local && set +a
-for t in contributions pledges messages members dues_payments anniversary_rsvps; do
+for t in contributions pledges messages members dues_payments anniversary_rsvps member_allowlist portal_access_log portal_config; do
   auth="Authorization: Bearer $SUPABASE_SECRET_KEY"
   code=$(curl -s -o /dev/null -w '%{http_code}' -H "apikey: $SUPABASE_SECRET_KEY" -H "$auth" "$SUPABASE_URL/rest/v1/$t?select=id&limit=1")
   [ "$code" = 200 ] && echo "$t EXISTS" || echo "$t MISSING ($code)"
 done
 ```
 
-All six should read `EXISTS`. A `404` with `PGRST205` means the table genuinely is not
-there, not that permissions are wrong.
+All nine should read `EXISTS`. A `404` with `PGRST205` means the table genuinely is not
+there, not that permissions are wrong. Migrations `0005` and `0006` (the invite gate and its
+hardening) were applied on 2026-08-26 and 2026-09-03 respectively; `0006` is the one that
+revokes PUBLIC execute on the security-definer functions — without it an anonymous caller
+could add themselves to the allowlist through the REST RPC endpoint.
+
+The browser needs to reach Supabase directly for the Portal (magic-link sign-in, the profile
+save) and for contributed photos (signed Storage URLs). `next.config.ts` allow-lists the
+Supabase origin in the Content Security Policy from `NEXT_PUBLIC_emc2fraternity_SUPABASE_URL`;
+if that env is missing at build time the CSP falls back to same-origin and the Portal will
+fail silently in the browser console.
 
 Note also that this Supabase project is on the **free plan, which auto-pauses after
 ~7 days of inactivity**. A paused database fails Vercel's resource-provisioning step,

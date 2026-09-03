@@ -37,12 +37,28 @@ export function SignInForm() {
 
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        // Only a member who was already invited (board-issued via
+        // auth.admin.inviteUserByEmail, i.e. an auth.user already exists) may
+        // sign in. A stranger's email yields no user, so Supabase refuses —
+        // this is the primary deny control that closes the "any email can get
+        // in" exploit. Self-service sign-up is also OFF in the Auth dashboard.
+        shouldCreateUser: false,
+      },
     });
 
     if (error) {
       setStatus("error");
-      setErrorMessage(error.message);
+      // Supabase's own wording for an uninvited address is "Signups not
+      // allowed for otp" — accurate, and meaningless to a brod. Say what it
+      // means here; keep the raw message for anything unexpected.
+      const uninvited = /signups? not allowed/i.test(error.message);
+      setErrorMessage(
+        uninvited
+          ? "That address isn't on the Alumni Association's invite list yet. If you're a brod, ask the Association through Contact — give your name and batch — and an invite will follow."
+          : `${error.message} — if this keeps happening, reach the Alumni Association through Contact.`
+      );
       return;
     }
     setStatus("sent");

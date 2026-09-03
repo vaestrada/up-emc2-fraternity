@@ -6,6 +6,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { PledgeForm } from "@/components/site/pledge-form";
 import { GivingGate } from "@/components/site/giving-gate";
 import { association, site, donorVoices } from "@/lib/content";
+import { withoutDemo } from "@/lib/demo";
 import { getPatrons } from "@/lib/patrons";
 
 export const metadata: Metadata = {
@@ -34,6 +35,7 @@ const IMPACT = [
 
 export default async function DonatePage() {
   const patrons = await getPatrons();
+  const voices = withoutDemo(donorVoices);
   return (
     <>
       <PageHero
@@ -194,9 +196,9 @@ export default async function DonatePage() {
             ))}
           </div>
 
-          {donorVoices.length > 0 ? (
+          {voices.length > 0 ? (
             <div className="mt-16 grid gap-8 md:grid-cols-2">
-              {donorVoices.map((v, i) => (
+              {voices.map((v, i) => (
                 <Reveal key={i} delay={(i % 2) * 0.08}>
                   <figure className="border-l border-[var(--frat-gold)]/40 pl-6">
                     <blockquote className="font-serif text-xl italic leading-relaxed text-[var(--frat-cream)]/85">

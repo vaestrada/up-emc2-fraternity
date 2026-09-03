@@ -40,8 +40,11 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /* Skip static assets and images; the portal is the only thing that
-       needs the auth cookie refreshed on navigation. */
-    "/((?!_next/static|_next/image|favicon.ico|icon.png|apple-icon.png|photos|logo).*)",
+    /* Only the member portal and the auth callback need the Supabase session
+       cookie refreshed on navigation. Bypass everything else — the public
+       pages never read the signed-in user, so running `getUser()` on every
+       one of them was an extra auth round-trip per page view. */
+    "/portal/:path*",
+    "/auth/:path*",
   ],
 };

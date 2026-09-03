@@ -7,7 +7,14 @@ import { getServerSupabase } from "@/lib/supabase/rsc";
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/portal";
+  // Only honour a same-origin relative path. `origin` is prepended below, so an
+  // absolute URL or a protocol-relative "//evil.com" would otherwise become a
+  // malformed-but-host-controlled redirect target; a bare "/portal" is all the
+  // client ever sends anyway.
+  const requested = searchParams.get("next") ?? "/portal";
+  const next = requested.startsWith("/") && !requested.startsWith("//") && !requested.startsWith("/\\")
+    ? requested
+    : "/portal";
 
   if (code) {
     const supabase = await getServerSupabase();

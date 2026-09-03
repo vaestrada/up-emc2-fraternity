@@ -3,6 +3,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
 import { site, milestones, founders, demoGalleryPhotos } from "@/lib/content";
+import { DEMO_CONTENT } from "@/lib/demo";
 import { getApprovedContributions } from "@/lib/contributions";
 import { PhotoGallery } from "@/components/site/photo-gallery";
 import { ScrollCinematic } from "@/components/site/scroll-cinematic";
@@ -134,7 +135,9 @@ export default async function HistoryPage() {
         heightVh={200}
       />
 
-      {/* Brotherhood Life — DEMO PREVIEW, AI-generated, remove before public launch */}
+      {/* Brotherhood Life — DEMO PREVIEW, AI-generated. Gated by lib/demo.ts:
+          NEXT_PUBLIC_DEMO_CONTENT=off removes it for the public launch. */}
+      {DEMO_CONTENT ? (
       <section className="blueprint border-t border-[var(--hairline)] py-24">
         <Container>
           <Reveal>
@@ -162,6 +165,7 @@ export default async function HistoryPage() {
           </Reveal>
         </Container>
       </section>
+      ) : null}
 
       {/* For the Studentry — a neutral path for prospective members */}
       <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-24">

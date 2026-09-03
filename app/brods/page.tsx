@@ -5,6 +5,7 @@ import { BrodCard } from "@/components/site/brod-card";
 import { Reveal } from "@/components/motion/reveal";
 import { ScrollCinematic } from "@/components/site/scroll-cinematic";
 import { prominentBrods, officers, inMemoriam, FOUNDING_YEAR } from "@/lib/content";
+import { DEMO_CONTENT, withoutDemo } from "@/lib/demo";
 
 export const metadata: Metadata = {
   title: "Prominent Brods",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default function BrodsPage() {
+  const brods = withoutDemo(prominentBrods);
   return (
     <>
       <PageHero
@@ -23,7 +25,7 @@ export default function BrodsPage() {
       <section className="py-24">
         <Container>
           <div className="grid gap-10 md:grid-cols-2">
-            {prominentBrods.map((brod, i) => (
+            {brods.map((brod, i) => (
               <Reveal key={brod.slug} delay={i * 0.1}>
                 <BrodCard brod={brod} index={i} />
               </Reveal>
@@ -46,15 +48,17 @@ export default function BrodsPage() {
       {/* Preview — the four synthetic citations above, in motion. AI-generated
           placeholders (see lib/content.ts), not real brods; framed here the
           same way the /history "Brotherhood Life" preview is — clearly a
-          preview, not documentation. */}
-      <ScrollCinematic
-        src="/quantum-leap/demo-brods-scroll.mp4"
-        poster="/quantum-leap/demo-brods-poster.jpg"
-        eyebrow="Preview — A Fuller Register"
-        title="A Glimpse of What the Register Could Hold"
-        description="Four AI-generated placeholder citations, not real brods — a preview of what a fuller register could look like once more of the brotherhood's own citations come in."
-        heightVh={200}
-      />
+          preview, not documentation. Gated with the rest of the demo content. */}
+      {DEMO_CONTENT ? (
+        <ScrollCinematic
+          src="/quantum-leap/demo-brods-scroll.mp4"
+          poster="/quantum-leap/demo-brods-poster.jpg"
+          eyebrow="Preview — A Fuller Register"
+          title="A Glimpse of What the Register Could Hold"
+          description="Four AI-generated placeholder citations, not real brods — a preview of what a fuller register could look like once more of the brotherhood's own citations come in."
+          heightVh={200}
+        />
+      ) : null}
 
       {/* The Register — non-PII aggregate */}
       <section className="border-t border-[var(--hairline)] bg-[var(--ink)] py-24">

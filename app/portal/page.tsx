@@ -15,7 +15,12 @@ export const metadata: Metadata = {
   description: "Sign in to update your record and browse the brotherhood's private directory.",
 };
 
-export default async function PortalPage() {
+export default async function PortalPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const { error } = await searchParams;
   const supabase = SUPABASE_AUTH_CONFIGURED ? await getServerSupabase() : null;
   const {
     data: { user },
@@ -35,12 +40,26 @@ export default async function PortalPage() {
         description={
           user
             ? "Keep your record current so the brotherhood — and the Association — can reach the real you."
-            : "A private space for brods to keep their record current and find one another. Sign in with the email the Association has on file, or any email you'd like to use going forward."
+            : "A private space for verified brods to keep their record current and find one another. Sign in with the email the Alumni Association invited you at — the Portal is by invitation, so a stranger's address gets no link."
         }
       />
 
       <section className="py-24">
         <Container className="max-w-2xl">
+          {/* The auth callback bounces here with ?error=auth when a magic link
+              is expired, already used, or opened on another device. Without
+              this the member lands on a plain sign-in form and assumes the
+              site is broken. */}
+          {!user && error === "auth" ? (
+            <div
+              role="alert"
+              className="mb-8 border border-dashed border-[var(--frat-gold)]/40 bg-[var(--frat-gold)]/5 p-5 text-sm leading-relaxed text-[var(--frat-cream)]/80"
+            >
+              That sign-in link didn&rsquo;t work — it may have expired, been used already, or been
+              opened on a different device from the one that requested it. Request a fresh link
+              below and open it on this device.
+            </div>
+          ) : null}
           {user ? (
             <div className="space-y-8">
               <Reveal>
@@ -94,6 +113,14 @@ export default async function PortalPage() {
             <LayoutDashboard className="h-6 w-6 text-[var(--frat-gold-light)]" strokeWidth={1.25} />
             <p className="font-serif text-lg italic text-[var(--frat-cream)]/80">
               &ldquo;A record kept is a brotherhood remembered.&rdquo;
+            </p>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-[var(--frat-cream)]/60">
+              Not invited yet? A board member verifies each brod against the roster before
+              sending an invite.{" "}
+              <Link href="/contact" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+                Ask the Alumni Association
+              </Link>{" "}
+              with your name and batch.
             </p>
           </Container>
         </section>

@@ -50,7 +50,7 @@ export default async function DirectoryPage() {
       <PageHero
         eyebrow="№ 07 — The Directory"
         title="The Brotherhood, Found"
-        description={`${rows.length} brod${rows.length === 1 ? "" : "s"} listed — everyone here chose to be found. Each member controls their own visibility from ${" "}their Portal record.`}
+        description={`${rows.length} brod${rows.length === 1 ? "" : "s"} listed — everyone here chose to be found. Each member controls their own visibility from their Portal record.`}
       />
 
       <section className="py-24">

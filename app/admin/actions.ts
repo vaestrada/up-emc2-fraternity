@@ -51,6 +51,7 @@ export async function logout(): Promise<void> {
 const ALLOWED: Record<string, string[]> = {
   contributions: ["pending", "approved", "rejected"],
   pledges: ["pending", "acknowledged"],
+  dues_payments: ["pending", "acknowledged"],
 };
 
 export async function moderate(formData: FormData): Promise<void> {
@@ -67,4 +68,64 @@ export async function moderate(formData: FormData): Promise<void> {
   // Approving/rejecting changes what the public pages show.
   if (table === "contributions") revalidatePath("/history");
   if (table === "pledges") revalidatePath("/donate");
+}
+
+/* ── Member Portal access control ────────────────────────────────
+   The board verifies a brod against the roster held OFFLINE (the 490-row
+   roster with PII is never imported — PRIVACY.md), then grants portal access.
+   grant_member adds the brod's email_hash (HMAC, zero raw PII) to the
+   member_allowlist via a security-definer RPC, and invites the account so
+   signInWithOtp({ shouldCreateUser:false }) accepts them. */
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export async function grantMember(formData: FormData): Promise<void> {
+  if (!(await isAuthed())) redirect("/admin");
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const batch = String(formData.get("batch") ?? "").trim().slice(0, 40);
+  if (!EMAIL_RE.test(email)) return;
+
+  const supabase = getAdminSupabase();
+  if (!supabase) return;
+
+  // 1) Add to the hash-only allowlist (hashed inside Postgres; the raw email
+  //    is never stored and the Node side never touches the secret).
+  const { error: rpcError } = await supabase.rpc("grant_member", {
+    p_email: email,
+    p_batch: batch || null,
+  });
+  if (rpcError) {
+    console.error("grant_member RPC failed:", rpcError.message);
+    return;
+  }
+
+  // 2) Invite the account so the magic link will accept them (user now exists).
+  const { error: inviteError } = await supabase.auth.admin.inviteUserByEmail(email, {
+    data: { batch: batch || null },
+  });
+  if (inviteError) console.error("inviteUserByEmail failed:", inviteError.message);
+
+  revalidatePath("/admin");
+}
+
+export async function revokeMember(formData: FormData): Promise<void> {
+  if (!(await isAuthed())) redirect("/admin");
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  if (!EMAIL_RE.test(email)) return;
+
+  const supabase = getAdminSupabase();
+  if (!supabase) return;
+  await supabase.rpc("revoke_member", { p_email: email });
+  revalidatePath("/admin");
+}
+
+export async function revokeMemberByHash(formData: FormData): Promise<void> {
+  if (!(await isAuthed())) redirect("/admin");
+  const hash = String(formData.get("hash") ?? "").trim();
+  if (!hash) return;
+
+  const supabase = getAdminSupabase();
+  if (!supabase) return;
+  await supabase.rpc("revoke_member_hash", { p_hash: hash });
+  revalidatePath("/admin");
 }

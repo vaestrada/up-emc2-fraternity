@@ -37,6 +37,8 @@ export function Footer() {
             <li><Link href="/history" className="transition-colors hover:text-[var(--frat-gold-light)]">History</Link></li>
             <li><Link href="/projects" className="transition-colors hover:text-[var(--frat-gold-light)]">Projects &amp; Campaigns</Link></li>
             <li><Link href="/brods" className="transition-colors hover:text-[var(--frat-gold-light)]">Prominent Brods</Link></li>
+            <li><Link href="/anniversary" className="transition-colors hover:text-[var(--frat-gold-light)]">The 58th Anniversary</Link></li>
+            <li><Link href="/quantum-leap" className="transition-colors hover:text-[var(--frat-gold-light)]">Quantum Leap Sports Series</Link></li>
             <li><Link href="/portal" className="transition-colors hover:text-[var(--frat-gold-light)]">The Portal</Link></li>
             <li><Link href="/contribute" className="transition-colors hover:text-[var(--frat-gold-light)]">Add to the Record</Link></li>
             <li><Link href="/roadmap" className="transition-colors hover:text-[var(--frat-gold-light)]">What&rsquo;s Next</Link></li>

@@ -25,8 +25,14 @@ personal information controller for this data.
    without BOT approval.
 3. The public website must never render personal contact details. The future member directory
    will be login-gated with per-member visibility consent (private by default).
-4. When the Supabase member portal is built, this CSV gets imported into a table protected by
-   Row Level Security — after that, delete local copies.
+4. The Supabase member portal is invite-gated for verified members. **The roster is never
+   bulk-imported into the portal database.** Only an HMAC hash of a member's verified email,
+   a masked label, and their batch ever enter the database; those are written by the board
+   (in `/admin`) after verifying the member against the roster held offline. `before-user-created`
+   and `custom-access-token` auth hooks enforce that only allow-listed, verified members can
+   sign in or read the brods-only directory, and RLS keeps everything private by default.
+   Delete local roster copies after each offline token/allowlist run, so raw member data never
+   persists in a Supabase table or beyond the brief offline step.
 5. Deceased members are marked in the data — handle memorial listings with family consent.
 
 ## Source

@@ -152,6 +152,42 @@ body::after {
   animation: light-sweep 3.2s cubic-bezier(0.45, 0, 0.25, 1) 1.7s 1 both;
 }
 
+/* Hero entrance, in CSS rather than framer-motion on purpose. The framer
+   `Reveal` waits for the JS bundle to load, hydrate, and an IntersectionObserver
+   to fire — on a slow connection the wordmark (the page's Largest Contentful
+   Paint) sat invisible for a second or more and the 4.5%-opacity seal was
+   reported as the LCP instead. A CSS animation starts on first paint, needs no
+   JavaScript, and still honours prefers-reduced-motion via the global rule at
+   the bottom of this file. Stagger with `--d`. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hero-engrave {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.hero-reveal {
+  animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+.hero-reveal-engrave {
+  animation: hero-engrave 1.3s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+
 /* The hero rule draws itself outward from the center */
 @keyframes rule-draw {
   from {

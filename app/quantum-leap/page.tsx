@@ -11,11 +11,11 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Quantum Leap Sports Series",
   description:
-    "Pickleball opens the fraternity's alumni sports series on 22 August 2026.",
+    "Pickleball opened the fraternity's alumni sports series on 22 August 2026. The next edition follows once it is certain.",
   openGraph: {
     title: "Quantum Leap Sports Series 2026 · Pickleball",
     description:
-      "Pickleball opens the fraternity's alumni sports series on 22 August 2026. Venue to be announced.",
+      "Pickleball opened the fraternity's alumni sports series on 22 August 2026. The next edition follows once it is certain.",
     images: [
       {
         url: "/quantum-leap/pickleball-2026-og.png",
@@ -31,17 +31,22 @@ export const metadata: Metadata = {
   },
 };
 
-// Only facts that have cleared a decision gate appear here. Venue, pricing,
-// packages, and the beneficiary entity are deliberately absent: see
+// Only facts that have cleared a decision gate appear here. Pricing, packages,
+// and the beneficiary entity are deliberately absent: see
 // second-brain/04_projects/emc2-fraternity-board-and-pickleball-2026.md.
+//
+// 22 August 2026 has passed. Until the committee supplies the edition's
+// record (venue, turnout, photos — /contribute is the route), the page
+// speaks of the first edition in the past tense and of the series ahead in
+// the future, and never says "to be announced" about a day that has been.
 const FACTS = [
-  { k: "Date", v: "22 August 2026", note: "Saturday" },
-  { k: "Sport", v: "Pickleball", note: "Edition one" },
-  { k: "Venue", v: "To be announced", note: "Metro Manila" },
+  { k: "Date", v: "22 August 2026", note: "Saturday · Edition one" },
+  { k: "Sport", v: "Pickleball", note: "Clinic and social tournament" },
+  { k: "Next edition", v: "To be announced", note: "Sport, date, and venue once certain" },
 ];
 
 const SERIES = [
-  { n: "01", sport: "Pickleball", status: "2026" },
+  { n: "01", sport: "Pickleball", status: "August 2026" },
   { n: "02", sport: "To be announced", status: "Planned" },
   { n: "03", sport: "To be announced", status: "Planned" },
 ];
@@ -52,7 +57,7 @@ export default function QuantumLeapPage() {
       <PageHero
         eyebrow="№ 07 — Quantum Leap Sports Series 2026"
         title="Pickleball"
-        description="The first edition of the fraternity's alumni sports series. One sport at a time, played well."
+        description="The first edition of the fraternity's alumni sports series, held 22 August 2026. One sport at a time, played well."
       />
 
       {/* ── The plate ─────────────────────────────────────────────── */}
@@ -104,8 +109,13 @@ export default function QuantumLeapPage() {
               </Reveal>
               <Reveal delay={0.15}>
                 <p className="mt-4 max-w-md leading-relaxed text-[var(--frat-cream)]/65">
-                  Programme, venue, and registration follow once each is secured.
-                  Nothing is announced before it is certain.
+                  The next edition&rsquo;s sport, venue, and registration follow once each is
+                  secured. Nothing is announced before it is certain. Were you on the court
+                  on the 22nd?{" "}
+                  <Link href="/contribute" className="text-[var(--frat-gold-light)] underline underline-offset-4">
+                    Send the photos in
+                  </Link>{" "}
+                  and the first edition takes its place in the record.
                 </p>
               </Reveal>
 
@@ -161,8 +171,9 @@ export default function QuantumLeapPage() {
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-6 max-w-md leading-relaxed text-[var(--frat-cream)]/65">
-                  Nineteen seconds, shot for the feed. Share it with a brod who
-                  has not been back to a court in a while.
+                  Nineteen seconds, shot for the feed ahead of the first edition. Share it
+                  with a brod who has not been back to a court in a while — the series
+                  continues.
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
