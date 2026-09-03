@@ -49,9 +49,12 @@ Gold is never body text on paper (2.45:1 fails). It is the dash and the navbar's
   a rounded panel drops beneath it on phones.
 - **Pill buttons** (`button.tsx`): `default` brand fill, `gold`, `outline`, `white`,
   `outline-light` for dark panels. Radius 9999px, 48px tall, bold 15px.
-- **Hero** (`app/page.tsx`): the 55th photograph under a green multiply tint, the metal
-  seal, the name in Cinzel capitals, the tagline tracked, two pills, an angled bottom edge
-  (`.angled-bottom`, a `clip-path` polygon).
+- **Scroll hero** (`scroll-hero.tsx`): the reference's opening, exactly. The page starts on
+  the photograph (a video later, same component) with only a scroll cue. Across the first
+  screen of scrolling a green panel grows down from the top, its chevron edge leading (a
+  `clip-path` polygon written from scroll progress), and the seal in metal, the name,
+  "University of the Philippines", "Take the quantum leap", and the Join and Give Back pills
+  rise inside it. A 200svh section with a sticky 100svh stage; no scroll hijacking.
 - **Page hero** (`page-hero.tsx`): tint ground, dash label, display title, lead, an optional
   rounded photograph.
 - **Card slider** (`card-slider.tsx`): native scroll-snap, round arrow buttons, rounded

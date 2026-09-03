@@ -22,11 +22,13 @@ playbook is the pitch. Everything below is rehearsable in twenty minutes the nig
 
 ## Minute by minute
 
-**0:00 — Land on the homepage and say nothing for five seconds.** The seal comes forward in
-metal over the 55th photograph, turns a few degrees, and follows the cursor. Move the mouse
-across it once. Then: *"That is our seal, cast from the 2023 vector, over the brotherhood at
-Quezon Hall in February 2024. Everything you'll see is either from the Association's own record
-or clearly marked as a placeholder."*
+**0:00 — Land on the homepage and say nothing for five seconds.** The page opens on the
+brotherhood at Quezon Hall, nothing else but "Scroll for the record". Scroll one notch at a
+time: the green panel comes down over the photograph with its point leading, and the seal, the
+name, "University of the Philippines", "Take the quantum leap", and the Join button rise inside
+it. Move the mouse across the seal once; it turns in metal. Then: *"That is our seal, cast from
+the 2023 vector, over the brotherhood in February 2024. The first button on the site is Join,
+because a landing page faces outward: the freshman first, then the brods."*
 
 **0:30 — Scroll slowly.** The angled edge, then "We are EMC²." with the gazebo photograph.
 *"Modern, light, fast, and unmistakably ours."* The Get Involved slider: click the round arrow

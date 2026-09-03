@@ -294,3 +294,9 @@ phideltatheta.org with our own brand. These are the words for what was borrowed.
 | **Radius scale** | One large corner (24px) for photographs, cards, and panels; a smaller one (16px) for thumbnails; pills for buttons. Consistency of radius is what makes a page feel like one product. | `--radius`, `.rounded-card` |
 | **Scroll cue** | The small "scroll" prompt with an arrow at the bottom of a full-screen hero. | `.scroll-cue` |
 | **Decorative motif** | A small repeated brand element (their six stars; our six diamonds from the mark) placed at a section corner. | `Diamonds()` in `app/page.tsx` |
+| **Scroll-linked reveal** | An animation whose progress *is* the scroll position, so the reader controls it and nothing plays on its own. The hero panel's edge descends exactly as far as you scroll. | `components/site/scroll-hero.tsx` |
+| **Sticky stage** | A 100vh element that holds still (`position: sticky`) inside a taller section, so the page keeps scrolling while the scene stays on screen. Ours is a 200vh section with a 100vh stage. | Same |
+| **Scroll hijacking (avoided)** | Overriding the wheel so one notch does something other than scroll. The reference does not do it and neither do we: the wheel always moves the page its normal distance. | Same |
+| **Animated `clip-path`** | Changing a clip polygon over time so a panel appears to grow or its edge to move. The chevron's points are written from the scroll progress with `useMotionTemplate`. | Same |
+| **`useScroll` with a target** | Framer's hook that reports progress through one element (0 at its top, 1 at its bottom) rather than the whole page. | `useScroll({ target, offset: ["start start", "end end"] })` |
+| **Recruitment page** | The page a landing page exists to send strangers to. The reference's first button is "Join"; ours is now too. | `app/join/page.tsx` |

@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/motion/reveal";
 import { SectionLabel } from "@/components/site/section-label";
 import { BrodCard } from "@/components/site/brod-card";
-import { Seal } from "@/components/site/seal";
+import { ScrollHero } from "@/components/site/scroll-hero";
 import { CardSlider, type SliderCard } from "@/components/site/card-slider";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -19,8 +18,6 @@ export const metadata: Metadata = {
       "An exclusive Engineering and Physical Sciences brotherhood, founded in 1969 at the University of the Philippines College of Engineering.",
   },
 };
-
-const delay = (seconds: number) => ({ "--d": `${seconds}s` }) as React.CSSProperties;
 
 const INVOLVEMENT: SliderCard[] = [
   {
@@ -114,45 +111,12 @@ export default function Home() {
 
   return (
     <>
-      {/* ── Hero: the photograph under a green tint, the seal in metal, the
-             name, one tagline, two pills. Angled bottom edge. ───────────── */}
-      <section className="angled-bottom relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-[var(--ink)] pb-[10vw] text-center">
-        <Image src="/photos/anniv55-outdoor.jpg" alt="" fill priority sizes="100vw" className="object-cover object-[50%_40%]" />
-        <div aria-hidden className="absolute inset-0 bg-[var(--frat-green)]/78 mix-blend-multiply" />
-        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-[var(--ink)]/40 via-transparent to-[var(--ink)]/50" />
-
-        <Container className="relative flex flex-col items-center pt-32 md:pt-36">
-          <Seal className="h-[30vh] w-[30vh] max-h-[19rem] max-w-[19rem] md:h-[36vh] md:w-[36vh]" />
-          <h1
-            className="hero-reveal on-plate mt-4 font-display text-[clamp(2.5rem,6.5vw,5.5rem)] font-bold leading-none tracking-tight text-[var(--frat-cream)] uppercase"
-            style={delay(0.1)}
-          >
-            EMC&sup2; Fraternity
-          </h1>
-          <p
-            className="hero-reveal on-plate mt-4 font-sans text-[clamp(0.95rem,1.6vw,1.25rem)] font-semibold tracking-[0.2em] text-[var(--frat-cream)]/90 uppercase"
-            style={delay(0.18)}
-          >
-            Engineered for Service
-          </p>
-          <div className="hero-reveal mt-9 flex flex-wrap items-center justify-center gap-3" style={delay(0.26)}>
-            <Link href="/donate" className={cn(buttonVariants({ variant: "white", size: "lg" }))}>
-              Give Back
-            </Link>
-            <Link href="/portal" className={cn(buttonVariants({ variant: "outline-light", size: "lg" }))}>
-              Enter the Portal
-            </Link>
-          </div>
-        </Container>
-
-        <a
-          href="#we-are"
-          className="absolute bottom-[calc(4vw+1.25rem)] left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[12px] font-bold tracking-[0.2em] text-[var(--frat-cream)]/85 uppercase md:flex"
-        >
-          Scroll for the record
-          <ArrowDown className="scroll-cue h-5 w-5 text-[var(--frat-gold-light)]" strokeWidth={2} />
-        </a>
-      </section>
+      {/* ── Hero: the photograph, then the panel that grows down over it as
+             the reader scrolls (see scroll-hero.tsx). ────────────────── */}
+      <ScrollHero
+        image="/photos/anniv55-outdoor.jpg"
+        imageAlt="Brods of every batch gathered before Quezon Hall at the 55th Anniversary Celebration, U.P. Diliman"
+      />
 
       {/* ── We are EMC² ──────────────────────────────────────────────────── */}
       <section id="we-are" className="scroll-mt-24 bg-[var(--tint)] py-20 md:py-28">
@@ -174,7 +138,7 @@ export default function Home() {
               <Link href="/history" className={cn(buttonVariants({ variant: "default" }))}>
                 About us
               </Link>
-              <Link href="/contact" className={cn(buttonVariants({ variant: "outline" }))}>
+              <Link href="/join" className={cn(buttonVariants({ variant: "outline" }))}>
                 Join the brotherhood
               </Link>
             </div>

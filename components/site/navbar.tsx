@@ -13,8 +13,8 @@ const LINKS = [
   { href: "/projects", label: "Projects" },
   { href: "/brods", label: "Brods" },
   { href: "/anniversary", label: "58th" },
-  { href: "/quantum-leap", label: "Sports" },
   { href: "/portal", label: "Portal" },
+  { href: "/donate", label: "Give Back" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -64,8 +64,8 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link href="/donate" className={cn(buttonVariants({ variant: "gold", size: "sm" }))}>
-            Give Back
+          <Link href="/join" className={cn(buttonVariants({ variant: "gold", size: "sm" }))}>
+            Join us
           </Link>
           <button
             className="flex h-10 w-10 items-center justify-center rounded-full text-[var(--fg)] transition-colors hover:bg-[var(--fg)]/5 lg:hidden"
