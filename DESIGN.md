@@ -68,6 +68,25 @@ Gold is never body text on paper (2.45:1 fails). It is the dash and the navbar's
 - **Pending entries**: a left gold rule and a sentence.
 - **Forms**: white fields with a 12px radius in a rounded card.
 
+## Photography
+
+Every photograph is real, from the Association's own record. Nothing is generated, and
+nothing is generatively "enhanced": these are photographs of identifiable brods, and a
+generative pass repaints faces.
+
+What they do get is a **colour grade**, the same set of adjustments a colourist applies in
+Lightroom, written down as a reproducible preset in `scripts/grade-photographs.py`. The grade
+is the brand in light: shadows lean toward `--frat-green`, highlights toward `--frat-gold`,
+which is a *split tone*. Applied in a colourist's order: dehaze and black point, shadow lift,
+S-curve contrast, split tone, vibrance, clarity, vignette. Two strengths, `GROUP` for the
+flat overcast group photographs and `PORTRAIT` at roughly half for faces, because skin is the
+one thing a grade must not shift.
+
+Untouched originals live in `assets/photos-ungraded/`, outside `public/`, so nothing is lost
+and re-running the script never compounds the effect. To retune, change an amount in the
+script and run `python scripts/grade-photographs.py`; `--check --out DIR` writes before/after
+pairs instead of overwriting.
+
 ## Layout
 
 - Container `max-w-6xl`; sections `py-20 md:py-28`; sections alternate paper and tint.

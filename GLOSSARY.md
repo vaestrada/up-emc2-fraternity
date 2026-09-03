@@ -300,3 +300,27 @@ phideltatheta.org with our own brand. These are the words for what was borrowed.
 | **Animated `clip-path`** | Changing a clip polygon over time so a panel appears to grow or its edge to move. The chevron's points are written from the scroll progress with `useMotionTemplate`. | Same |
 | **`useScroll` with a target** | Framer's hook that reports progress through one element (0 at its top, 1 at its bottom) rather than the whole page. | `useScroll({ target, offset: ["start start", "end end"] })` |
 | **Recruitment page** | The page a landing page exists to send strangers to. The reference's first button is "Join"; ours is now too. | `app/join/page.tsx` |
+
+## 13. Colour grading: the words a colourist uses
+
+Added 3 September 2026, when the photographs were graded rather than left flat. These are
+the standard terms; the preset that uses them is `scripts/grade-photographs.py`.
+
+| Term | What it means | Where it lives here |
+|---|---|---|
+| **Colour grade** | A deliberate, consistent set of colour and tone adjustments applied to every image so a body of work looks like one body of work. Distinct from *correction*, which just fixes what is wrong. | The whole script |
+| **Preset / LUT** | A saved grade. A preset is the list of amounts (what we have); a LUT, look-up table, is the same thing baked into a table of colour values that hardware can apply instantly. | `GROUP` and `PORTRAIT` |
+| **Split tone** | Pushing one colour into the dark end of the range and a different one into the light end. Ours is green shadows and gold highlights, straight from the brand tokens. It is the single move that makes the photographs feel like they belong to this site. | `SHADOW_TONE`, `HIGHLIGHT_TONE` |
+| **Black point / white point** | Where the darkest and lightest tones sit. Stretching an image between new ones is a *levels* adjustment. | Step 1 |
+| **Dehaze** | Removing the flat grey veil an overcast sky or distance puts over a frame. Ours is a per-channel percentile stretch, which lifts the haze and its colour cast at once. | Step 1 |
+| **Shadow lift** | Opening up the dark end only, so faces under a bright sky become readable without brightening the whole frame. | Step 2 |
+| **Tone curve / S-curve** | A graph mapping input brightness to output. An S-shape darkens the darks and brightens the brights, which is what "more contrast" actually means. Ours blends toward a *smoothstep* so nothing clips. | Step 3 |
+| **Pivot** | The brightness the curve rotates around. Below it things get darker, above it lighter. | `pivot=0.46` |
+| **Clipping** | Pushing values past pure black or pure white, where detail is gone for good. The reason contrast is added with a curve, not a multiplication. | Why step 3 is an S-curve |
+| **Saturation vs. vibrance** | Saturation raises all colour equally and turns skin orange. Vibrance raises the *least* saturated colours most, so it enriches a scene while leaving faces alone. | Step 5 |
+| **Clarity / local contrast** | Contrast within small regions rather than across the whole image, made by subtracting a wide blur. It is what makes a photograph look crisp without looking sharpened. | Step 6 |
+| **Unsharp mask** | The technique behind clarity and sharpening: blur a copy, subtract it to isolate detail, add the detail back. Named from a darkroom practice. | Step 6 |
+| **Halo** | The bright outline an over-strong unsharp mask leaves along high-contrast edges. Ours is masked away from the extremes to prevent it. | The `mask` in step 6 |
+| **Vignette** | Darkening toward the corners, which pulls the eye to the centre. Subtle is the whole art of it. | Step 7 |
+| **Luminance** | Perceived brightness, not the average of the channels. The Rec. 709 weights (0.2126, 0.7152, 0.0722) reflect how much the eye takes from red, green, and blue. | `LUMA` |
+| **Non-destructive** | Never overwriting the original. Ours are kept in `assets/photos-ungraded/`, so the grade can be retuned or reverted forever. | `source_for()` |

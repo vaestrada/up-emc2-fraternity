@@ -40,8 +40,15 @@ export function Navbar() {
       <div className="island mx-auto flex h-16 max-w-6xl items-center justify-between rounded-full pr-2 pl-5 md:pl-6">
         <Link href="/" onClick={() => setOpen(false)} aria-label="EMC² Fraternity, home" className="flex items-center">
           <Image src="/logo/emc2-mark.svg" alt="" width={114} height={114} unoptimized className="h-9 w-9" />
-          <span className="ml-3 hidden font-display text-[15px] font-bold tracking-wide text-[var(--fg)] sm:block">
-            EMC&sup2; Fraternity
+          {/* The lockup's own two-line arrangement: the name, the University
+              beneath it, the way it is set on the banner and the seal. */}
+          <span className="ml-3 hidden leading-none sm:block">
+            <span className="block font-display text-[15px] font-bold tracking-wide text-[var(--fg)]">
+              EMC&sup2; Fraternity
+            </span>
+            <span className="mt-1 block font-display text-[9.5px] font-semibold tracking-[0.14em] text-[var(--fg)]/60 uppercase">
+              University of the Philippines
+            </span>
           </span>
         </Link>
 
