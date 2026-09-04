@@ -106,6 +106,23 @@ async function persist(
       });
       return !error;
     }
+    if (kind === "claim") {
+      // The claim is a REQUEST, not a grant. It is written through an RPC so
+      // the HMAC and the masked label are computed inside Postgres and the
+      // application never touches portal_config.app_secret. The board decides
+      // it against the roster they hold offline (PRIVACY.md rule 4).
+      const { error } = await supabase.rpc("submit_membership_claim", {
+        p_full_name: values.name,
+        p_batch: values.batch,
+        p_email: values.email.toLowerCase(),
+        p_nickname: values.nickname || null,
+        p_vouch: values.vouch || null,
+        p_note: values.note || null,
+        p_ip: ip,
+      });
+      if (error) console.error("submit_membership_claim failed:", error.message);
+      return !error;
+    }
     if (kind === "rsvp") {
       // Checkboxes share a name, so these arrive as several entries rather
       // than one field — readField would silently keep only the first.
@@ -219,7 +236,7 @@ async function deliver(subject: string, text: string, replyTo: string): Promise<
   return true;
 }
 
-type FormKind = "contact" | "pledge" | "contribute" | "dues" | "rsvp";
+type FormKind = "contact" | "pledge" | "contribute" | "dues" | "rsvp" | "claim";
 
 type Definition = {
   subject: (name: string) => string;
@@ -278,6 +295,20 @@ const FORMS: Record<FormKind, Definition> = {
       { name: "method", label: "Payment method", maxLength: 40 },
       { name: "reference", label: "Transfer reference no.", maxLength: 64 },
       { name: "message", label: "Message", maxLength: 2000 },
+    ],
+  },
+  claim: {
+    // "Claim your record" — a brod asking the board for Portal access. Batch
+    // is required because it is the field the board matches against the
+    // offline roster first; without it a claim cannot be decided at all.
+    subject: (name) => `[Website] Portal access claim from ${name}`,
+    fields: [
+      { name: "name", label: "Full name", maxLength: 120, required: true },
+      { name: "batch", label: "Batch", maxLength: 40, required: true },
+      { name: "email", label: "Email", maxLength: 254, required: true },
+      { name: "nickname", label: "Nickname", maxLength: 80 },
+      { name: "vouch", label: "A brod who can vouch for you", maxLength: 160 },
+      { name: "note", label: "Anything else", maxLength: 2000 },
     ],
   },
   rsvp: {
@@ -394,4 +425,8 @@ export async function submitDues(_prev: FormState, formData: FormData): Promise<
 
 export async function submitRsvp(_prev: FormState, formData: FormData): Promise<FormState> {
   return submit("rsvp", formData);
+}
+
+export async function submitClaim(_prev: FormState, formData: FormData): Promise<FormState> {
+  return submit("claim", formData);
 }

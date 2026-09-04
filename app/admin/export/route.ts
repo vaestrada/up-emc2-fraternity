@@ -36,6 +36,12 @@ const TABLES: Record<string, { columns: string[]; order: string }> = {
     columns: ["created_at", "name", "email", "topic", "message"],
     order: "created_at",
   },
+  // Deliberately no `email` column: it exists only while a claim is pending,
+  // and a roster-matching worksheet has no business carrying addresses.
+  membership_claims: {
+    columns: ["created_at", "status", "full_name", "batch", "nickname", "vouch", "note", "label", "decided_at", "decided_note"],
+    order: "created_at",
+  },
 };
 
 /* RFC 4180 quoting, plus a guard against spreadsheet formula injection: a

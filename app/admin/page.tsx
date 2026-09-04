@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/site/container";
 import { adminConfigured, isAuthed } from "@/lib/admin/auth";
 import { getAdminSupabase, CONTRIB_BUCKET } from "@/lib/supabase/server";
-import { login, logout, moderate, grantMember, revokeMemberByHash } from "./actions";
+import { login, logout, moderate, grantMember, revokeMemberByHash, decideClaim } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -135,13 +135,14 @@ export default async function AdminPage({
   }
 
   const supabase = getAdminSupabase()!;
-  const [contribRes, pledgeRes, messageRes, allowlistRes, rsvpRes, duesRes] = await Promise.all([
+  const [contribRes, pledgeRes, messageRes, allowlistRes, rsvpRes, duesRes, claimRes] = await Promise.all([
     supabase.from("contributions").select("*").order("created_at", { ascending: false }).limit(200),
     supabase.from("pledges").select("*").order("created_at", { ascending: false }).limit(200),
     supabase.from("messages").select("*").order("created_at", { ascending: false }).limit(100),
     supabase.from("member_allowlist").select("email_hash, label, batch, status, created_at").order("created_at", { ascending: false }).limit(200),
     supabase.from("anniversary_rsvps").select("*").order("created_at", { ascending: false }).limit(500),
     supabase.from("dues_payments").select("*").order("created_at", { ascending: false }).limit(200),
+    supabase.from("membership_claims").select("*").order("created_at", { ascending: false }).limit(300),
   ]);
 
   type Contribution = {
@@ -176,6 +177,13 @@ export default async function AdminPage({
     period: string; amount: string | null; method: string | null; reference: string | null; message: string | null;
   };
   const dues = (duesRes.data ?? []) as Dues[];
+  type Claim = {
+    id: string; created_at: string; status: string; full_name: string; batch: string;
+    email: string | null; label: string | null; nickname: string | null; vouch: string | null;
+    note: string | null; decided_at: string | null; decided_note: string | null;
+  };
+  const claims = (claimRes.data ?? []) as Claim[];
+  const pendingClaims = claims.filter((c) => c.status === "pending");
 
   // The committee's numbers at a glance: headcount and who to call first.
   const rsvpCount = (a: Rsvp["attending"]) => rsvps.filter((r) => r.attending === a).length;
@@ -213,7 +221,8 @@ export default async function AdminPage({
           <p className="mt-3 font-mono text-[11px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
             {pendingContrib} contribution{pendingContrib === 1 ? "" : "s"} · {pendingPledge} pledge
             {pendingPledge === 1 ? "" : "s"} · {pendingDues} dues record{pendingDues === 1 ? "" : "s"} pending
-            · {rsvps.length} on the 58th list
+            · {rsvps.length} on the 58th list · {pendingClaims.length} claim
+            {pendingClaims.length === 1 ? "" : "s"} to verify
           </p>
         </div>
         <form action={logout}>
@@ -222,6 +231,77 @@ export default async function AdminPage({
           </button>
         </form>
       </div>
+
+      {/* Portal claims. First in the queue because someone is waiting on the
+          other end, and because approving is the whole grant: allowlist,
+          invite, and close, in one click. Verify against the roster held
+          OFFLINE before approving — nothing here can check it for you. */}
+      <SectionHead title="Portal claims to verify" count={pendingClaims.length} table="membership_claims" />
+      {pendingClaims.length === 0 ? (
+        <p className="mt-6 text-sm text-[var(--fg)]/60">
+          No claims waiting. Brods claim their record at{" "}
+          <code className="text-[var(--brand)]">/portal/claim</code>.
+        </p>
+      ) : (
+        <div className="mt-6 space-y-4">
+          {pendingClaims.map((c) => (
+            <article key={c.id} className="rounded-2xl border border-[var(--hairline)] bg-[var(--card)] p-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <div>
+                  <p className="font-sans text-[19px] font-bold text-[var(--fg)]">
+                    {c.full_name}
+                    {c.nickname ? <span className="font-normal text-[var(--fg)]/60"> &ldquo;{c.nickname}&rdquo;</span> : null}
+                  </p>
+                  <p className="mt-1 font-mono text-[11px] tracking-[0.15em] text-[var(--fg)]/60 uppercase">
+                    Batch {c.batch} · {c.email ?? c.label ?? "—"}
+                  </p>
+                </div>
+                <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--fg)]/45 uppercase">
+                  {new Date(c.created_at).toLocaleDateString("en-PH", { day: "numeric", month: "short", year: "numeric" })}
+                </p>
+              </div>
+
+              {c.vouch ? (
+                <p className="mt-3 text-[14px] text-[var(--fg)]/70">
+                  <span className="text-[var(--fg)]/50">Vouched by:</span> {c.vouch}
+                </p>
+              ) : null}
+              {c.note ? (
+                <p className="mt-2 text-[14px] leading-relaxed whitespace-pre-wrap text-[var(--fg)]/70">{c.note}</p>
+              ) : null}
+
+              <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-[var(--hairline)] pt-4">
+                <form action={decideClaim} className="flex flex-wrap items-center gap-2">
+                  <input type="hidden" name="id" value={c.id} />
+                  <input type="hidden" name="email" value={c.email ?? ""} />
+                  <input type="hidden" name="batch" value={c.batch} />
+                  <input type="hidden" name="decision" value="approved" />
+                  <button type="submit" className={actionBtn}>
+                    Approve &amp; invite
+                  </button>
+                </form>
+                <form action={decideClaim} className="flex flex-wrap items-center gap-2">
+                  <input type="hidden" name="id" value={c.id} />
+                  <input type="hidden" name="decision" value="rejected" />
+                  <input
+                    type="text"
+                    name="note"
+                    maxLength={500}
+                    placeholder="Reason (optional, for the record)"
+                    className="rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)] outline-none focus:border-[var(--brand)]"
+                  />
+                  <button type="submit" className={actionBtn}>
+                    Reject
+                  </button>
+                </form>
+              </div>
+              <p className="mt-3 font-mono text-[10px] tracking-[0.15em] text-[var(--fg)]/40 uppercase">
+                Check against the offline roster before approving
+              </p>
+            </article>
+          ))}
+        </div>
+      )}
 
       {/* 58th Anniversary — the warm list. This is the reason the save-the-date
           page exists six months early; the committee needs to see it, and to

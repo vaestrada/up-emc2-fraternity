@@ -129,3 +129,56 @@ export async function revokeMemberByHash(formData: FormData): Promise<void> {
   await supabase.rpc("revoke_member_hash", { p_hash: hash });
   revalidatePath("/admin");
 }
+
+/* ── Membership claims ───────────────────────────────────────────
+   A brod claims their record at /portal/claim; the board decides it here
+   against the roster held offline. Approving is the whole grant in one
+   action: allowlist the hash, invite the account, close the claim. The RPC
+   nulls the raw email whichever way the decision goes, so a decided claim
+   keeps no address — only the HMAC and the masked label. */
+
+export async function decideClaim(formData: FormData): Promise<void> {
+  if (!(await isAuthed())) redirect("/admin");
+  const id = String(formData.get("id") ?? "").trim();
+  const decision = String(formData.get("decision") ?? "");
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const batch = String(formData.get("batch") ?? "").trim().slice(0, 40);
+  const note = String(formData.get("note") ?? "").trim().slice(0, 500);
+  if (!id || (decision !== "approved" && decision !== "rejected")) return;
+
+  const supabase = getAdminSupabase();
+  if (!supabase) return;
+
+  if (decision === "approved") {
+    // Refuse rather than half-approve: a claim marked approved whose invite
+    // never went out is worse than one still sitting in the queue, because
+    // nobody will look at it again.
+    if (!EMAIL_RE.test(email)) {
+      console.error("decideClaim: approve called without a usable email");
+      return;
+    }
+    const { error: rpcError } = await supabase.rpc("grant_member", {
+      p_email: email,
+      p_batch: batch || null,
+    });
+    if (rpcError) {
+      console.error("grant_member RPC failed:", rpcError.message);
+      return;
+    }
+    const { error: inviteError } = await supabase.auth.admin.inviteUserByEmail(email, {
+      data: { batch: batch || null },
+    });
+    // An already-registered brod is not a failure: they are allow-listed now
+    // and their next magic link will work. Log it and close the claim.
+    if (inviteError) console.error("inviteUserByEmail failed:", inviteError.message);
+  }
+
+  const { error } = await supabase.rpc("decide_membership_claim", {
+    p_id: id,
+    p_status: decision,
+    p_note: note || null,
+  });
+  if (error) console.error("decide_membership_claim failed:", error.message);
+
+  revalidatePath("/admin");
+}
