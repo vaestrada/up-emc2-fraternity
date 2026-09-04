@@ -70,6 +70,7 @@ export function Footer() {
           <ul className="mt-5 space-y-3 text-[15px] text-[var(--frat-cream)]/75">
             <li><Link href="/join" className={linkClass}>Join the brotherhood</Link></li>
             <li><Link href="/anniversary" className={linkClass}>The 58th Anniversary</Link></li>
+            <li><Link href="/sponsorship" className={linkClass}>Sponsorship</Link></li>
             <li><Link href="/quantum-leap" className={linkClass}>Quantum Leap Sports Series</Link></li>
             <li><Link href="/contribute" className={linkClass}>Add to the record</Link></li>
             <li><Link href="/donate" className={linkClass}>Give back</Link></li>

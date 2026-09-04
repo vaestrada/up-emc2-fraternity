@@ -106,6 +106,24 @@ async function persist(
       });
       return !error;
     }
+    if (kind === "sponsor") {
+      const expected = Number(String(values.amount_expected ?? "").replace(/[^\d.]/g, ""));
+      const { error } = await supabase.from("sponsor_enquiries").insert({
+        organisation: values.organisation,
+        contact_name: values.name,
+        email: values.email,
+        phone: values.phone || null,
+        introduced_by: values.introduced_by || null,
+        interest: values.interest || "sponsorship",
+        tier: values.tier || null,
+        // An expected amount is NOT revenue; the pipeline stage decides that.
+        amount_expected: Number.isFinite(expected) && expected > 0 ? expected : null,
+        message: values.message || null,
+        ip,
+      });
+      if (error) console.error("sponsor_enquiries insert failed:", error.message);
+      return !error;
+    }
     if (kind === "rsvp") {
       // Checkboxes share a name, so these arrive as several entries rather
       // than one field — readField would silently keep only the first.
@@ -219,7 +237,7 @@ async function deliver(subject: string, text: string, replyTo: string): Promise<
   return true;
 }
 
-type FormKind = "contact" | "pledge" | "contribute" | "dues" | "rsvp";
+type FormKind = "contact" | "pledge" | "contribute" | "dues" | "rsvp" | "sponsor";
 
 type Definition = {
   subject: (name: string) => string;
@@ -278,6 +296,22 @@ const FORMS: Record<FormKind, Definition> = {
       { name: "method", label: "Payment method", maxLength: 40 },
       { name: "reference", label: "Transfer reference no.", maxLength: 64 },
       { name: "message", label: "Message", maxLength: 2000 },
+    ],
+  },
+  sponsor: {
+    // A sponsorship or souvenir-ad enquiry. Goes into a pipeline, not the
+    // message queue, because PLAN §5 needs expected and collected kept apart.
+    subject: (name) => `[Website] Sponsorship enquiry from ${name}`,
+    fields: [
+      { name: "organisation", label: "Organisation", maxLength: 160, required: true },
+      { name: "name", label: "Your name", maxLength: 120, required: true },
+      { name: "email", label: "Email", maxLength: 254, required: true },
+      { name: "phone", label: "Mobile", maxLength: 40 },
+      { name: "introduced_by", label: "Introduced by", maxLength: 160 },
+      { name: "interest", label: "Interest", maxLength: 40 },
+      { name: "tier", label: "Tier or placement", maxLength: 80 },
+      { name: "amount_expected", label: "Indicative amount", maxLength: 20 },
+      { name: "message", label: "Message", maxLength: 4000 },
     ],
   },
   rsvp: {
@@ -394,4 +428,8 @@ export async function submitDues(_prev: FormState, formData: FormData): Promise<
 
 export async function submitRsvp(_prev: FormState, formData: FormData): Promise<FormState> {
   return submit("rsvp", formData);
+}
+
+export async function submitSponsor(_prev: FormState, formData: FormData): Promise<FormState> {
+  return submit("sponsor", formData);
 }

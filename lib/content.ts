@@ -28,6 +28,11 @@ export const association = {
   secRegNo: null as string | null, // TODO: official SEC registration number
 };
 
+/* The legal name ends in "Inc.", so writing `{association.legalName}.` in a
+   sentence produces "Inc..". Use this wherever the sentence supplies its own
+   full stop; use `legalName` itself only mid-sentence. */
+export const legalNameNoPeriod = association.legalName.replace(/\.$/, "");
+
 /* The next anniversary. The edition number is settled by the Association's own
    record: the 55th was 24 February 2024 (see `milestones` below), so February
    2027 is the 58th.
@@ -101,6 +106,93 @@ export const donorVoices: DonorVoice[] = [
     synthetic: true,
   },
   // --- END SYNTHETIC DEMO CONTENT ----------------------------------------------
+];
+
+/* Sponsorship and the souvenir programme. PLAN.md §5 ranks souvenir-programme
+   advertisements and sponsorship packages as the two largest revenue lines,
+   and notes the inventory is reusable across the Quantum Leap Sports Series
+   and the anniversary — so the rate card is built once, here.
+
+   `ratesApproved` is false until the treasurer signs off. While it is false
+   every figure on the page is labelled indicative, which is the honest state:
+   these are proposals for the board to change, not quotes. Changing a figure
+   is one line; changing the flag republishes the whole card as final. */
+export const sponsorship = {
+  ratesApproved: false,
+  /** Corporate budgets close in December–January (PLAN §4). */
+  deadlineLabel: "Commitments by 31 December 2026",
+  contactLabel: "the Alumni Association",
+};
+
+export type SponsorTier = {
+  slug: string;
+  name: string;
+  amount: number | null;
+  limit: string;
+  benefits: string[];
+};
+
+export const sponsorTiers: SponsorTier[] = [
+  {
+    slug: "presenting",
+    name: "Presenting Partner",
+    amount: 150000,
+    limit: "One only",
+    benefits: [
+      "Named in the evening's title treatment and from the stage",
+      "Full inside-front-cover page in the souvenir programme",
+      "First position on the sponsor wall, here and at the venue",
+      "A table of ten at the anniversary",
+      "Named in the post-event report to members",
+    ],
+  },
+  {
+    slug: "gold",
+    name: "Gold",
+    amount: 75000,
+    limit: "Up to four",
+    benefits: [
+      "Full page in the souvenir programme",
+      "Sponsor wall, here and at the venue",
+      "Five seats at the anniversary",
+      "Named in the post-event report to members",
+    ],
+  },
+  {
+    slug: "silver",
+    name: "Silver",
+    amount: 40000,
+    limit: "Open",
+    benefits: [
+      "Half page in the souvenir programme",
+      "Sponsor wall, here and at the venue",
+      "Two seats at the anniversary",
+    ],
+  },
+  {
+    slug: "supporter",
+    name: "Supporter",
+    amount: 15000,
+    limit: "Open",
+    benefits: [
+      "Quarter page in the souvenir programme",
+      "Sponsor wall listing",
+    ],
+  },
+];
+
+export type AdRate = { slug: string; placement: string; amount: number | null; note?: string };
+
+/* The souvenir programme, sold twice: printed for the evening and kept as a
+   permanent digital record. PLAN §5 calls this routinely the largest single
+   line at Philippine anniversary events. */
+export const souvenirAdRates: AdRate[] = [
+  { slug: "back-cover", placement: "Back cover", amount: 60000, note: "One only" },
+  { slug: "inside-cover", placement: "Inside front or back cover", amount: 45000, note: "Two only" },
+  { slug: "full-page", placement: "Full page", amount: 25000 },
+  { slug: "half-page", placement: "Half page", amount: 15000 },
+  { slug: "quarter-page", placement: "Quarter page", amount: 8000 },
+  { slug: "greeting", placement: "Greeting line", amount: 2500, note: "A name and a message from a brod or a batch" },
 ];
 
 export type Project = {

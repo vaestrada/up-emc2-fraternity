@@ -129,3 +129,33 @@ export async function revokeMemberByHash(formData: FormData): Promise<void> {
   await supabase.rpc("revoke_member_hash", { p_hash: hash });
   revalidatePath("/admin");
 }
+
+/* ── Sponsorship pipeline ────────────────────────────────────────
+   PLAN §5's cash discipline, made structural: an expected amount and a
+   collected amount are separate fields, and only the `paid` stage counts as
+   money. The 2025 Sportsfest reported PHP 294,050 against PHP 136,050 actually
+   collected; the point of this queue is that the gap cannot hide. */
+
+const SPONSOR_STAGE = ["enquiry", "proposal_sent", "committed", "paid", "declined"];
+
+export async function updateSponsor(formData: FormData): Promise<void> {
+  if (!(await isAuthed())) redirect("/admin");
+  const id = String(formData.get("id") ?? "").trim();
+  const stage = String(formData.get("stage") ?? "");
+  const note = String(formData.get("committee_note") ?? "").trim().slice(0, 2000);
+  const paidRaw = String(formData.get("amount_paid") ?? "").replace(/[^\d.]/g, "");
+  if (!id || !SPONSOR_STAGE.includes(stage)) return;
+
+  const supabase = getAdminSupabase();
+  if (!supabase) return;
+  const paid = Number(paidRaw);
+  await supabase
+    .from("sponsor_enquiries")
+    .update({
+      stage,
+      ...(note ? { committee_note: note } : {}),
+      ...(paidRaw !== "" && Number.isFinite(paid) ? { amount_paid: paid } : {}),
+    })
+    .eq("id", id);
+  revalidatePath("/admin");
+}

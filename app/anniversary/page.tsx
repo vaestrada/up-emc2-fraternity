@@ -40,7 +40,7 @@ const ARCHIVE_PLATES = [
 ];
 
 /* What the committee is preparing, each with an honest status. */
-const PROGRAMME = [
+const PROGRAMME: { title: string; body: string; status: string; href?: string }[] = [
   {
     title: "The Awards",
     body: "Honouring brods whose work has carried the fraternity's name in engineering, public service, the academe, and the brotherhood itself.",
@@ -49,12 +49,14 @@ const PROGRAMME = [
   {
     title: "Sponsorship",
     body: "Partner companies, many led or founded by brods, underwriting the evening in exchange for a place in its record.",
-    status: "Prospectus in preparation. Asks go out before corporate budgets close.",
+    status: "Prospectus published. Commitments by 31 December, before corporate budgets close.",
+    href: "/sponsorship",
   },
   {
     title: "The Souvenir Programme",
     body: "A printed and permanent digital record of the evening, carrying greetings and advertisements from alumni firms.",
-    status: "Rate card being set.",
+    status: "Indicative rate card published; the treasurer sets the final figures.",
+    href: "/sponsorship",
   },
   {
     title: "Anniversary Merchandise",
@@ -139,7 +141,15 @@ export default function AnniversaryPage() {
             {PROGRAMME.map((item, i) => (
               <Reveal key={item.title} delay={i * 0.04}>
                 <div className="grid gap-2 border-b border-[var(--hairline)] py-6 md:grid-cols-[14rem_1fr] md:gap-8">
-                  <h3 className="font-sans text-[22px] font-bold leading-snug text-[var(--fg)]">{item.title}</h3>
+                  <h3 className="font-sans text-[22px] font-bold leading-snug text-[var(--fg)]">
+                    {item.href ? (
+                      <Link href={item.href} className="underline-offset-4 transition-colors hover:text-[var(--brand)] hover:underline">
+                        {item.title}
+                      </Link>
+                    ) : (
+                      item.title
+                    )}
+                  </h3>
                   <div>
                     <p className="text-[15px] leading-relaxed text-[var(--fg)]/70">{item.body}</p>
                     <p className="mt-2 text-[13px] text-[var(--brand)]/90">{item.status}</p>
