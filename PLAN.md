@@ -10,8 +10,9 @@ Last updated: 2026-09-03.
 
 ## 0. Delivery status
 
-Audited against the live site on 3 September 2026. `main` is the deployed branch; the tag
-`v1.0-demo` is the verified board-demo build and the restore point.
+Audited against the live site on 3 September 2026; P1–P4 built and integrated on 4–5
+September. `main` is the deployed branch and the tag `v1.0-demo` is the restore point;
+`launch/v2` is the launch candidate carrying all four features. See `BRANCHES.md`.
 
 ### Shipped and live
 

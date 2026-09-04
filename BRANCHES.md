@@ -27,14 +27,23 @@ approved, in about ninety seconds including the redeploy.
 
 ## The branches
 
-| Branch | What it adds | Why it is separate |
+| Branch | What it adds | Preview |
 |---|---|---|
-| `main` | The live site | Always deployable. Never broken. |
-| `launch/polish` | Accessibility, SEO, small fixes | Merges quickly and often; no reason to hold it |
-| `feat/claim-record` | Brods claim their own Portal record from a Viber link | Touches auth; you should be able to reject it without losing anything else |
-| `feat/assistance-fund` | The Brotherhood Assistance Fund: programme page, private intake, ledger | The largest and most sensitive; deserves its own look |
-| `feat/awards` | Awards nominations: landing, intake, admin screening | Judged separately; the board may want to change the categories |
-| `feat/sponsorship` | Sponsor prospectus, packages, rate card, sponsor wall | Money page; the treasurer may want different numbers |
+| `main` | The live site. Always deployable. | [up-emc2-fraternity.vercel.app](https://up-emc2-fraternity.vercel.app) |
+| `launch/v2` | **All four features together.** This is the launch candidate. | [preview](https://up-emc2-fraternity-git-launch-v2-hype-kidz.vercel.app) |
+| `feat/claim-record` | Brods claim their own Portal record; the board still verifies against the offline roster | [preview](https://up-emc2-fraternity-git-feat-claim-record-hype-kidz.vercel.app/portal/claim) |
+| `feat/assistance-fund` | The Brotherhood Assistance Fund: programme page, private intake, public ledger | [preview](https://up-emc2-fraternity-git-feat-assistance-fund-hype-kidz.vercel.app/assistance) |
+| `feat/awards` | The Anniversary Awards: categories, criteria, process, nomination intake, screening | [preview](https://up-emc2-fraternity-git-feat-awards-hype-kidz.vercel.app/awards) |
+| `feat/sponsorship` | Sponsorship tiers, souvenir rate card, enquiry pipeline | [preview](https://up-emc2-fraternity-git-feat-sponsorship-hype-kidz.vercel.app/sponsorship) |
+
+### How to use these
+
+Look at `launch/v2` first — it is everything at once, which is what launching
+actually looks like. If one feature is wrong, look at its own branch to judge it
+in isolation, and say so; each can be dropped without touching the others.
+
+When you are happy, `launch/v2` merges into `main` and the public site changes.
+Until you say so, `main` stays exactly where you approved it.
 
 ## Naming
 
