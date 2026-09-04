@@ -129,3 +129,28 @@ export async function revokeMemberByHash(formData: FormData): Promise<void> {
   await supabase.rpc("revoke_member_hash", { p_hash: hash });
   revalidatePath("/admin");
 }
+
+/* ── Award nominations ───────────────────────────────────────────
+   Screening precedes judging (PLAN §6). The committee moves a nomination
+   along and may leave a note; that note is for the committee and is never
+   part of what a judge reads. There is no payment field on a nomination at
+   all, by design — a fee, if one is ever charged, lives in `pledges` and is
+   joined by a human, never surfaced beside the case for a brod. */
+
+const NOMINATION_STATUS = ["received", "screening", "shortlisted", "declined", "judged"];
+
+export async function screenNomination(formData: FormData): Promise<void> {
+  if (!(await isAuthed())) redirect("/admin");
+  const id = String(formData.get("id") ?? "").trim();
+  const status = String(formData.get("status") ?? "");
+  const note = String(formData.get("screening_note") ?? "").trim().slice(0, 2000);
+  if (!id || !NOMINATION_STATUS.includes(status)) return;
+
+  const supabase = getAdminSupabase();
+  if (!supabase) return;
+  await supabase
+    .from("award_nominations")
+    .update({ status, ...(note ? { screening_note: note } : {}) })
+    .eq("id", id);
+  revalidatePath("/admin");
+}

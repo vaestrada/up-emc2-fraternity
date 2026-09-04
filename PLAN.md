@@ -36,7 +36,7 @@ Audited against the live site on 3 September 2026. `main` is the deployed branch
 |---|---|---|---|
 | P1 | **Claim-your-record flow** | §4 says the list built in September is what everything is sold to in January. Today the Portal is invitation-only, which does not scale past the board's typing speed. | **Building** |
 | P2 | **Brotherhood Assistance Fund** | §3. The most emotionally real thing on the list. Programme page, private intake, admin triage, transparency ledger. | **Building** |
-| P3 | **Awards programme** | D6. Nominations open Nov–Dec; intake, screening, and the published panel and criteria must exist first. | **Building** |
+| P3 | **Awards programme** | D6. | **Shipped** — `/awards` publishes the eight proposed categories, their criteria, and the four-step process; screening queue in `/admin`. Nominations open when the board flips `awards.nominationsOpen`. Panel still to be appointed. |
 | P4 | **Sponsorship and souvenir ads** | §5 ranks these the two largest revenue lines. Prospectus, packages, rate card, sponsor wall. Corporate budgets close Dec–Jan. | **Building** |
 | P5 | Newsletter | On the roadmap as committed. Needs the member list (P1) to be worth sending. | After P1 |
 | P6 | Per-member giving and attendance history | Without it every year restarts blind. | After P1 |

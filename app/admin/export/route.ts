@@ -36,6 +36,12 @@ const TABLES: Record<string, { columns: string[]; order: string }> = {
     columns: ["created_at", "name", "email", "topic", "message"],
     order: "created_at",
   },
+  // The judging pack. screening_note is deliberately absent: it is the
+  // committee's, and PLAN section 6 keeps screening and judging apart.
+  award_nominations: {
+    columns: ["created_at", "status", "category", "nominee_name", "nominee_batch", "nominee_known", "citation", "evidence", "nominator_name", "nominator_batch", "nominator_email"],
+    order: "created_at",
+  },
 };
 
 /* RFC 4180 quoting, plus a guard against spreadsheet formula injection: a

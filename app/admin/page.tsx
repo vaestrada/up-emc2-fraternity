@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/site/container";
 import { adminConfigured, isAuthed } from "@/lib/admin/auth";
 import { getAdminSupabase, CONTRIB_BUCKET } from "@/lib/supabase/server";
-import { login, logout, moderate, grantMember, revokeMemberByHash } from "./actions";
+import { login, logout, moderate, grantMember, revokeMemberByHash, screenNomination } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -135,13 +135,14 @@ export default async function AdminPage({
   }
 
   const supabase = getAdminSupabase()!;
-  const [contribRes, pledgeRes, messageRes, allowlistRes, rsvpRes, duesRes] = await Promise.all([
+  const [contribRes, pledgeRes, messageRes, allowlistRes, rsvpRes, duesRes, nominationRes] = await Promise.all([
     supabase.from("contributions").select("*").order("created_at", { ascending: false }).limit(200),
     supabase.from("pledges").select("*").order("created_at", { ascending: false }).limit(200),
     supabase.from("messages").select("*").order("created_at", { ascending: false }).limit(100),
     supabase.from("member_allowlist").select("email_hash, label, batch, status, created_at").order("created_at", { ascending: false }).limit(200),
     supabase.from("anniversary_rsvps").select("*").order("created_at", { ascending: false }).limit(500),
     supabase.from("dues_payments").select("*").order("created_at", { ascending: false }).limit(200),
+    supabase.from("award_nominations").select("*").order("created_at", { ascending: false }).limit(300),
   ]);
 
   type Contribution = {
@@ -176,6 +177,19 @@ export default async function AdminPage({
     period: string; amount: string | null; method: string | null; reference: string | null; message: string | null;
   };
   const dues = (duesRes.data ?? []) as Dues[];
+  type Nomination = {
+    id: string; created_at: string; status: string; category: string;
+    nominee_name: string; nominee_batch: string | null; nominee_email: string | null;
+    nominee_known: string | null; citation: string; evidence: string | null;
+    nominator_name: string; nominator_batch: string | null; nominator_email: string;
+    screening_note: string | null;
+  };
+  const nominations = (nominationRes.data ?? []) as Nomination[];
+  const openNominations = nominations.filter((n) => n.status === "received" || n.status === "screening");
+  const byCategory = nominations.reduce<Record<string, number>>(
+    (acc, n) => ({ ...acc, [n.category]: (acc[n.category] ?? 0) + 1 }),
+    {}
+  );
 
   // The committee's numbers at a glance: headcount and who to call first.
   const rsvpCount = (a: Rsvp["attending"]) => rsvps.filter((r) => r.attending === a).length;
@@ -213,7 +227,8 @@ export default async function AdminPage({
           <p className="mt-3 font-mono text-[11px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
             {pendingContrib} contribution{pendingContrib === 1 ? "" : "s"} · {pendingPledge} pledge
             {pendingPledge === 1 ? "" : "s"} · {pendingDues} dues record{pendingDues === 1 ? "" : "s"} pending
-            · {rsvps.length} on the 58th list
+            · {rsvps.length} on the 58th list · {openNominations.length} nomination
+            {openNominations.length === 1 ? "" : "s"} to screen
           </p>
         </div>
         <form action={logout}>
@@ -222,6 +237,85 @@ export default async function AdminPage({
           </button>
         </form>
       </div>
+
+      {/* Award nominations. Screening happens here; judging happens off this
+          page, from the CSV, which deliberately omits screening_note. */}
+      <SectionHead title="Award nominations" count={nominations.length} table="award_nominations" />
+      {nominations.length === 0 ? (
+        <p className="mt-6 text-sm text-[var(--fg)]/60">
+          No nominations yet. They open at <code className="text-[var(--brand)]">/awards</code> when the
+          board flips <code className="text-[var(--brand)]">awards.nominationsOpen</code>.
+        </p>
+      ) : (
+        <>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {Object.entries(byCategory).map(([cat, n]) => (
+              <span key={cat} className="border border-[var(--hairline)] px-3 py-1 font-mono text-[10px] tracking-[0.15em] text-[var(--fg)]/70 uppercase">
+                {cat} · {n}
+              </span>
+            ))}
+          </div>
+          <div className="mt-6 space-y-4">
+            {nominations.map((n) => (
+              <article key={n.id} className="rounded-2xl border border-[var(--hairline)] bg-[var(--card)] p-6">
+                <div className="flex flex-wrap items-baseline justify-between gap-3">
+                  <div>
+                    <p className="font-sans text-[19px] font-bold text-[var(--fg)]">
+                      {n.nominee_name}
+                      {n.nominee_batch ? <span className="font-normal text-[var(--fg)]/60"> · {n.nominee_batch}</span> : null}
+                    </p>
+                    <p className="mt-1 font-mono text-[11px] tracking-[0.15em] text-[var(--fg)]/60 uppercase">
+                      {n.category}
+                    </p>
+                  </div>
+                  <span className={badge(n.status)}>{n.status}</span>
+                </div>
+
+                {n.nominee_known ? (
+                  <p className="mt-2 text-[14px] text-[var(--fg)]/70">{n.nominee_known}</p>
+                ) : null}
+                <p className="mt-4 text-[15px] leading-relaxed whitespace-pre-wrap text-[var(--fg)]/80">{n.citation}</p>
+                {n.evidence ? (
+                  <p className="mt-3 text-[14px] leading-relaxed whitespace-pre-wrap text-[var(--fg)]/60">
+                    <span className="text-[var(--fg)]/45">Evidence: </span>
+                    {n.evidence}
+                  </p>
+                ) : null}
+                <p className="mt-4 font-mono text-[11px] tracking-[0.15em] text-[var(--fg)]/55 uppercase">
+                  Nominated by {n.nominator_name}
+                  {n.nominator_batch ? ` · ${n.nominator_batch}` : ""} · {n.nominator_email}
+                </p>
+                {n.screening_note ? (
+                  <p className="mt-3 border-l-2 border-[var(--frat-gold)]/50 pl-4 text-[14px] text-[var(--fg)]/70">
+                    {n.screening_note}
+                  </p>
+                ) : null}
+
+                <form action={screenNomination} className="mt-5 flex flex-wrap items-center gap-2 border-t border-[var(--hairline)] pt-4">
+                  <input type="hidden" name="id" value={n.id} />
+                  <input
+                    type="text"
+                    name="screening_note"
+                    maxLength={2000}
+                    placeholder="Screening note (committee only)"
+                    className="min-w-[14rem] flex-1 rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)] outline-none focus:border-[var(--brand)]"
+                  />
+                  <select
+                    name="status"
+                    defaultValue={n.status}
+                    className="rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)] outline-none focus:border-[var(--brand)]"
+                  >
+                    {["received", "screening", "shortlisted", "declined", "judged"].map((v) => (
+                      <option key={v} value={v}>{v}</option>
+                    ))}
+                  </select>
+                  <button type="submit" className={actionBtn}>Save</button>
+                </form>
+              </article>
+            ))}
+          </div>
+        </>
+      )}
 
       {/* 58th Anniversary — the warm list. This is the reason the save-the-date
           page exists six months early; the committee needs to see it, and to
