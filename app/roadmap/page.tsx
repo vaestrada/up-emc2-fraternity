@@ -59,7 +59,7 @@ const VISUALS: Record<string, React.ReactNode> = {
   "Publishing from Google Drive": <PipelineMockup />,
   "A Companion App": <CompanionAppMockup />,
   "An AI-Native Archive": <AiArchiveMockup />,
-  "The Assistance Fund, Endowed": <LedgerMockup />,
+  "The Brotherhood Assistance Fund": <LedgerMockup />,
 };
 
 export default function RoadmapPage() {
@@ -164,9 +164,9 @@ export default function RoadmapPage() {
                             >
                               Record your dues
                             </Link>
-                          ) : item.title === "The Assistance Fund, Endowed" ? (
+                          ) : item.title === "The Brotherhood Assistance Fund" ? (
                             <Link
-                              href="/anniversary"
+                              href="/assistance"
                               className={cn(buttonVariants({ variant: "outline", size: "sm" }), "mt-7")}
                             >
                               Read about the fund

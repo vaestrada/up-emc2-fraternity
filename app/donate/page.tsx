@@ -7,7 +7,7 @@ import { PledgeForm } from "@/components/site/pledge-form";
 import { GivingGate } from "@/components/site/giving-gate";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { association, site, donorVoices } from "@/lib/content";
+import { association, site, donorVoices, legalNameNoPeriod } from "@/lib/content";
 import { withoutDemo } from "@/lib/demo";
 import { getPatrons } from "@/lib/patrons";
 
@@ -18,6 +18,10 @@ export const metadata: Metadata = {
 };
 
 const IMPACT = [
+  {
+    title: "The Brotherhood Assistance Fund",
+    body: "Hospitalisation, accident, and bereavement for brods and their families. Requests are private; every peso appears in a public ledger.",
+  },
   {
     title: "Scholarships",
     body: "Grants for deserving Engineering students. The fund is now being established.",
@@ -40,7 +44,7 @@ export default async function DonatePage() {
       <PageHero
         eyebrow="Patronage"
         title="Give Back"
-        description={`Contributions from brods, alumni, and friends fund scholarships, campus projects, and community outreach, received and acknowledged by the ${association.legalName}.`}
+        description={`Contributions from brods, alumni, and friends fund scholarships, campus projects, and community outreach, received and acknowledged by the ${legalNameNoPeriod}.`}
       />
 
       <section className="border-b border-[var(--hairline)] py-20 md:py-28">

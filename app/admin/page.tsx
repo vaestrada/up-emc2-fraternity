@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/site/container";
 import { adminConfigured, isAuthed } from "@/lib/admin/auth";
 import { getAdminSupabase, CONTRIB_BUCKET } from "@/lib/supabase/server";
-import { login, logout, moderate, grantMember, revokeMemberByHash } from "./actions";
+import { login, logout, moderate, grantMember, revokeMemberByHash, triageAssistance, addLedgerEntry, deleteLedgerEntry } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -135,13 +135,15 @@ export default async function AdminPage({
   }
 
   const supabase = getAdminSupabase()!;
-  const [contribRes, pledgeRes, messageRes, allowlistRes, rsvpRes, duesRes] = await Promise.all([
+  const [contribRes, pledgeRes, messageRes, allowlistRes, rsvpRes, duesRes, assistRes, ledgerRes] = await Promise.all([
     supabase.from("contributions").select("*").order("created_at", { ascending: false }).limit(200),
     supabase.from("pledges").select("*").order("created_at", { ascending: false }).limit(200),
     supabase.from("messages").select("*").order("created_at", { ascending: false }).limit(100),
     supabase.from("member_allowlist").select("email_hash, label, batch, status, created_at").order("created_at", { ascending: false }).limit(200),
     supabase.from("anniversary_rsvps").select("*").order("created_at", { ascending: false }).limit(500),
     supabase.from("dues_payments").select("*").order("created_at", { ascending: false }).limit(200),
+    supabase.from("assistance_requests").select("*").order("created_at", { ascending: false }).limit(200),
+    supabase.from("assistance_ledger").select("*").order("entry_date", { ascending: false }).limit(100),
   ]);
 
   type Contribution = {
@@ -176,6 +178,22 @@ export default async function AdminPage({
     period: string; amount: string | null; method: string | null; reference: string | null; message: string | null;
   };
   const dues = (duesRes.data ?? []) as Dues[];
+  type AssistanceRequest = {
+    id: string; created_at: string; status: string; name: string; batch: string | null;
+    email: string; phone: string | null; relation: string; kind: string; summary: string;
+    amount_needed: string | null; urgency: string | null; board_note: string | null;
+  };
+  const assistance = (assistRes.data ?? []) as AssistanceRequest[];
+  const openAssistance = assistance.filter((a) => a.status === "received" || a.status === "reviewing");
+  type LedgerRow = {
+    id: string; entry_date: string; direction: "raised" | "disbursed"; amount: string | number;
+    note: string | null; beneficiaries: number;
+  };
+  const ledger = (ledgerRes.data ?? []) as LedgerRow[];
+  const ledgerSum = (d: "raised" | "disbursed") =>
+    ledger.filter((l) => l.direction === d).reduce((n, l) => n + Number(l.amount), 0);
+  const money = (n: number) =>
+    new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP", maximumFractionDigits: 0 }).format(n);
 
   // The committee's numbers at a glance: headcount and who to call first.
   const rsvpCount = (a: Rsvp["attending"]) => rsvps.filter((r) => r.attending === a).length;
@@ -213,7 +231,8 @@ export default async function AdminPage({
           <p className="mt-3 font-mono text-[11px] tracking-[0.2em] text-[var(--fg)]/60 uppercase">
             {pendingContrib} contribution{pendingContrib === 1 ? "" : "s"} · {pendingPledge} pledge
             {pendingPledge === 1 ? "" : "s"} · {pendingDues} dues record{pendingDues === 1 ? "" : "s"} pending
-            · {rsvps.length} on the 58th list
+            · {rsvps.length} on the 58th list · {openAssistance.length} assistance request
+            {openAssistance.length === 1 ? "" : "s"} open
           </p>
         </div>
         <form action={logout}>
@@ -222,6 +241,133 @@ export default async function AdminPage({
           </button>
         </form>
       </div>
+
+      {/* The Assistance Fund. Above the anniversary list because someone is in
+          hospital. These rows are the most sensitive in the database — a
+          summary may name an illness or a death in the family — and they
+          appear nowhere else in the application. */}
+      <SectionHead title="Assistance requests" count={openAssistance.length} />
+      {assistance.length === 0 ? (
+        <p className="mt-6 text-sm text-[var(--fg)]/60">
+          No requests. Brods ask at <code className="text-[var(--brand)]">/portal/assistance</code>.
+        </p>
+      ) : (
+        <div className="mt-6 space-y-4">
+          {assistance.map((a) => (
+            <article key={a.id} className="rounded-2xl border border-[var(--hairline)] bg-[var(--card)] p-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <div>
+                  <p className="font-sans text-[19px] font-bold text-[var(--fg)]">
+                    {a.name}
+                    {a.batch ? <span className="font-normal text-[var(--fg)]/60"> · {a.batch}</span> : null}
+                  </p>
+                  <p className="mt-1 font-mono text-[11px] tracking-[0.15em] text-[var(--fg)]/60 uppercase">
+                    {a.kind} · for {a.relation} · {a.urgency ?? "no urgency given"}
+                  </p>
+                </div>
+                <span className={badge(a.status)}>{a.status}</span>
+              </div>
+
+              <p className="mt-4 text-[15px] leading-relaxed whitespace-pre-wrap text-[var(--fg)]/80">{a.summary}</p>
+
+              <dl className="mt-4 grid gap-x-8 gap-y-2 text-[13px] sm:grid-cols-2">
+                <div className="flex gap-2">
+                  <dt className="text-[var(--fg)]/50">Contact</dt>
+                  <dd className="text-[var(--fg)]/80">{a.email}{a.phone ? ` · ${a.phone}` : ""}</dd>
+                </div>
+                {a.amount_needed ? (
+                  <div className="flex gap-2">
+                    <dt className="text-[var(--fg)]/50">Amount that would help</dt>
+                    <dd className="text-[var(--fg)]/80">{a.amount_needed}</dd>
+                  </div>
+                ) : null}
+              </dl>
+              {a.board_note ? (
+                <p className="mt-3 border-l-2 border-[var(--frat-gold)]/50 pl-4 text-[14px] text-[var(--fg)]/70">
+                  {a.board_note}
+                </p>
+              ) : null}
+
+              <form action={triageAssistance} className="mt-5 flex flex-wrap items-center gap-2 border-t border-[var(--hairline)] pt-4">
+                <input type="hidden" name="id" value={a.id} />
+                <input
+                  type="text"
+                  name="board_note"
+                  maxLength={2000}
+                  placeholder="Board note (private)"
+                  className="min-w-[14rem] flex-1 rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)] outline-none focus:border-[var(--brand)]"
+                />
+                <select
+                  name="status"
+                  defaultValue={a.status}
+                  className="rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)] outline-none focus:border-[var(--brand)]"
+                >
+                  {["received", "reviewing", "assisted", "declined", "closed"].map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+                <button type="submit" className={actionBtn}>Save</button>
+              </form>
+            </article>
+          ))}
+        </div>
+      )}
+
+      {/* The public ledger. Everything entered here appears on /assistance. */}
+      <SectionHead title="Assistance ledger — published publicly" count={ledger.length} />
+      <p className="mt-4 text-sm text-[var(--fg)]/60">
+        Raised {money(ledgerSum("raised"))} · disbursed {money(ledgerSum("disbursed"))} · balance{" "}
+        {money(ledgerSum("raised") - ledgerSum("disbursed"))}. Notes here are <strong>public</strong>:
+        write &ldquo;hospitalisation assistance&rdquo;, never a name.
+      </p>
+
+      <form action={addLedgerEntry} className="mt-5 flex flex-wrap items-end gap-2 rounded-2xl border border-[var(--hairline)] bg-[var(--card)] p-4">
+        <label className="text-[12px] text-[var(--fg)]/60">
+          Date
+          <input type="date" name="entry_date" className="mt-1 block rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)]" />
+        </label>
+        <label className="text-[12px] text-[var(--fg)]/60">
+          Direction
+          <select name="direction" className="mt-1 block rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)]">
+            <option value="raised">raised</option>
+            <option value="disbursed">disbursed</option>
+          </select>
+        </label>
+        <label className="text-[12px] text-[var(--fg)]/60">
+          Amount (PHP)
+          <input type="text" name="amount" required placeholder="5000" className="mt-1 block w-28 rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)]" />
+        </label>
+        <label className="text-[12px] text-[var(--fg)]/60">
+          Brods helped
+          <input type="text" name="beneficiaries" placeholder="0" className="mt-1 block w-24 rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)]" />
+        </label>
+        <label className="min-w-[12rem] flex-1 text-[12px] text-[var(--fg)]/60">
+          Public note
+          <input type="text" name="note" maxLength={200} placeholder="Hospitalisation assistance" className="mt-1 block w-full rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)]" />
+        </label>
+        <button type="submit" className={actionBtn}>Add entry</button>
+      </form>
+
+      {ledger.length > 0 ? (
+        <div className="mt-4 border-t border-[var(--hairline)]">
+          {ledger.map((l) => (
+            <div key={l.id} className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--hairline)] py-3">
+              <span className="font-mono text-[11px] tracking-[0.15em] text-[var(--fg)]/60 uppercase">
+                {l.entry_date} · {l.direction}
+                {l.beneficiaries ? ` · ${l.beneficiaries} helped` : ""}
+              </span>
+              <span className="flex items-center gap-4">
+                <span className="text-[14px] text-[var(--fg)]/80">{l.note ?? "—"}</span>
+                <span className="text-[14px] font-semibold tabular-nums text-[var(--fg)]">{money(Number(l.amount))}</span>
+                <form action={deleteLedgerEntry}>
+                  <input type="hidden" name="id" value={l.id} />
+                  <button type="submit" className={actionBtn}>Delete</button>
+                </form>
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : null}
 
       {/* 58th Anniversary — the warm list. This is the reason the save-the-date
           page exists six months early; the committee needs to see it, and to
