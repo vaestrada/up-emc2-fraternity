@@ -3,10 +3,19 @@ import Image from "next/image";
 import { Container } from "@/components/site/container";
 import { FacebookIcon } from "@/components/site/facebook-icon";
 import { LinkedInIcon } from "@/components/site/linkedin-icon";
+import { InstagramIcon } from "@/components/site/instagram-icon";
 import { site, association } from "@/lib/content";
 
 const linkClass = "transition-colors hover:text-[var(--frat-cream)]";
 const heading = "text-[13px] font-bold tracking-[0.12em] text-[var(--frat-gold-light)] uppercase";
+
+/* Rendered only where a handle actually exists, so adding Instagram later is
+   one line in lib/content.ts and nothing else. */
+const SOCIALS = [
+  { href: site.facebook, label: "Facebook", Icon: FacebookIcon },
+  { href: site.linkedin, label: "LinkedIn", Icon: LinkedInIcon },
+  { href: site.instagram, label: "Instagram", Icon: InstagramIcon },
+];
 
 export function Footer() {
   return (
@@ -31,24 +40,18 @@ export function Footer() {
             Quezon City, Philippines
           </p>
           <div className="mt-6 flex gap-3">
-            <a
-              href={site.facebook}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Facebook"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--frat-cream)]/25 transition-colors hover:bg-[var(--frat-cream)]/10"
-            >
-              <FacebookIcon className="h-4 w-4" />
-            </a>
-            <a
-              href={site.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--frat-cream)]/25 transition-colors hover:bg-[var(--frat-cream)]/10"
-            >
-              <LinkedInIcon className="h-4 w-4" />
-            </a>
+            {SOCIALS.filter((x) => x.href).map(({ href, label, Icon }) => (
+              <a
+                key={label}
+                href={href as string}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--frat-cream)]/25 transition-colors hover:bg-[var(--frat-cream)]/10"
+              >
+                <Icon className="h-4 w-4" />
+              </a>
+            ))}
           </div>
         </div>
 

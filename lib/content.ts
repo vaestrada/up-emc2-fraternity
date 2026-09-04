@@ -16,6 +16,9 @@ export const site = {
   base: "3rd Floor Lobby, Melchor Hall, U.P. Diliman",
   facebook: "https://www.facebook.com/EMC2Fraternity",
   linkedin: "https://www.linkedin.com/company/up-emc2-fraternity",
+  // Null until the Association confirms the handle; the footer skips nulls
+  // rather than linking somewhere that does not exist.
+  instagram: null as string | null,
 };
 
 // The legal entity that receives and acknowledges donations.

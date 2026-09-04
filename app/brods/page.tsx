@@ -24,7 +24,12 @@ export default function BrodsPage() {
 
       <section className="border-b border-[var(--hairline)] py-20 md:py-28">
         <Container>
-          <div className="grid gap-12 md:grid-cols-2 md:gap-14 lg:grid-cols-3">
+          {/* The grid's cards are h3; without this the page jumped h1 to h3,
+              which is a real navigation problem for a screen reader. */}
+          <Reveal>
+            <h2 className="display text-[2rem] md:text-[2.75rem]">The citations.</h2>
+          </Reveal>
+          <div className="mt-12 grid gap-12 md:grid-cols-2 md:gap-14 lg:grid-cols-3">
             {brods.map((brod, i) => (
               <Reveal key={brod.slug} delay={(i % 3) * 0.06}>
                 <BrodCard brod={brod} />
