@@ -40,11 +40,12 @@ const ARCHIVE_PLATES = [
 ];
 
 /* What the committee is preparing, each with an honest status. */
-const PROGRAMME = [
+const PROGRAMME: { title: string; body: string; status: string; href?: string }[] = [
   {
     title: "The Awards",
     body: "Honouring brods whose work has carried the fraternity's name in engineering, public service, the academe, and the brotherhood itself.",
-    status: "Categories being screened. Nominations open toward the end of the year.",
+    status: "Categories, criteria, and the process are published. Nominations open November 2026.",
+    href: "/awards",
   },
   {
     title: "Sponsorship",
@@ -139,7 +140,15 @@ export default function AnniversaryPage() {
             {PROGRAMME.map((item, i) => (
               <Reveal key={item.title} delay={i * 0.04}>
                 <div className="grid gap-2 border-b border-[var(--hairline)] py-6 md:grid-cols-[14rem_1fr] md:gap-8">
-                  <h3 className="font-sans text-[22px] font-bold leading-snug text-[var(--fg)]">{item.title}</h3>
+                  <h3 className="font-sans text-[22px] font-bold leading-snug text-[var(--fg)]">
+                    {item.href ? (
+                      <Link href={item.href} className="underline-offset-4 transition-colors hover:text-[var(--brand)] hover:underline">
+                        {item.title}
+                      </Link>
+                    ) : (
+                      item.title
+                    )}
+                  </h3>
                   <div>
                     <p className="text-[15px] leading-relaxed text-[var(--fg)]/70">{item.body}</p>
                     <p className="mt-2 text-[13px] text-[var(--brand)]/90">{item.status}</p>

@@ -246,3 +246,27 @@ export async function deleteLedgerEntry(formData: FormData): Promise<void> {
   revalidatePath("/admin");
   revalidatePath("/assistance");
 }
+
+/* ── Award nominations ───────────────────────────────────────────
+   Screening precedes judging (PLAN §6). The committee moves a nomination
+   along and may leave a note; that note is for the committee and is never
+   part of what a judge reads. There is no payment field on a nomination at
+   all, by design. */
+
+const NOMINATION_STATUS = ["received", "screening", "shortlisted", "declined", "judged"];
+
+export async function screenNomination(formData: FormData): Promise<void> {
+  if (!(await isAuthed())) redirect("/admin");
+  const id = String(formData.get("id") ?? "").trim();
+  const status = String(formData.get("status") ?? "");
+  const note = String(formData.get("screening_note") ?? "").trim().slice(0, 2000);
+  if (!id || !NOMINATION_STATUS.includes(status)) return;
+
+  const supabase = getAdminSupabase();
+  if (!supabase) return;
+  await supabase
+    .from("award_nominations")
+    .update({ status, ...(note ? { screening_note: note } : {}) })
+    .eq("id", id);
+  revalidatePath("/admin");
+}

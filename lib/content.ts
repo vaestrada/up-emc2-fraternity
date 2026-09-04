@@ -108,6 +108,120 @@ export const donorVoices: DonorVoice[] = [
   // --- END SYNTHETIC DEMO CONTENT ----------------------------------------------
 ];
 
+/* The 58th Anniversary awards programme. PLAN.md §6, decision D6.
+
+   `nominationsOpen` is the single switch the board flips. Before it opens the
+   page publishes the categories, the criteria, and the panel — which PLAN §6
+   requires happen BEFORE nominations, so nobody can say the rules were written
+   around a winner. After it closes the page says so rather than silently
+   accepting late entries.
+
+   `panel` is empty until the board names it. The page says the panel is being
+   appointed rather than inventing one, the same discipline `founders` and
+   `officers` follow. */
+export type AwardCategory = {
+  slug: string;
+  title: string;
+  who: string;
+  criteria: string[];
+};
+
+export const awards = {
+  edition: 58,
+  /** Flip to true when the board opens nominations. */
+  nominationsOpen: false,
+  opensLabel: "November 2026",
+  closesLabel: "January 2027",
+  announcedLabel: "at the anniversary, February 2027",
+  /** Named judges, published before nominations open. Empty until appointed. */
+  panel: [] as { name: string; role: string; batch?: string }[],
+};
+
+/* The starting set from PLAN §6, which says plainly: screen down, do not
+   launch with all eight. Presented as proposed until the board cuts it. */
+export const awardCategories: AwardCategory[] = [
+  {
+    slug: "professional-excellence",
+    title: "Professional Excellence in Engineering",
+    who: "A brod whose engineering work has met the standard the fraternity claims for itself.",
+    criteria: [
+      "Recognised work in a field of engineering practice",
+      "Evidence beyond a job title: projects, patents, licensure, citations by peers",
+      "Conduct that the brotherhood would be glad to have named beside it",
+    ],
+  },
+  {
+    slug: "public-service",
+    title: "Public Service",
+    who: "A brod who has carried the credo into government, the judiciary, or civic work.",
+    criteria: [
+      "Sustained service in a public role",
+      "A record that stands up to scrutiny",
+      "Impact that outlasted the appointment",
+    ],
+  },
+  {
+    slug: "entrepreneurship",
+    title: "Entrepreneurship",
+    who: "A brod who built something that employs people and lasted.",
+    criteria: [
+      "A company founded or led through material growth",
+      "Years in operation, not valuation",
+      "Brods and non-brods alike better off for it",
+    ],
+  },
+  {
+    slug: "academe-research",
+    title: "Academe and Research",
+    who: "A brod who teaches, or who has added to what is known.",
+    criteria: [
+      "A teaching or research record in a recognised institution",
+      "Published, cited, or supervised work",
+      "Students who say so",
+    ],
+  },
+  {
+    slug: "young-alumnus",
+    title: "Young Alumnus",
+    who: "A brod from the last ten batches, on a trajectory the brotherhood should back now.",
+    criteria: [
+      "Graduated within the last ten batches",
+      "Early achievement in any field",
+      "The judgement that this is a beginning, not a peak",
+    ],
+  },
+  {
+    slug: "service-to-brotherhood",
+    title: "Service to the Brotherhood",
+    who: "A brod who did the unglamorous work: the committee, the ledger, the phone calls.",
+    criteria: [
+      "Sustained service to the fraternity or the Association",
+      "Work that others benefited from and few saw",
+      "No requirement of public prominence whatsoever",
+    ],
+  },
+  {
+    slug: "lifetime-achievement",
+    title: "Lifetime Achievement",
+    who: "A brod whose whole career is the case.",
+    criteria: [
+      "A body of work across decades",
+      "Standing in their field at the end of it",
+      "A life the credo would recognise",
+    ],
+  },
+  {
+    slug: "in-memoriam",
+    title: "Posthumous Honour",
+    who: "A brod no longer with us, whose record deserves to be read aloud.",
+    criteria: [
+      "Nominated with the family's knowledge and consent",
+      "A record the brotherhood wishes to enter permanently",
+      "Read at the anniversary, with the family invited",
+    ],
+  },
+];
+
 export type Project = {
   slug: string;
   title: string;

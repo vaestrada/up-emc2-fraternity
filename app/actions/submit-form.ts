@@ -123,6 +123,23 @@ async function persist(
       if (error) console.error("submit_membership_claim failed:", error.message);
       return !error;
     }
+    if (kind === "nomination") {
+      const { error } = await supabase.from("award_nominations").insert({
+        category: values.category,
+        nominee_name: values.nominee_name,
+        nominee_batch: values.nominee_batch || null,
+        nominee_email: values.nominee_email || null,
+        nominee_known: values.nominee_known || null,
+        citation: values.citation,
+        evidence: values.evidence || null,
+        nominator_name: values.name,
+        nominator_batch: values.batch || null,
+        nominator_email: values.email,
+        ip,
+      });
+      if (error) console.error("award_nominations insert failed:", error.message);
+      return !error;
+    }
     if (kind === "rsvp") {
       // Checkboxes share a name, so these arrive as several entries rather
       // than one field — readField would silently keep only the first.
@@ -236,7 +253,7 @@ async function deliver(subject: string, text: string, replyTo: string): Promise<
   return true;
 }
 
-type FormKind = "contact" | "pledge" | "contribute" | "dues" | "rsvp" | "claim";
+type FormKind = "contact" | "pledge" | "contribute" | "dues" | "rsvp" | "claim" | "nomination";
 
 type Definition = {
   subject: (name: string) => string;
@@ -309,6 +326,24 @@ const FORMS: Record<FormKind, Definition> = {
       { name: "nickname", label: "Nickname", maxLength: 80 },
       { name: "vouch", label: "A brod who can vouch for you", maxLength: 160 },
       { name: "note", label: "Anything else", maxLength: 2000 },
+    ],
+  },
+  nomination: {
+    // An award nomination. The nominee need not be the nominator (PLAN §6),
+    // so this form carries two people and keeps them clearly apart.
+    subject: (name) => `[Website] Award nomination from ${name}`,
+    requireConsent: true,
+    fields: [
+      { name: "category", label: "Category", maxLength: 80, required: true },
+      { name: "nominee_name", label: "Nominee's name", maxLength: 160, required: true },
+      { name: "nominee_batch", label: "Nominee's batch", maxLength: 40 },
+      { name: "nominee_email", label: "Nominee's email", maxLength: 254 },
+      { name: "nominee_known", label: "Where the nominee is now", maxLength: 200 },
+      { name: "citation", label: "The case for them", maxLength: 8000, required: true },
+      { name: "evidence", label: "Evidence and links", maxLength: 1000 },
+      { name: "name", label: "Your name", maxLength: 120, required: true },
+      { name: "batch", label: "Your batch", maxLength: 40 },
+      { name: "email", label: "Your email", maxLength: 254, required: true },
     ],
   },
   rsvp: {
@@ -429,4 +464,8 @@ export async function submitRsvp(_prev: FormState, formData: FormData): Promise<
 
 export async function submitClaim(_prev: FormState, formData: FormData): Promise<FormState> {
   return submit("claim", formData);
+}
+
+export async function submitNomination(_prev: FormState, formData: FormData): Promise<FormState> {
+  return submit("nomination", formData);
 }
