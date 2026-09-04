@@ -9,7 +9,7 @@ import { AnniversarySeal } from "@/components/site/anniversary-seal";
 import { ArchivePlates } from "@/components/site/archive-plates";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { anniversary, association, site, FOUNDING_YEAR } from "@/lib/content";
+import { anniversary, site, FOUNDING_YEAR, legalNameNoPeriod } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: `The ${anniversary.ordinal} Anniversary`,
@@ -189,7 +189,7 @@ export default function AnniversaryPage() {
                 </p>
                 <p>
                   Tickets, nominations, and merchandise open later in the year through the{" "}
-                  {association.legalName}. Everyone on this list hears first.
+                  {legalNameNoPeriod}. Everyone on this list hears first.
                 </p>
               </div>
               <p className="caption mt-6 max-w-md">

@@ -35,7 +35,7 @@ Audited against the live site on 3 September 2026. `main` is the deployed branch
 | # | Item | Why it matters | Status |
 |---|---|---|---|
 | P1 | **Claim-your-record flow** | §4 says the list built in September is what everything is sold to in January. | **Shipped** — `/portal/claim`, queue in `/admin`. A claim is a request; the board still verifies against the offline roster. |
-| P2 | **Brotherhood Assistance Fund** | §3. The most emotionally real thing on the list. Programme page, private intake, admin triage, transparency ledger. | **Building** |
+| P2 | **Brotherhood Assistance Fund** | §3. The most emotionally real thing on the list. | **Shipped** — `/assistance`, private intake at `/portal/assistance`, triage and public ledger in `/admin`. The fund itself still needs endowing. |
 | P3 | **Awards programme** | D6. Nominations open Nov–Dec; intake, screening, and the published panel and criteria must exist first. | **Building** |
 | P4 | **Sponsorship and souvenir ads** | §5 ranks these the two largest revenue lines. Prospectus, packages, rate card, sponsor wall. Corporate budgets close Dec–Jan. | **Building** |
 | P5 | Newsletter | On the roadmap as committed. Needs the member list (P1) to be worth sending. | After P1 |

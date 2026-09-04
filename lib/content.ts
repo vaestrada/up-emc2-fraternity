@@ -28,6 +28,11 @@ export const association = {
   secRegNo: null as string | null, // TODO: official SEC registration number
 };
 
+/* The legal name ends in "Inc.", so writing `{association.legalName}.` in a
+   sentence produces "Inc..". Use this wherever the sentence supplies its own
+   full stop; use `legalName` itself only mid-sentence. */
+export const legalNameNoPeriod = association.legalName.replace(/\.$/, "");
+
 /* The next anniversary. The edition number is settled by the Association's own
    record: the 55th was 24 February 2024 (see `milestones` below), so February
    2027 is the 58th.
@@ -377,9 +382,9 @@ export const roadmap: RoadmapItem[] = [
       "Ask it who was in a given batch, surface a citation you half-remember, or draft your own update to the brotherhood from a few notes. A copilot over the archive, not a replacement for the brods who keep it.",
   },
   {
-    phase: "future",
-    title: "The Assistance Fund, Endowed",
+    phase: "now",
+    title: "The Brotherhood Assistance Fund",
     body:
-      "A standing fund for brods and their families facing hospitalisation, accident, or loss, with a published ledger — raised, disbursed, balance, brods helped — and never a name on either side. Being established with the Alumni Association.",
+      "A standing programme for brods and their families facing hospitalisation, accident, or loss. Requests are private to the board; the ledger — raised, disbursed, balance, brods helped — is public, with never a name on either side. The page and the private intake are live; the fund itself is being endowed with the Alumni Association.",
   },
 ];

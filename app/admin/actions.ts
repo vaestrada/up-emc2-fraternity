@@ -182,3 +182,67 @@ export async function decideClaim(formData: FormData): Promise<void> {
 
   revalidatePath("/admin");
 }
+/* ── The Brotherhood Assistance Fund ─────────────────────────────
+   Requests are the most sensitive rows in this database: a summary may name
+   a brod's illness or a death in their family. They are readable only here,
+   behind the admin password, and they never reach a public page in any form.
+   The ledger is the opposite — public by policy — and carries no names by
+   construction, because the table has no column for one. */
+
+const ASSISTANCE_STATUS = ["received", "reviewing", "assisted", "declined", "closed"];
+
+export async function triageAssistance(formData: FormData): Promise<void> {
+  if (!(await isAuthed())) redirect("/admin");
+  const id = String(formData.get("id") ?? "").trim();
+  const status = String(formData.get("status") ?? "");
+  const note = String(formData.get("board_note") ?? "").trim().slice(0, 2000);
+  if (!id || !ASSISTANCE_STATUS.includes(status)) return;
+
+  const supabase = getAdminSupabase();
+  if (!supabase) return;
+  await supabase
+    .from("assistance_requests")
+    .update({
+      status,
+      // Keep an existing note when the board only moves the status along.
+      ...(note ? { board_note: note } : {}),
+      decided_at: status === "assisted" || status === "declined" ? new Date().toISOString() : null,
+    })
+    .eq("id", id);
+  revalidatePath("/admin");
+}
+
+export async function addLedgerEntry(formData: FormData): Promise<void> {
+  if (!(await isAuthed())) redirect("/admin");
+  const direction = String(formData.get("direction") ?? "");
+  const amount = Number(String(formData.get("amount") ?? "").replace(/[^\d.]/g, ""));
+  const note = String(formData.get("note") ?? "").trim().slice(0, 200);
+  const beneficiaries = Number(String(formData.get("beneficiaries") ?? "0").replace(/[^\d]/g, "")) || 0;
+  const entryDate = String(formData.get("entry_date") ?? "").trim();
+  if (!["raised", "disbursed"].includes(direction) || !Number.isFinite(amount) || amount <= 0) return;
+
+  const supabase = getAdminSupabase();
+  if (!supabase) return;
+  const { error } = await supabase.from("assistance_ledger").insert({
+    direction,
+    amount,
+    // The note is PUBLIC. "Hospitalisation assistance", never who.
+    note: note || null,
+    beneficiaries: direction === "disbursed" ? beneficiaries : 0,
+    ...(entryDate ? { entry_date: entryDate } : {}),
+  });
+  if (error) console.error("assistance_ledger insert failed:", error.message);
+  revalidatePath("/admin");
+  revalidatePath("/assistance");
+}
+
+export async function deleteLedgerEntry(formData: FormData): Promise<void> {
+  if (!(await isAuthed())) redirect("/admin");
+  const id = String(formData.get("id") ?? "").trim();
+  if (!id) return;
+  const supabase = getAdminSupabase();
+  if (!supabase) return;
+  await supabase.from("assistance_ledger").delete().eq("id", id);
+  revalidatePath("/admin");
+  revalidatePath("/assistance");
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { association } from "@/lib/content";
+import { legalNameNoPeriod } from "@/lib/content";
 
 const gateInput =
   "w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-[15px] text-[var(--fg)] outline-none transition-colors placeholder:text-[var(--fg)]/50 focus:border-[var(--brand)]";
@@ -36,7 +36,7 @@ export function GivingGate({ children }: { children: React.ReactNode }) {
         Give Back is for brods, alumni, and friends of the fraternity.
       </h2>
       <p className="prose-archive mt-5 text-[15px] leading-relaxed">
-        Contributions are received and formally acknowledged by the {association.legalName}. Tell us
+        Contributions are received and formally acknowledged by the {legalNameNoPeriod}. Tell us
         who you are so we can thank you properly, then view how to give.
       </p>
       <form
