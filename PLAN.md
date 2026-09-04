@@ -4,7 +4,72 @@ Working document for the Board of Trustees. Decisions taken so far are recorded 
 everything below the fold is an unscreened idea bank, kept deliberately broad so the board,
 the residents, and volunteers can screen it down rather than start from a blank page.
 
-Last updated: 2026-08-24.
+Last updated: 2026-09-03.
+
+---
+
+## 0. Delivery status
+
+Audited against the live site on 3 September 2026. `main` is the deployed branch; the tag
+`v1.0-demo` is the verified board-demo build and the restore point.
+
+### Shipped and live
+
+| Area | What exists | Route |
+|---|---|---|
+| Public record | Home, history, projects, prominent brods, privacy, 404 | `/`, `/history`, `/projects`, `/brods`, `/privacy` |
+| Recruitment | Join page: what the brotherhood gives, who it is for, three steps | `/join` |
+| 58th Anniversary | Save-the-date page with RSVP capture, programme with honest status lines, archive plates | `/anniversary` |
+| Giving | Give Back with the giving gate, impact, pledge form, Roll of Patrons (opt-in, names only) | `/donate` |
+| Contribution intake | Submit memories, photographs, citations; published to `/history` after review | `/contribute` |
+| Sports series | Quantum Leap, first edition recorded | `/quantum-leap` |
+| Member Portal | Magic-link sign-in (invitation only), profile, opt-in directory, dues recording | `/portal/*` |
+| Board queue | RSVP list with headcount, contributions, pledges, messages, dues, allowlist, CSV export on every list | `/admin` |
+| Roadmap | Nine entries across shipped / committed / direction, each with a visual | `/roadmap` |
+| Data | Nine tables, RLS on all, functions hardened (`0006`), zero advisor warnings | Supabase |
+| Design | The Modern Charter; seal in metal (WebGL, with fallback); scroll-reveal hero; photographs graded to the brand | — |
+| Operations | Google Drive content pipeline, Content Log sheet, draft template, `emc2-publish` skill | — |
+
+### Pending — the September–October critical path
+
+| # | Item | Why it matters | Status |
+|---|---|---|---|
+| P1 | **Claim-your-record flow** | §4 says the list built in September is what everything is sold to in January. Today the Portal is invitation-only, which does not scale past the board's typing speed. | **Building** |
+| P2 | **Brotherhood Assistance Fund** | §3. The most emotionally real thing on the list. Programme page, private intake, admin triage, transparency ledger. | **Building** |
+| P3 | **Awards programme** | D6. Nominations open Nov–Dec; intake, screening, and the published panel and criteria must exist first. | **Building** |
+| P4 | **Sponsorship and souvenir ads** | §5 ranks these the two largest revenue lines. Prospectus, packages, rate card, sponsor wall. Corporate budgets close Dec–Jan. | **Building** |
+| P5 | Newsletter | On the roadmap as committed. Needs the member list (P1) to be worth sending. | After P1 |
+| P6 | Per-member giving and attendance history | Without it every year restarts blind. | After P1 |
+| P7 | Event check-in with QR codes | For the anniversary itself, not for launch. | Feb 2027 |
+
+### Parked, with the reason
+
+| Item | Why parked | Unblocks when |
+|---|---|---|
+| On-site checkout (tickets, merch, nominations) | D7 — PayMongo merchant account unresolved | Association completes KYB |
+| Official receipts for ticket revenue | D8 — owner's call to proceed; treasurer to confirm | Treasurer confirms position |
+| Tax-deductibility claims | No donee-institution status | PCNC → BIR accreditation |
+| Bulk roster import | `PRIVACY.md` rule 4 forbids it, permanently | Never. Claim-your-record replaces it |
+| Public case pages for assistance | D1 — RA 10173 sensitive personal information | Never; the programme model replaces it |
+| Instagram link | Handle not confirmed | Set `site.instagram` in `lib/content.ts`; the footer renders it automatically |
+
+### Waiting on the Board — these block real content, not code
+
+Each of these has a place in the code already, holding `null` or an empty array, and the page
+renders an honest "entry pending" until it is filled.
+
+| What is needed | Where it lands | What it unblocks |
+|---|---|---|
+| SEC registration number | `association.secRegNo` | The footer and `/donate` legal line |
+| The ten founding scholars | `founders` in `lib/content.ts` | `/history` founding section |
+| Current council / officers | `officers` | `/brods` council section |
+| Brods to remember | `inMemoriam` | `/brods` in memoriam section |
+| Official Association email | env + `lib/content.ts` | Receipting, newsletter sender |
+| Domain (`upemc2fraternity.org`) | `NEXT_PUBLIC_SITE_URL` | Public launch, sender reputation |
+| Exact day in February 2027 | `anniversary.date` | Save-the-date reads "February 2027" until then |
+| Instagram handle | `site.instagram` | Footer social row |
+| GCash / Maya / bank details | `/donate` | Currently reads "being finalised" |
+| Quantum Leap: did 22 Aug run, and where | `/quantum-leap` | The page speaks of it as held |
 
 ---
 
