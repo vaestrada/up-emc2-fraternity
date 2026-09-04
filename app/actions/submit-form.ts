@@ -140,6 +140,24 @@ async function persist(
       if (error) console.error("award_nominations insert failed:", error.message);
       return !error;
     }
+    if (kind === "sponsor") {
+      const expected = Number(String(values.amount_expected ?? "").replace(/[^\d.]/g, ""));
+      const { error } = await supabase.from("sponsor_enquiries").insert({
+        organisation: values.organisation,
+        contact_name: values.name,
+        email: values.email,
+        phone: values.phone || null,
+        introduced_by: values.introduced_by || null,
+        interest: values.interest || "sponsorship",
+        tier: values.tier || null,
+        // An expected amount is NOT revenue; the pipeline stage decides that.
+        amount_expected: Number.isFinite(expected) && expected > 0 ? expected : null,
+        message: values.message || null,
+        ip,
+      });
+      if (error) console.error("sponsor_enquiries insert failed:", error.message);
+      return !error;
+    }
     if (kind === "rsvp") {
       // Checkboxes share a name, so these arrive as several entries rather
       // than one field — readField would silently keep only the first.
@@ -253,7 +271,7 @@ async function deliver(subject: string, text: string, replyTo: string): Promise<
   return true;
 }
 
-type FormKind = "contact" | "pledge" | "contribute" | "dues" | "rsvp" | "claim" | "nomination";
+type FormKind = "contact" | "pledge" | "contribute" | "dues" | "rsvp" | "claim" | "nomination" | "sponsor";
 
 type Definition = {
   subject: (name: string) => string;
@@ -344,6 +362,22 @@ const FORMS: Record<FormKind, Definition> = {
       { name: "name", label: "Your name", maxLength: 120, required: true },
       { name: "batch", label: "Your batch", maxLength: 40 },
       { name: "email", label: "Your email", maxLength: 254, required: true },
+    ],
+  },
+  sponsor: {
+    // A sponsorship or souvenir-ad enquiry. Goes into a pipeline, not the
+    // message queue, because PLAN §5 needs expected and collected kept apart.
+    subject: (name) => `[Website] Sponsorship enquiry from ${name}`,
+    fields: [
+      { name: "organisation", label: "Organisation", maxLength: 160, required: true },
+      { name: "name", label: "Your name", maxLength: 120, required: true },
+      { name: "email", label: "Email", maxLength: 254, required: true },
+      { name: "phone", label: "Mobile", maxLength: 40 },
+      { name: "introduced_by", label: "Introduced by", maxLength: 160 },
+      { name: "interest", label: "Interest", maxLength: 40 },
+      { name: "tier", label: "Tier or placement", maxLength: 80 },
+      { name: "amount_expected", label: "Indicative amount", maxLength: 20 },
+      { name: "message", label: "Message", maxLength: 4000 },
     ],
   },
   rsvp: {
@@ -468,4 +502,8 @@ export async function submitClaim(_prev: FormState, formData: FormData): Promise
 
 export async function submitNomination(_prev: FormState, formData: FormData): Promise<FormState> {
   return submit("nomination", formData);
+}
+
+export async function submitSponsor(_prev: FormState, formData: FormData): Promise<FormState> {
+  return submit("sponsor", formData);
 }

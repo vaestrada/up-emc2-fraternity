@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/site/container";
 import { adminConfigured, isAuthed } from "@/lib/admin/auth";
 import { getAdminSupabase, CONTRIB_BUCKET } from "@/lib/supabase/server";
-import { login, logout, moderate, grantMember, revokeMemberByHash, decideClaim, triageAssistance, addLedgerEntry, deleteLedgerEntry, screenNomination } from "./actions";
+import { login, logout, moderate, grantMember, revokeMemberByHash, decideClaim, triageAssistance, addLedgerEntry, deleteLedgerEntry, screenNomination, updateSponsor } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -135,7 +135,7 @@ export default async function AdminPage({
   }
 
   const supabase = getAdminSupabase()!;
-  const [contribRes, pledgeRes, messageRes, allowlistRes, rsvpRes, duesRes, claimRes, assistRes, ledgerRes, nominationRes] = await Promise.all([
+  const [contribRes, pledgeRes, messageRes, allowlistRes, rsvpRes, duesRes, claimRes, assistRes, ledgerRes, nominationRes, sponsorRes] = await Promise.all([
     supabase.from("contributions").select("*").order("created_at", { ascending: false }).limit(200),
     supabase.from("pledges").select("*").order("created_at", { ascending: false }).limit(200),
     supabase.from("messages").select("*").order("created_at", { ascending: false }).limit(100),
@@ -146,6 +146,7 @@ export default async function AdminPage({
     supabase.from("assistance_requests").select("*").order("created_at", { ascending: false }).limit(200),
     supabase.from("assistance_ledger").select("*").order("entry_date", { ascending: false }).limit(100),
     supabase.from("award_nominations").select("*").order("created_at", { ascending: false }).limit(300),
+    supabase.from("sponsor_enquiries").select("*").order("created_at", { ascending: false }).limit(300),
   ]);
 
   type Contribution = {
@@ -216,6 +217,20 @@ export default async function AdminPage({
     (acc, n) => ({ ...acc, [n.category]: (acc[n.category] ?? 0) + 1 }),
     {}
   );
+  type Sponsor = {
+    id: string; created_at: string; stage: string; organisation: string; contact_name: string;
+    email: string; phone: string | null; introduced_by: string | null; interest: string;
+    tier: string | null; amount_expected: string | number | null; amount_paid: string | number;
+    message: string | null; committee_note: string | null;
+  };
+  const sponsors = (sponsorRes.data ?? []) as Sponsor[];
+  const openSponsors = sponsors.filter((s) => s.stage !== "paid" && s.stage !== "declined");
+  // PLAN section 5: pipeline is not revenue. Shown side by side so the gap is
+  // impossible to overlook, which is the 2025 Sportsfest lesson.
+  const pipelineValue = sponsors
+    .filter((s) => s.stage !== "declined" && s.stage !== "paid")
+    .reduce((n, s) => n + Number(s.amount_expected ?? 0), 0);
+  const collected = sponsors.reduce((n, s) => n + Number(s.amount_paid ?? 0), 0);
 
   // The committee's numbers at a glance: headcount and who to call first.
   const rsvpCount = (a: Rsvp["attending"]) => rsvps.filter((r) => r.attending === a).length;
@@ -258,7 +273,8 @@ export default async function AdminPage({
             {openAssistance.length} assistance request
             {openAssistance.length === 1 ? "" : "s"} open ·{" "}
             {openNominations.length} nomination
-            {openNominations.length === 1 ? "" : "s"} to screen
+            {openNominations.length === 1 ? "" : "s"} to screen ·{" "}
+            {openSponsors.length} sponsor{openSponsors.length === 1 ? "" : "s"} in play
           </p>
         </div>
         <form action={logout}>
@@ -410,6 +426,96 @@ export default async function AdminPage({
         </div>
       )}
 
+      {/* Sponsorship pipeline. Expected and collected are shown apart, always:
+          PLAN section 5's rule is that unsigned and unpaid pledges are not
+          available cash, and the 2025 Sportsfest is why. */}
+      <SectionHead title="Sponsorship pipeline" count={sponsors.length} table="sponsor_enquiries" />
+      <p className="mt-4 text-sm text-[var(--fg)]/60">
+        In play {money(pipelineValue)} · <strong className="text-[var(--fg)]">collected {money(collected)}</strong>.
+        Only collected is money. Do not commit spending against the first figure.
+      </p>
+      {sponsors.length === 0 ? (
+        <p className="mt-6 text-sm text-[var(--fg)]/60">
+          No enquiries yet. The prospectus is at <code className="text-[var(--brand)]">/sponsorship</code>.
+        </p>
+      ) : (
+        <div className="mt-6 space-y-4">
+          {sponsors.map((s) => (
+            <article key={s.id} className="rounded-2xl border border-[var(--hairline)] bg-[var(--card)] p-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <div>
+                  <p className="font-sans text-[19px] font-bold text-[var(--fg)]">{s.organisation}</p>
+                  <p className="mt-1 font-mono text-[11px] tracking-[0.15em] text-[var(--fg)]/60 uppercase">
+                    {s.contact_name} · {s.email}
+                    {s.phone ? ` · ${s.phone}` : ""}
+                  </p>
+                </div>
+                <span className={badge(s.stage === "paid" ? "acknowledged" : s.stage === "declined" ? "rejected" : "pending")}>
+                  {s.stage.replace("_", " ")}
+                </span>
+              </div>
+
+              <dl className="mt-4 grid gap-x-8 gap-y-2 text-[13px] sm:grid-cols-2">
+                <div className="flex gap-2">
+                  <dt className="text-[var(--fg)]/50">Interest</dt>
+                  <dd className="text-[var(--fg)]/80">{s.interest}{s.tier ? ` · ${s.tier}` : ""}</dd>
+                </div>
+                {s.introduced_by ? (
+                  <div className="flex gap-2">
+                    <dt className="text-[var(--fg)]/50">Introduced by</dt>
+                    <dd className="text-[var(--fg)]/80">{s.introduced_by}</dd>
+                  </div>
+                ) : null}
+                <div className="flex gap-2">
+                  <dt className="text-[var(--fg)]/50">Expected</dt>
+                  <dd className="text-[var(--fg)]/80">{s.amount_expected ? money(Number(s.amount_expected)) : "—"}</dd>
+                </div>
+                <div className="flex gap-2">
+                  <dt className="text-[var(--fg)]/50">Collected</dt>
+                  <dd className="font-semibold text-[var(--fg)]">{money(Number(s.amount_paid ?? 0))}</dd>
+                </div>
+              </dl>
+
+              {s.message ? (
+                <p className="mt-3 text-[14px] leading-relaxed whitespace-pre-wrap text-[var(--fg)]/70">{s.message}</p>
+              ) : null}
+              {s.committee_note ? (
+                <p className="mt-3 border-l-2 border-[var(--frat-gold)]/50 pl-4 text-[14px] text-[var(--fg)]/70">
+                  {s.committee_note}
+                </p>
+              ) : null}
+
+              <form action={updateSponsor} className="mt-5 flex flex-wrap items-center gap-2 border-t border-[var(--hairline)] pt-4">
+                <input type="hidden" name="id" value={s.id} />
+                <input
+                  type="text"
+                  name="committee_note"
+                  maxLength={2000}
+                  placeholder="Committee note"
+                  className="min-w-[12rem] flex-1 rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)] outline-none focus:border-[var(--brand)]"
+                />
+                <input
+                  type="text"
+                  name="amount_paid"
+                  placeholder="Collected ₱"
+                  className="w-32 rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)] outline-none focus:border-[var(--brand)]"
+                />
+                <select
+                  name="stage"
+                  defaultValue={s.stage}
+                  className="rounded-lg border border-[var(--hairline)] bg-[var(--paper)] px-3 py-2 text-[13px] text-[var(--fg)] outline-none focus:border-[var(--brand)]"
+                >
+                  {["enquiry", "proposal_sent", "committed", "paid", "declined"].map((v) => (
+                    <option key={v} value={v}>{v.replace("_", " ")}</option>
+                  ))}
+                </select>
+                <button type="submit" className={actionBtn}>Save</button>
+              </form>
+            </article>
+          ))}
+        </div>
+      )}
+
 
       {/* The public ledger. Everything entered here appears on /assistance. */}
       <SectionHead title="Assistance ledger — published publicly" count={ledger.length} />
@@ -545,6 +651,7 @@ export default async function AdminPage({
           </div>
         </>
       )}
+
 
       {/* 58th Anniversary — the warm list. This is the reason the save-the-date
           page exists six months early; the committee needs to see it, and to

@@ -50,12 +50,14 @@ const PROGRAMME: { title: string; body: string; status: string; href?: string }[
   {
     title: "Sponsorship",
     body: "Partner companies, many led or founded by brods, underwriting the evening in exchange for a place in its record.",
-    status: "Prospectus in preparation. Asks go out before corporate budgets close.",
+    status: "Prospectus published. Commitments by 31 December, before corporate budgets close.",
+    href: "/sponsorship",
   },
   {
     title: "The Souvenir Programme",
     body: "A printed and permanent digital record of the evening, carrying greetings and advertisements from alumni firms.",
-    status: "Rate card being set.",
+    status: "Indicative rate card published; the treasurer sets the final figures.",
+    href: "/sponsorship",
   },
   {
     title: "Anniversary Merchandise",

@@ -48,6 +48,10 @@ const TABLES: Record<string, { columns: string[]; order: string }> = {
     columns: ["created_at", "status", "category", "nominee_name", "nominee_batch", "nominee_known", "citation", "evidence", "nominator_name", "nominator_batch", "nominator_email"],
     order: "created_at",
   },
+  sponsor_enquiries: {
+    columns: ["created_at", "stage", "organisation", "contact_name", "email", "phone", "introduced_by", "interest", "tier", "amount_expected", "amount_paid", "message", "committee_note"],
+    order: "created_at",
+  },
 };
 
 /* RFC 4180 quoting, plus a guard against spreadsheet formula injection: a

@@ -37,7 +37,7 @@ Audited against the live site on 3 September 2026. `main` is the deployed branch
 | P1 | **Claim-your-record flow** | §4 says the list built in September is what everything is sold to in January. | **Shipped** — `/portal/claim`, queue in `/admin`. A claim is a request; the board still verifies against the offline roster. |
 | P2 | **Brotherhood Assistance Fund** | §3. The most emotionally real thing on the list. | **Shipped** — `/assistance`, private intake at `/portal/assistance`, triage and public ledger in `/admin`. The fund itself still needs endowing. |
 | P3 | **Awards programme** | D6. | **Shipped** — `/awards` publishes the eight proposed categories, their criteria, and the four-step process; screening queue in `/admin`. Nominations open when the board flips `awards.nominationsOpen`. Panel still to be appointed. |
-| P4 | **Sponsorship and souvenir ads** | §5 ranks these the two largest revenue lines. Prospectus, packages, rate card, sponsor wall. Corporate budgets close Dec–Jan. | **Building** |
+| P4 | **Sponsorship and souvenir ads** | §5 ranks these the two largest revenue lines. | **Shipped** — `/sponsorship` with four tiers, a six-line souvenir rate card, and an enquiry form; pipeline in `/admin` keeps expected and collected visibly apart. Rates indicative until the treasurer approves. |
 | P5 | Newsletter | On the roadmap as committed. Needs the member list (P1) to be worth sending. | After P1 |
 | P6 | Per-member giving and attendance history | Without it every year restarts blind. | After P1 |
 | P7 | Event check-in with QR codes | For the anniversary itself, not for launch. | Feb 2027 |

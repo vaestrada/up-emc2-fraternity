@@ -72,6 +72,7 @@ export function Footer() {
             <li><Link href="/assistance" className={linkClass}>The Assistance Fund</Link></li>
             <li><Link href="/anniversary" className={linkClass}>The 58th Anniversary</Link></li>
             <li><Link href="/awards" className={linkClass}>The Anniversary Awards</Link></li>
+            <li><Link href="/sponsorship" className={linkClass}>Sponsorship</Link></li>
             <li><Link href="/quantum-leap" className={linkClass}>Quantum Leap Sports Series</Link></li>
             <li><Link href="/contribute" className={linkClass}>Add to the record</Link></li>
             <li><Link href="/donate" className={linkClass}>Give back</Link></li>
