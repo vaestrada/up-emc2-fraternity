@@ -34,6 +34,12 @@ personal information controller for this data.
    Delete local roster copies after each offline token/allowlist run, so raw member data never
    persists in a Supabase table or beyond the brief offline step.
 5. Deceased members are marked in the data — handle memorial listings with family consent.
+6. **Claim-your-record (`/portal/claim`) does not verify anyone.** It is an intake queue: a
+   brod supplies their own name, batch, and email, and a board member matches that against
+   the roster held offline before `grant_member` runs. Nothing in the codebase can check a
+   claim, by design. A pending claim holds the raw email only because the invitation needs
+   it; `decide_membership_claim` nulls it the moment the claim is approved or rejected,
+   leaving only the HMAC and a masked label. Verified end to end on 2026-09-04.
 
 ## Source
 

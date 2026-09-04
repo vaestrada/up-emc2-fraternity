@@ -106,13 +106,12 @@ export default async function PortalPage({
               A record kept is a brotherhood remembered.
             </p>
             <p className="mt-4 max-w-md text-[15px] leading-relaxed text-[var(--fg)]/60">
-              Not invited yet? A board member verifies each brod against the roster before
-              sending an invite.{" "}
-              <Link href="/contact" className="text-[var(--brand)] underline underline-offset-4">
-                Ask the Alumni Association
-              </Link>{" "}
-              with your name and batch.
+              Not invited yet? Claim your record and a board member will check you against the
+              roster.
             </p>
+            <Link href="/portal/claim" className={cn(buttonVariants({ variant: "outline" }), "mt-6")}>
+              Claim your record
+            </Link>
           </Container>
         </section>
       ) : null}
